@@ -3,16 +3,11 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    quickshell = {
-      url = "git+https://git.outfoxxed.me/quickshell/quickshell?rev=41828c4180fb921df7992a5405f5ff05d2ac2fff";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
     self,
     nixpkgs,
-    quickshell,
     ...
   }: let
     eachSystem = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.linux;
@@ -20,7 +15,6 @@
       system:
         nixpkgs.legacyPackages.${system}.appendOverlays [
           self.overlays.default
-          quickshell.overlays.default
         ]
     );
   in {
