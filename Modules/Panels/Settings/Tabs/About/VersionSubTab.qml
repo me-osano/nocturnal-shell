@@ -76,8 +76,6 @@ ColumnLayout {
     return lines.join(sep);
   }
 
-  }
-
   function copyInfoToClipboard() {
     let info = "Nocturnal Shell\n";
     info += "==============\n";
