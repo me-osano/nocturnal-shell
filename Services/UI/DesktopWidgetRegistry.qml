@@ -4,7 +4,6 @@ import QtQuick
 import Quickshell
 import qs.Commons
 import qs.Modules.DesktopWidgets.Widgets
-import qs.Services.Nocturnal
 
 Singleton {
   id: root
@@ -133,7 +132,7 @@ Singleton {
   function getWidgetDisplayName(widgetId) {
     if (widgetId.startsWith("plugin:")) {
       var pluginId = widgetId.replace("plugin:", "");
-      var manifest = PluginRegistry.getPluginManifest(pluginId);
+      var manifest = Logger.w("Stubs", "PluginRegistry removed"); undefined.getPluginManifest(pluginId);
       return manifest ? manifest.name : pluginId;
     }
     // Core widgets - return as-is (Clock, MediaPlayer, Weather, SystemStat)
@@ -244,7 +243,7 @@ Singleton {
     var hasSettings = false;
     if (root.isPluginWidget(widgetId)) {
       var pluginId = widgetId.replace("plugin:", "");
-      var manifest = PluginRegistry.getPluginManifest(pluginId);
+      var manifest = Logger.w("Stubs", "PluginRegistry removed"); undefined.getPluginManifest(pluginId);
       if (manifest && manifest.entryPoints && manifest.entryPoints.settings) {
         hasSettings = true;
       }

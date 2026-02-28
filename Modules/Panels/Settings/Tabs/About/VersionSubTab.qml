@@ -5,7 +5,6 @@ import Quickshell
 import Quickshell.Io
 import qs.Commons
 import qs.Services.Compositor
-import qs.Services.Nocturnal
 import qs.Services.System
 import qs.Services.UI
 import qs.Widgets
@@ -29,7 +28,7 @@ ColumnLayout {
   }
 
   property string latestVersion: "Unknown"
-  property string currentVersion: UpdateService.currentVersion
+  property string currentVersion: "v4.6.1-git"
   property string commitInfo: ""
 
   readonly property bool isGitVersion: root.currentVersion.endsWith("-git")
@@ -491,10 +490,10 @@ ColumnLayout {
       text: "View changelog"
       outlined: true
       Layout.alignment: Qt.AlignHCenter
+      enabled: false
+      opacity: 0.5
       onClicked: {
-        var screen = PanelService.openedPanel?.screen || SettingsPanelService.settingsWindow?.screen || PanelService.findScreenForPanels();
-        SettingsPanelService.close(screen);
-        UpdateService.viewChangelog(screen);
+        // Changelog feature has been removed
       }
     }
 

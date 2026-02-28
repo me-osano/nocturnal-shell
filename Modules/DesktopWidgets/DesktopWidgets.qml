@@ -6,7 +6,6 @@ import Quickshell.Wayland
 import qs.Commons
 import qs.Modules.Panels.Settings
 import qs.Services.Compositor
-import qs.Services.Nocturnal
 import qs.Services.Power
 import qs.Services.UI
 import qs.Widgets
@@ -291,7 +290,7 @@ Variants {
                 // Inject plugin API for plugin widgets
                 if (DesktopWidgetRegistry.isPluginWidget(modelData.id)) {
                   var pluginId = modelData.id.replace("plugin:", "");
-                  var api = PluginService.getPluginAPI(pluginId);
+                  var api = Logger.w("Stubs", "PluginService removed"); undefined.getPluginAPI(pluginId);
                   if (api && item.hasOwnProperty("pluginApi")) {
                     item.pluginApi = api;
                   }

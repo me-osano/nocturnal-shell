@@ -7,7 +7,6 @@ import Quickshell.Widgets
 import "Providers"
 import qs.Commons
 import qs.Services.Keyboard
-import qs.Services.Nocturnal
 import qs.Services.UI
 import qs.Widgets
 
@@ -234,7 +233,7 @@ Rectangle {
       if (!pluginProviderInstances[providerId]) {
         var component = LauncherProviderRegistry.getProviderComponent(providerId);
         var pluginId = providerId.substring(7); // Remove "plugin:" prefix
-        var pluginApi = PluginService.getPluginAPI(pluginId);
+        var pluginApi = Logger.w("Stubs", "PluginService removed"); undefined.getPluginAPI(pluginId);
         if (component && pluginApi) {
           var instance = component.createObject(root, {
                                                   pluginApi: pluginApi

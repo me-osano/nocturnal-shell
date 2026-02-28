@@ -3,7 +3,6 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import qs.Commons
-import qs.Services.Nocturnal
 import qs.Services.UI
 import qs.Widgets
 
@@ -134,7 +133,7 @@ ColumnLayout {
                       let displayName = entry;
                       if (isPlugin) {
                         const pluginId = entry.replace("plugin:", "");
-                        const manifest = PluginRegistry.getPluginManifest(pluginId);
+                        const manifest = Logger.w("Stubs", "PluginRegistry removed"); undefined.getPluginManifest(pluginId);
                         if (manifest && manifest.name) {
                           displayName = manifest.name;
                         } else {

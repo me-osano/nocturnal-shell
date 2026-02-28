@@ -19,7 +19,7 @@ import qs.Modules.Panels.Settings.Tabs.Launcher
 import qs.Modules.Panels.Settings.Tabs.LockScreen
 import qs.Modules.Panels.Settings.Tabs.Notifications
 import qs.Modules.Panels.Settings.Tabs.Osd
-import qs.Modules.Panels.Settings.Tabs.Plugins
+
 import qs.Modules.Panels.Settings.Tabs.Region
 import qs.Modules.Panels.Settings.Tabs.SessionMenu
 import qs.Modules.Panels.Settings.Tabs.SystemMonitor
@@ -513,10 +513,6 @@ Item {
     SystemMonitorTab {}
   }
   Component {
-    id: pluginsTab
-    PluginsTab {}
-  }
-  Component {
     id: desktopWidgetsTab
     DesktopWidgetsTab {}
   }
@@ -636,12 +632,6 @@ Item {
             "label": "system-monitor.title",
             "icon": "settings-system-monitor",
             "source": systemMonitorTab
-          },
-          {
-            "id": SettingsPanel.Tab.Plugins,
-            "label": "panels.plugins.title",
-            "icon": "plugin",
-            "source": pluginsTab
           },
           {
             "id": SettingsPanel.Tab.Hooks,

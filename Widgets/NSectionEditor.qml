@@ -3,7 +3,6 @@ import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Layouts
 import qs.Commons
-import qs.Services.Nocturnal
 import qs.Widgets
 
 NBox {
@@ -199,7 +198,7 @@ NBox {
     // Check if it's a plugin with settings
     if (root.widgetRegistry && root.widgetRegistry.isPluginWidget(widgetId)) {
       var pluginId = widgetId.replace("plugin:", "");
-      var manifest = PluginRegistry.getPluginManifest(pluginId);
+      var manifest = Logger.w("Stubs", "PluginRegistry removed"); undefined.getPluginManifest(pluginId);
       return manifest?.entryPoints?.settings !== undefined;
     }
 
@@ -219,7 +218,7 @@ NBox {
     if (isPlugin) {
       // Handle plugin settings - emit signal for parent to handle
       var pluginId = widgetData.id.replace("plugin:", "");
-      var manifest = PluginRegistry.getPluginManifest(pluginId);
+      var manifest = Logger.w("Stubs", "PluginRegistry removed"); undefined.getPluginManifest(pluginId);
 
       if (!manifest || !manifest.entryPoints?.settings) {
         Logger.e("NSectionEditor", "Plugin settings not found for:", pluginId);
@@ -552,7 +551,7 @@ NBox {
                   // For plugin widgets, get the actual plugin name from manifest
                   if (root.widgetRegistry && root.widgetRegistry.isPluginWidget(modelData.id)) {
                     const pluginId = modelData.id.replace("plugin:", "");
-                    const manifest = PluginRegistry.getPluginManifest(pluginId);
+                    const manifest = Logger.w("Stubs", "PluginRegistry removed"); undefined.getPluginManifest(pluginId);
                     if (manifest && manifest.name) {
                       return manifest.name;
                     }

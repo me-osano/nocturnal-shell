@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Effects
 import Quickshell
 import qs.Commons
-import qs.Services.Nocturnal
 import qs.Services.UI
 import qs.Widgets
 
@@ -300,7 +299,7 @@ Item {
       var widgetId = widgetData.id;
       if (DesktopWidgetRegistry.isPluginWidget(widgetId)) {
         var pluginId = widgetId.replace("plugin:", "");
-        var manifest = PluginRegistry.getPluginManifest(pluginId);
+        var manifest = Logger.w("Stubs", "PluginRegistry removed"); undefined.getPluginManifest(pluginId);
         hasSettings = manifest && manifest.entryPoints && manifest.entryPoints.settings;
       } else {
         hasSettings = DesktopWidgetRegistry.widgetSettingsMap[widgetId] !== undefined;

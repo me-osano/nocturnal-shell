@@ -12,7 +12,6 @@ import qs.Services.Compositor
 import qs.Services.Hardware
 import qs.Services.Media
 import qs.Services.Networking
-import qs.Services.Nocturnal
 import qs.Services.Power
 import qs.Services.System
 import qs.Services.Theming
@@ -806,10 +805,12 @@ Singleton {
     }
   }
 
+  // Plugin IPC handlers have been removed
+  /*
   IpcHandler {
     target: "plugin"
     function openSettings(key: string) {
-      var manifest = PluginRegistry.getPluginManifest(key);
+      var manifest = Logger.w("Stubs", "PluginRegistry removed"); undefined.getPluginManifest(key);
       if (!manifest) {
         Logger.w("IPC", "Plugin not found:", key);
         return;
@@ -824,7 +825,7 @@ Singleton {
     }
 
     function openPanel(key: string) {
-      var manifest = PluginRegistry.getPluginManifest(key);
+      var manifest = Logger.w("Stubs", "PluginRegistry removed"); undefined.getPluginManifest(key);
       if (!manifest) {
         Logger.w("IPC", "Plugin not found:", key);
         return;
@@ -834,12 +835,12 @@ Singleton {
         return;
       }
       root.screenDetector.withCurrentScreen(screen => {
-                                              PluginService.openPluginPanel(key, screen, null);
+                                              Logger.w("Stubs", "PluginService removed"); undefined.openPluginPanel(key, screen, null);
                                             });
     }
 
     function closePanel(key: string) {
-      var manifest = PluginRegistry.getPluginManifest(key);
+      var manifest = Logger.w("Stubs", "PluginRegistry removed"); undefined.getPluginManifest(key);
       if (!manifest) {
         Logger.w("IPC", "Plugin not found:", key);
         return;
@@ -849,7 +850,7 @@ Singleton {
         return;
       }
       root.screenDetector.withCurrentScreen(screen => {
-                                              var api = PluginService.getPluginAPI(key);
+                                              var api = Logger.w("Stubs", "PluginService removed"); undefined.getPluginAPI(key);
                                               if (api) {
                                                 api.closePanel(screen);
                                               }
@@ -857,7 +858,7 @@ Singleton {
     }
 
     function togglePanel(key: string) {
-      var manifest = PluginRegistry.getPluginManifest(key);
+      var manifest = Logger.w("Stubs", "PluginRegistry removed"); undefined.getPluginManifest(key);
       if (!manifest) {
         Logger.w("IPC", "Plugin not found:", key);
         return;
@@ -867,8 +868,9 @@ Singleton {
         return;
       }
       root.screenDetector.withCurrentScreen(screen => {
-                                              PluginService.togglePluginPanel(key, screen, null);
+                                              Logger.w("Stubs", "PluginService removed"); undefined.togglePluginPanel(key, screen, null);
                                             });
     }
   }
+  */
 }

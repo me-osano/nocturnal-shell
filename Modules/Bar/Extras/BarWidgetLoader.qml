@@ -1,7 +1,6 @@
 import QtQuick
 import Quickshell
 import qs.Commons
-import qs.Services.Nocturnal
 import qs.Services.UI
 
 Item {
@@ -123,7 +122,7 @@ Item {
       // The API is fully populated (settings/translations already loaded) by PluginService
       if (BarWidgetRegistry.isPluginWidget(widgetId)) {
         var pluginId = widgetId.replace("plugin:", "");
-        var api = PluginService.getPluginAPI(pluginId);
+        var api = Logger.w("Stubs", "PluginService removed"); undefined.getPluginAPI(pluginId);
         if (api && item.hasOwnProperty("pluginApi")) {
           item.pluginApi = api;
           Logger.d("BarWidgetLoader", "Injected plugin API for", widgetId);

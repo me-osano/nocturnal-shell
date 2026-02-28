@@ -8,8 +8,6 @@ import qs.Modules.Bar.Widgets
 Singleton {
   id: root
 
-  signal pluginWidgetRegistryUpdated
-
   // Widget registry object mapping widget names to components
   property var widgets: ({
                            "ActiveWindow": activeWindowComponent,
@@ -434,69 +432,9 @@ Singleton {
     return widgetMetadata[id] !== undefined;
   }
 
-  // ------------------------------
-  // Plugin widget registration
-
-  // Track plugin widgets separately
-  property var pluginWidgets: ({})
-  property var pluginWidgetMetadata: ({})
-
-  // Register a plugin widget
-  function registerPluginWidget(pluginId, component, metadata) {
-    if (!pluginId || !component) {
-      Logger.e("BarWidgetRegistry", "Cannot register plugin widget: invalid parameters");
-      return false;
-    }
-
-    // Add plugin: prefix to avoid conflicts with core widgets
-    var widgetId = "plugin:" + pluginId;
-
-    pluginWidgets[widgetId] = component;
-    pluginWidgetMetadata[widgetId] = metadata || {};
-
-    // Also add to main widgets object for unified access
-    widgets[widgetId] = component;
-    widgetMetadata[widgetId] = metadata || {};
-
-    Logger.i("BarWidgetRegistry", "Registered plugin widget:", widgetId);
-    root.pluginWidgetRegistryUpdated();
-    return true;
-  }
-
-  // Unregister a plugin widget
-  function unregisterPluginWidget(pluginId) {
-    var widgetId = "plugin:" + pluginId;
-
-    if (!pluginWidgets[widgetId]) {
-      Logger.w("BarWidgetRegistry", "Plugin widget not registered:", widgetId);
-      return false;
-    }
-
-    delete pluginWidgets[widgetId];
-    delete pluginWidgetMetadata[widgetId];
-    delete widgets[widgetId];
-    delete widgetMetadata[widgetId];
-
-    Logger.i("BarWidgetRegistry", "Unregistered plugin widget:", widgetId);
-    root.pluginWidgetRegistryUpdated();
-    return true;
-  }
-
-  // Check if a widget is a plugin widget
-  function isPluginWidget(id) {
-    return id.startsWith("plugin:");
-  }
-
   property var cpuIntensiveWidgets: ["AudioVisualizer"]
 
   function isCpuIntensive(id) {
-    if (pluginWidgetMetadata[id]?.cpuIntensive)
-      return true;
     return cpuIntensiveWidgets.indexOf(id) >= 0;
-  }
-
-  // Get list of plugin widget IDs
-  function getPluginWidgets() {
-    return Object.keys(pluginWidgets);
   }
 }

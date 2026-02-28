@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import qs.Commons
-import qs.Services.Nocturnal
 import qs.Services.UI
 import qs.Widgets
 
@@ -119,28 +118,8 @@ Popup {
   }
 
   function openPluginSettings(pluginManifest) {
-    currentPlugin = pluginManifest;
-
-    // Use composite key if available (for custom plugins), otherwise use manifest ID (for official plugins)
-    var pluginId = pluginManifest.compositeKey || pluginManifest.id;
-
-    currentPluginApi = PluginService.getPluginAPI(pluginId);
-    if (!currentPluginApi) {
-      Logger.e("NPluginSettingsPopup", "Cannot open settings: plugin not loaded:", pluginId);
-      if (showToastOnSave) {
-        ToastService.showError("Plugins", "Plugin not loaded");
-      }
-      return;
-    }
-
-    // Get plugin directory
-    var pluginDir = PluginRegistry.getPluginDir(pluginId);
-    var settingsPath = pluginDir + "/" + pluginManifest.entryPoints.settings;
-
-    settingsLoader.setSource("file://" + settingsPath, {
-                               "pluginApi": currentPluginApi
-                             });
-
-    open();
+    // Plugin support has been removed
+    Logger.w("NPluginSettingsPopup", "Plugin support has been removed");
+    ToastService.showError("Plugins", "Plugin support has been removed");
   }
 }

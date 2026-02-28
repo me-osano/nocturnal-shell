@@ -7,7 +7,6 @@ import "../Helpers/QtObj2JS.js" as QtObj2JS
 import qs.Commons
 import qs.Commons.Migrations
 import qs.Modules.OSD
-import qs.Services.Nocturnal
 import qs.Services.UI
 
 Singleton {
@@ -16,7 +15,6 @@ Singleton {
   property bool isLoaded: false
   property bool reloadSettings: false
   property bool directoriesCreated: false
-  property bool shouldOpenSetupWizard: false
   property bool isFreshInstall: false
 
   /*
@@ -135,9 +133,6 @@ Singleton {
         // File doesn't exist, create it with default values
         root.isFreshInstall = true;
         writeAdapter();
-
-        // We started without settings, we should open the setupWizard
-        root.shouldOpenSetupWizard = true;
       }
     }
   }
@@ -1099,14 +1094,6 @@ Singleton {
   // If the settings structure has changed, ensure
   // backward compatibility by upgrading the settings
   function upgradeSettings() {
-    // Wait for PluginService to finish loading plugins first
-    // This prevents deleting plugin widgets during reload before plugins are registered
-    if (!PluginService.initialized || !PluginService.pluginsFullyLoaded) {
-      Logger.d("Settings", "Plugins not fully loaded yet, deferring upgrade");
-      Qt.callLater(upgradeSettings);
-      return;
-    }
-
     // Wait for BarWidgetRegistry to be ready
     if (!BarWidgetRegistry.widgets || Object.keys(BarWidgetRegistry.widgets).length === 0) {
       Logger.d("Settings", "BarWidgetRegistry not ready, deferring upgrade");

@@ -33,7 +33,6 @@ import qs.Services.Hardware
 import qs.Services.Keyboard
 import qs.Services.Location
 import qs.Services.Networking
-import qs.Services.Nocturnal
 import qs.Services.Power
 import qs.Services.System
 import qs.Services.Theming
@@ -48,9 +47,6 @@ ShellRoot {
   Component.onCompleted: {
     Logger.i("Shell", "---------------------------");
     Logger.i("Shell", "Nocturnal Hello!");
-
-    // Plugin system has been disabled
-    // PluginRegistry.init();
   }
 
   Connections {
@@ -105,7 +101,6 @@ ShellRoot {
           IdleService.init();
           PowerProfileService.init();
           HostService.init();
-          SupporterService.init();
           CustomButtonIPCService.init();
           IPCService.init(screenDetector);
 
@@ -142,84 +137,24 @@ ShellRoot {
       // Settings window mode (single window across all monitors)
       SettingsPanelWindow {}
 
-      // Shared screen detector for IPC and plugins
+      // Shared screen detector for IPC
       CurrentScreenDetector {
         id: screenDetector
       }
 
       // IPCService is a singleton, initialized via init() in deferred services block
-
-      // Container for plugins Main.qml instances (must be in graphics scene)
-      // Plugin system has been disabled
-      /*
-      Item {
-        id: pluginContainer
-        visible: false
-
-        Component.onCompleted: {
-          PluginService.pluginContainer = pluginContainer;
-          PluginService.screenDetector = screenDetector;
-        }
-      }
-      */
     }
   }
 
   // ---------------------------------------------
-  // Delayed initialization and wizard/changelog
-  // ---------------------------------------------
+  // Delayed initialization
+  // ----------------------
   Timer {
     id: delayedInitTimer
     running: false
     interval: 1500
     onTriggered: {
       FontService.init();
-      UpdateService.init();
-      showWizardOrChangelog();
     }
-  }
-
-  // Retry timer for when panel isn't ready yet
-  Timer {
-    id: wizardRetryTimer
-    running: false
-    interval: 500
-    property string pendingWizardType: "" // "setup"
-    onTriggered: showWizardOrChangelog()
-  }
-
-  function showWizardOrChangelog() {
-    // Determine what to show: setup wizard > changelog
-    var wizardType = wizardRetryTimer.pendingWizardType;
-
-    if (wizardType === "") {
-      // First call - determine wizard type
-      if (Settings.shouldOpenSetupWizard) {
-        wizardType = "setup";
-      } else {
-        // No wizard needed - show changelog
-        UpdateService.showLatestChangelog();
-        return;
-      }
-    }
-
-    var targetScreen = PanelService.findScreenForPanels();
-    if (!targetScreen) {
-      Logger.w("Shell", "No screen available to show wizard");
-      wizardRetryTimer.pendingWizardType = "";
-      return;
-    }
-
-    var setupPanel = PanelService.getPanel("setupWizardPanel", targetScreen);
-    if (!setupPanel) {
-      // Panel not ready, retry
-      wizardRetryTimer.pendingWizardType = wizardType;
-      wizardRetryTimer.restart();
-      return;
-    }
-
-    // Panel is ready, show it
-    wizardRetryTimer.pendingWizardType = "";
-    setupPanel.open();
   }
 }

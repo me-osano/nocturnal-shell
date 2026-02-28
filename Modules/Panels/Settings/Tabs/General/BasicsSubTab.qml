@@ -165,22 +165,10 @@ ColumnLayout {
       text: "Setup wizard"
       outlined: true
       Layout.fillWidth: true
+      enabled: false
+      opacity: 0.5
       onClicked: {
-        var targetScreen = PanelService.openedPanel ? PanelService.openedPanel.screen : (Quickshell.screens.length > 0 ? Quickshell.screens[0] : null);
-        if (!targetScreen) {
-          return;
-        }
-        var setupPanel = PanelService.getPanel("setupWizardPanel", targetScreen);
-        if (setupPanel) {
-          setupPanel.open();
-        } else {
-          Qt.callLater(() => {
-                         var sp = PanelService.getPanel("setupWizardPanel", targetScreen);
-                         if (sp) {
-                           sp.open();
-                         }
-                       });
-        }
+        // Setup wizard has been removed
       }
     }
 

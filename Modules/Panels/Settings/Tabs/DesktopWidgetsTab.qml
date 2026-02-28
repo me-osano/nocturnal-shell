@@ -4,7 +4,6 @@ import QtQuick.Layouts
 import Quickshell
 import qs.Commons
 import qs.Services.Compositor
-import qs.Services.Nocturnal
 import qs.Services.UI
 import qs.Widgets
 
@@ -179,7 +178,7 @@ ColumnLayout {
         if (DesktopWidgetRegistry.isPluginWidget(widgetId)) {
           isPlugin = true;
           var pluginId = widgetId.replace("plugin:", "");
-          var manifest = PluginRegistry.getPluginManifest(pluginId);
+          var manifest = Logger.w("Stubs", "PluginRegistry removed"); undefined.getPluginManifest(pluginId);
           if (manifest && manifest.name) {
             displayName = manifest.name;
           }
