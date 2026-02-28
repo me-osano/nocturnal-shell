@@ -14,8 +14,8 @@ Singleton {
   property var activeInhibitors: []
   property var timeout: null // in seconds
 
-  // True when the native Wayland IdleInhibitor is handling inhibition
-  // (set by the IdleInhibitor element in MainScreen via the nativeInhibitor property)
+  // True when the native Wayland IdleInhibit is handling inhibition
+  // (set by the IdleInhibit element in MainScreen via the nativeInhibitor property)
   property bool nativeInhibitorAvailable: false
 
   function init() {

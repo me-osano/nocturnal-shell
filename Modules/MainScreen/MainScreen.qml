@@ -581,13 +581,13 @@ PanelWindow {
     // Native idle inhibitor — one per active MainScreen window.
     // Multiple inhibitors bound to the same enabled state are harmless;
     // having one per screen is more robust than picking a "primary" screen.
-    IdleInhibitor {
+    IdleInhibit {
       window: root
       enabled: IdleInhibitorService.isInhibited
 
       Component.onCompleted: {
         IdleInhibitorService.nativeInhibitorAvailable = true;
-        Logger.d("IdleInhibitor", "Native IdleInhibitor active on screen:", root.screen?.name);
+        Logger.d("IdleInhibit", "Native IdleInhibit active on screen:", root.screen?.name);
       }
     }
   }
