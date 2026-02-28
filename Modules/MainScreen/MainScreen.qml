@@ -578,9 +578,10 @@ PanelWindow {
       readonly property real frameR: Settings.data.bar.frameRadius ?? 20
     }
 
-    // Native idle inhibitor — one per active MainScreen window.
-    // Multiple inhibitors bound to the same enabled state are harmless;
-    // having one per screen is more robust than picking a "primary" screen.
+    // Native idle inhibitor — disabled for now as IdleInhibit type is not available
+    // The IdleInhibitorService handles inhibition via subprocess fallback (systemd-inhibit)
+    // Uncomment below when Quickshell provides IdleInhibit type
+    /*
     IdleInhibit {
       window: root
       enabled: IdleInhibitorService.isInhibited
@@ -590,6 +591,7 @@ PanelWindow {
         Logger.d("IdleInhibit", "Native IdleInhibit active on screen:", root.screen?.name);
       }
     }
+    */
   }
 
   // Centralized Keyboard Shortcuts
