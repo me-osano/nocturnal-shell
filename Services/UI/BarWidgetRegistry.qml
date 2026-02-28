@@ -19,7 +19,6 @@ Singleton {
                            "ControlCenter": controlCenterComponent,
                            "CustomButton": customButtonComponent,
                            "DarkMode": darkModeComponent,
-                           "KeepAwake": keepAwakeComponent,
                            "KeyboardLayout": keyboardLayoutComponent,
                            "LockKeys": lockKeysComponent,
                            "Launcher": launcherComponent,
@@ -52,7 +51,6 @@ Singleton {
                                      "ControlCenter": "WidgetSettings/ControlCenterSettings.qml",
                                      "CustomButton": "WidgetSettings/CustomButtonSettings.qml",
                                      "DarkMode": "WidgetSettings/DarkModeSettings.qml",
-                                     "KeepAwake": "WidgetSettings/KeepAwakeSettings.qml",
                                      "KeyboardLayout": "WidgetSettings/KeyboardLayoutSettings.qml",
                                      "Launcher": "WidgetSettings/LauncherSettings.qml",
                                      "LockKeys": "WidgetSettings/LockKeysSettings.qml",
@@ -160,10 +158,6 @@ Singleton {
                                   },
                                   "DarkMode": {
                                     "iconColor": "none"
-                                  },
-                                  "KeepAwake": {
-                                    "iconColor": "none",
-                                    "textColor": "none"
                                   },
                                   "KeyboardLayout": {
                                     "displayMode": "onhover",
@@ -343,9 +337,6 @@ Singleton {
   }
   property Component keyboardLayoutComponent: Component {
     KeyboardLayout {}
-  }
-  property Component keepAwakeComponent: Component {
-    KeepAwake {}
   }
   property Component lockKeysComponent: Component {
     LockKeys {}
