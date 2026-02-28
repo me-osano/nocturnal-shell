@@ -13,15 +13,10 @@ import qs.Widgets
 SmartPanel {
   id: root
 
-  // When true, only shows step 0 with modified text for returning users (telemetry notification)
-  property bool telemetryOnlyMode: false
-
-  signal telemetryWizardCompleted
-
   preferredWidth: Math.round(preferredWidthRatio * 2560 * Style.uiScaleRatio)
   preferredHeight: Math.round(preferredHeightRatio * 1440 * Style.uiScaleRatio)
   preferredWidthRatio: 0.4
-  preferredHeightRatio: root.telemetryOnlyMode ? 0.45 : 0.6
+  preferredHeightRatio: 0.6
 
   panelAnchorHorizontalCenter: true
   panelAnchorVerticalCenter: true
@@ -33,7 +28,7 @@ SmartPanel {
 
     // Wizard state (lazy-loaded with panelContent)
     property int currentStep: 0
-    readonly property int totalSteps: root.telemetryOnlyMode ? 1 : 5
+    readonly property int totalSteps: 5
     property bool isCompleting: false
 
     // Setup wizard data
@@ -78,43 +73,29 @@ SmartPanel {
       }
 
       try {
-        Logger.i("SetupWizard", root.telemetryOnlyMode ? "Completing telemetry wizard" : "Completing setup with selected options");
+        Logger.i("SetupWizard", "Completing setup with selected options");
         isCompleting = true;
 
-        // In telemetry-only mode, we only need to save the telemetry setting
-        if (!root.telemetryOnlyMode) {
-          if (typeof WallpaperService !== "undefined" && WallpaperService.refreshWallpapersList) {
-            if (selectedWallpaperDirectory !== Settings.data.wallpaper.directory) {
-              Settings.data.wallpaper.directory = selectedWallpaperDirectory;
-              WallpaperService.refreshWallpapersList();
-            }
-
-            if (selectedWallpaper !== "") {
-              WallpaperService.changeWallpaper(selectedWallpaper, undefined);
-            }
+        if (typeof WallpaperService !== "undefined" && WallpaperService.refreshWallpapersList) {
+          if (selectedWallpaperDirectory !== Settings.data.wallpaper.directory) {
+            Settings.data.wallpaper.directory = selectedWallpaperDirectory;
+            WallpaperService.refreshWallpapersList();
           }
 
-          Settings.data.general.scaleRatio = selectedScaleRatio;
-          Settings.data.bar.position = selectedBarPosition;
+          if (selectedWallpaper !== "") {
+            WallpaperService.changeWallpaper(selectedWallpaper, undefined);
+          }
         }
 
-        // Mark the current version as seen to prevent telemetry wizard on next startup
-        // (only for full setup wizard - telemetry wizard lets changelog mark it seen)
-        if (!root.telemetryOnlyMode) {
-          UpdateService.markChangelogSeen(UpdateService.currentVersion);
-        }
+        Settings.data.general.scaleRatio = selectedScaleRatio;
+        Settings.data.bar.position = selectedBarPosition;
 
-        // Initialize telemetry now that user has made their choice
-        TelemetryService.init();
+        // Mark the current version as seen
+        UpdateService.markChangelogSeen(UpdateService.currentVersion);
 
         // Save settings immediately and wait for settingsSaved signal before closing
         Settings.saveImmediate();
         Logger.i("SetupWizard", "Setup completed successfully, waiting for settings save confirmation");
-
-        // Emit signal for telemetry wizard completion (shell.qml will show changelog)
-        if (root.telemetryOnlyMode) {
-          root.telemetryWizardCompleted();
-        }
 
         // Fallback: if settingsSaved signal doesn't fire within 2 seconds, close anyway
         closeTimer.start();
@@ -233,7 +214,7 @@ SmartPanel {
                 spacing: Style.marginM
 
                 NText {
-                  text: root.telemetryOnlyMode ? "Privacy Update" : "Welcome to Nocturnal!"
+                  text: "Welcome to Nocturnal!"
                   pointSize: Style.fontSizeXXL * 1.4
                   font.weight: Style.fontWeightBold
                   color: Color.mOnSurface
@@ -242,7 +223,7 @@ SmartPanel {
                 }
 
                 NText {
-                  text: root.telemetryOnlyMode ? "We've added anonymous analytics to help improve Nocturnal" : "Let's make your desktop uniquely yours"
+                  text: "Let's make your desktop uniquely yours"
                   pointSize: Style.fontSizeL
                   color: Color.mOnSurfaceVariant
                   Layout.fillWidth: true
@@ -261,7 +242,7 @@ SmartPanel {
                   NText {
                     anchors.centerIn: parent
                     width: parent.width - Style.margin2L
-                    text: root.telemetryOnlyMode ? "You're in control — enable or disable this anytime in settings" : "Just a few basics to get you started — full options are in the settings"
+                    text: "Just a few basics to get you started — full options are in the settings"
                     pointSize: Style.fontSizeM
                     color: Color.mOnSurfaceVariant
                     horizontalAlignment: Text.AlignHCenter
@@ -269,15 +250,6 @@ SmartPanel {
                   }
                 }
 
-                // Telemetry toggle
-                NToggle {
-                  Layout.fillWidth: true
-                  Layout.topMargin: Style.marginM
-                  label: "Send anonymous system information"
-                  description: "Help improve Nocturnal by sharing anonymous system info (screen resolution, compositor, distro). Sent once at startup, no tracking, data auto-deleted after 30 days."
-                  checked: Settings.data.general.telemetryEnabled
-                  onToggled: checked => Settings.data.general.telemetryEnabled = checked
-                }
               }
             }
           }
@@ -330,14 +302,12 @@ SmartPanel {
         Layout.preferredHeight: 1
         color: Color.mOutline
         opacity: 0.2
-        visible: !root.telemetryOnlyMode
       }
 
       // Modern progress indicator with labels
       Item {
         Layout.fillWidth: true
         Layout.preferredHeight: 32
-        visible: !root.telemetryOnlyMode
 
         RowLayout {
           anchors.centerIn: parent
@@ -436,7 +406,6 @@ SmartPanel {
           NButton {
             text: "Skip Setup"
             outlined: true
-            visible: !root.telemetryOnlyMode
             Layout.preferredHeight: 44
             onClicked: {
               panelContent.completeSetup();
@@ -450,7 +419,6 @@ SmartPanel {
           NButton {
             text: "← " + "Back"
             outlined: true
-            visible: currentStep > 0 && !root.telemetryOnlyMode
             Layout.preferredHeight: 44
             onClicked: {
               if (currentStep > 0) {
@@ -460,7 +428,7 @@ SmartPanel {
           }
 
           NButton {
-            text: root.telemetryOnlyMode ? "Got it!" : (currentStep === totalSteps - 1 ? "All Done!" : "Continue" + " →")
+            text: currentStep === totalSteps - 1 ? "All Done!" : "Continue" + " →"
             Layout.preferredHeight: 44
             onClicked: {
               if (currentStep < totalSteps - 1) {

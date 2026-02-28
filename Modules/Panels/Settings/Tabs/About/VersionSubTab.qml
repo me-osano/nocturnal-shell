@@ -28,7 +28,7 @@ ColumnLayout {
     running: false
   }
 
-  property string latestVersion: GitHubService.latestVersion
+  property string latestVersion: "Unknown"
   property string currentVersion: UpdateService.currentVersion
   property string commitInfo: ""
 
@@ -76,41 +76,6 @@ ColumnLayout {
     return lines.join(sep);
   }
 
-  function getTelemetryPayload() {
-    const screens = Quickshell.screens || [];
-    const scales = CompositorService.displayScales || {};
-    const monitors = [];
-    for (let i = 0; i < screens.length; i++) {
-      const screen = screens[i];
-      const name = screen.name || "Unknown";
-      const scaleData = scales[name];
-      const scaleValue = (typeof scaleData === "object" && scaleData !== null) ? (scaleData.scale || 1.0) : (scaleData || 1.0);
-      monitors.push({
-                      width: screen.width || 0,
-                      height: screen.height || 0,
-                      scale: scaleValue
-                    });
-    }
-    return {
-      instanceId: TelemetryService.getInstanceId(),
-      version: UpdateService.currentVersion,
-      compositor: TelemetryService.getCompositorType(),
-      os: HostService.osPretty || "Unknown",
-      ramGb: Math.round((root.getModule("Memory")?.result?.total || 0) / root.giga),
-      monitors: monitors,
-      ui: {
-        scaleRatio: Settings.data.general.scaleRatio,
-        fontDefaultScale: Settings.data.ui.fontDefaultScale,
-        fontFixedScale: Settings.data.ui.fontFixedScale
-      }
-    };
-  }
-
-  function copyTelemetryData() {
-    const payload = getTelemetryPayload();
-    const json = JSON.stringify(payload, null, 2);
-    Quickshell.execDetached(["wl-copy", json]);
-    ToastService.showNotice("Privacy", "Telemetry data copied to clipboard");
   }
 
   function copyInfoToClipboard() {
@@ -859,42 +824,6 @@ ColumnLayout {
         Layout.fillWidth: !isLabel
         wrapMode: Text.Wrap
       }
-    }
-  }
-
-  // Telemetry Section
-  NDivider {
-    Layout.fillWidth: true
-    Layout.topMargin: Style.marginL
-  }
-
-  NHeader {
-    label: "Privacy"
-  }
-
-  NToggle {
-    Layout.fillWidth: true
-    label: "Send anonymous system information"
-    description: "Help improve Nocturnal by sharing anonymous system info (screen resolution, compositor, distro). Sent once at startup, no tracking, data auto-deleted after 30 days."
-    checked: Settings.data.general.telemetryEnabled
-    onToggled: checked => Settings.data.general.telemetryEnabled = checked
-  }
-
-  RowLayout {
-    spacing: Style.marginM
-
-    NButton {
-      icon: "eye"
-      text: "View data"
-      outlined: true
-      onClicked: root.copyTelemetryData()
-    }
-
-    NButton {
-      icon: "shield-lock"
-      text: "Privacy policy"
-      outlined: true
-      onClicked: Quickshell.execDetached(["xdg-open", "https://nocturnal.dev/privacy"])
     }
   }
 }
