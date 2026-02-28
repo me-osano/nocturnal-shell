@@ -105,10 +105,7 @@ Item {
       if (item.hasOwnProperty("screen")) {
         item.screen = widgetScreen;
       }
-
-      // Plugin support removed: plugin API injection no longer required
-      }
-
+      
       // Unregister any previous registration before registering the new instance
       root._unregister();
 
