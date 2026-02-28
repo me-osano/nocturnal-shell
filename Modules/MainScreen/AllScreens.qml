@@ -53,9 +53,12 @@ Item {
   // itself via ExclusionMode.Ignore/Auto.
   Repeater {
     model: Settings.data.bar.barType === "framed" ? ["top", "bottom", "left", "right"] : [Settings.getBarPositionForScreen(root.primaryScreen?.name)]
-    delegate: BarExclusionZone {
-      screen: root.primaryScreen
-      edge: modelData
+    delegate: Item {
+      required property var modelData
+      BarExclusionZone {
+        screen: root.primaryScreen
+        edge: modelData
+      }
     }
   }
 

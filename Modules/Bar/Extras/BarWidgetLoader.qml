@@ -54,19 +54,7 @@ Item {
   // Force reload counter - incremented when plugin widget registry changes
   property int reloadCounter: 0
 
-  // Listen for plugin widget registry changes to force reload
-  Connections {
-    target: BarWidgetRegistry
-    enabled: BarWidgetRegistry.isPluginWidget(root.widgetId)
-
-    function onPluginWidgetRegistryUpdated() {
-      // Force the loader to reload by toggling active
-      if (BarWidgetRegistry.hasWidget(root.widgetId)) {
-        root.reloadCounter++;
-        Logger.d("BarWidgetLoader", "Plugin widget registry updated, reloading:", root.widgetId);
-      }
-    }
-  }
+  // Connections block for pluginWidgetRegistryUpdated removed: signal does not exist
 
   Loader {
     id: loader
@@ -118,15 +106,7 @@ Item {
         item.screen = widgetScreen;
       }
 
-      // Inject plugin API for plugin widgets
-      // The API is fully populated (settings/translations already loaded) by PluginService
-      if (BarWidgetRegistry.isPluginWidget(widgetId)) {
-        var pluginId = widgetId.replace("plugin:", "");
-        var api = Logger.w("Stubs", "PluginService removed"); undefined.getPluginAPI(pluginId);
-        if (api && item.hasOwnProperty("pluginApi")) {
-          item.pluginApi = api;
-          Logger.d("BarWidgetLoader", "Injected plugin API for", widgetId);
-        }
+      // Plugin support removed: plugin API injection no longer required
       }
 
       // Unregister any previous registration before registering the new instance

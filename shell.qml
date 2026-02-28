@@ -97,8 +97,6 @@ ShellRoot {
           NightLightService.apply();
           HooksService.init();
           BluetoothService.init();
-          IdleInhibitorService.init();
-          IdleService.init();
           PowerProfileService.init();
           HostService.init();
           CustomButtonIPCService.init();

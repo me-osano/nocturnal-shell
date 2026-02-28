@@ -552,20 +552,7 @@ PanelWindow {
       readonly property real frameR: Settings.data.bar.frameRadius ?? 20
     }
 
-    // Native idle inhibitor — disabled for now as IdleInhibit type is not available
-    // The IdleInhibitorService handles inhibition via subprocess fallback (systemd-inhibit)
-    // Uncomment below when Quickshell provides IdleInhibit type
-    /*
-    IdleInhibit {
-      window: root
-      enabled: IdleInhibitorService.isInhibited
-
-      Component.onCompleted: {
-        IdleInhibitorService.nativeInhibitorAvailable = true;
-        Logger.d("IdleInhibit", "Native IdleInhibit active on screen:", root.screen?.name);
-      }
-    }
-    */
+    // IdleInhibitorService removed
   }
 
   // Centralized Keyboard Shortcuts

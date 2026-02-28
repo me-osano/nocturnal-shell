@@ -60,37 +60,5 @@ Item {
                  }
   }
 
-  BarPill {
-    id: pill
-
-    screen: root.screen
-    text: IdleInhibitorService.timeout == null ? "" : Time.formatVagueHumanReadableDuration(IdleInhibitorService.timeout)
-    oppositeDirection: BarService.getPillDirection(root)
-    customIconColor: Color.resolveColorKeyOptional(root.iconColorKey)
-    customTextColor: Color.resolveColorKeyOptional(root.textColorKey)
-    icon: IdleInhibitorService.isInhibited ? "keep-awake-on" : "keep-awake-off"
-    tooltipText: IdleInhibitorService.isInhibited ? "Keep Awake" : "Keep Awake"
-    onClicked: IdleInhibitorService.manualToggle()
-    onRightClicked: {
-      PanelService.showContextMenu(contextMenu, pill, screen);
-    }
-    forceOpen: IdleInhibitorService.timeout !== null
-    forceClose: IdleInhibitorService.timeout == null
-    onWheel: function (delta) {
-      var sign = delta > 0 ? 1 : -1;
-      // the offset makes scrolling down feel symmetrical to scrolling up
-      var timeout = IdleInhibitorService.timeout - (delta < 0 ? 60 : 0);
-      if (timeout == null || timeout < 600) {
-        delta = 60; // <= 10m, increment at 1m interval
-      } else if (timeout >= 600 && timeout < 1800) {
-        delta = 300; // >= 10m, increment at 5m interval
-      } else if (timeout >= 1800 && timeout < 3600) {
-        delta = 600; // >= 30m, increment at 10m interval
-      } else if (timeout >= 3600) {
-        delta = 1800; // > 1h, increment at 30m interval
-      }
-
-      IdleInhibitorService.changeTimeout(delta * sign);
-    }
-  }
+  // IdleInhibitorService removed
 }

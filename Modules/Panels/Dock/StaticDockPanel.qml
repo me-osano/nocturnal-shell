@@ -11,8 +11,8 @@ SmartPanel {
 
   readonly property string dockPosition: Settings.data.dock.position
   readonly property bool isVertical: dockPosition === "left" || dockPosition === "right"
-  readonly property bool hasBar: modelData && modelData.name ? (Settings.data.bar.monitors.includes(modelData.name) || (Settings.data.bar.monitors.length === 0)) : false
-  readonly property bool barAtSameEdge: hasBar && Settings.getBarPositionForScreen(modelData?.name) === dockPosition
+  readonly property bool hasBar: screen && screen.name ? (Settings.data.bar.monitors.includes(screen.name) || (Settings.data.bar.monitors.length === 0)) : false
+  readonly property bool barAtSameEdge: hasBar && Settings.getBarPositionForScreen(screen?.name) === dockPosition
   readonly property bool isFramed: Settings.data.bar.barType === "framed" && hasBar
   property bool isDockHovered: false
   property bool panelHovered: false

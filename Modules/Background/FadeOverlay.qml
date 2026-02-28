@@ -15,38 +15,5 @@ import qs.Services.Power
 Item {
   id: root
 
-  Loader {
-    active: IdleService.fadePending !== ""
-    asynchronous: false
-
-    sourceComponent: Variants {
-      model: Quickshell.screens
-      delegate: PanelWindow {
-        id: overlay
-        required property ShellScreen modelData
-        screen: modelData
-
-        color: Qt.rgba(0, 0, 0, 0)
-
-        WlrLayershell.layer: WlrLayer.Overlay
-        WlrLayershell.namespace: "nocturnal-fade-overlay"
-        WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
-        WlrLayershell.exclusionMode: ExclusionMode.Ignore
-        WlrLayershell.anchors {
-          top: true
-          bottom: true
-          left: true
-          right: true
-        }
-
-        ColorAnimation on color {
-          running: true
-          from: Qt.rgba(0, 0, 0, 0)
-          to: Qt.rgba(0, 0, 0, 1)
-          duration: IdleService.fadeDuration * 1000
-          easing.type: Easing.InQuad
-        }
-      }
-    }
-  }
+  // IdleService removed
 }
