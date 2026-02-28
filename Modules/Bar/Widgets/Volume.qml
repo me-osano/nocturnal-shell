@@ -136,8 +136,7 @@ Item {
     suffix: "%"
     forceOpen: displayMode === "alwaysShow"
     forceClose: displayMode === "alwaysHide"
-    tooltipText: "Output volume: {volume}%"()
-                         })
+    tooltipText: "Output volume: {volume}%"
 
     onWheel: function (delta) {
       // Hide tooltip as soon as the user starts scrolling to adjust volume
