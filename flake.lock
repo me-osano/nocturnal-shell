@@ -16,30 +16,31 @@
         "type": "github"
       }
     },
-    "nocturnal-qs": {
+    "quickshell": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1772227064,
-        "narHash": "sha256-f821ZSoGpa/aXrWq0gPpea9qBnX8KDyavGKkptz2Mog=",
-        "owner": "me-osano",
-        "repo": "nocturnal-qs",
-        "rev": "0741d27d2f7db567270f139c5d1684614ecf9863",
-        "type": "github"
+        "lastModified": 1766725085,
+        "narHash": "sha256-O2aMFdDUYJazFrlwL7aSIHbUSEm3ADVZjmf41uBJfHs=",
+        "ref": "refs/heads/master",
+        "rev": "41828c4180fb921df7992a5405f5ff05d2ac2fff",
+        "revCount": 715,
+        "type": "git",
+        "url": "https://git.outfoxxed.me/quickshell/quickshell"
       },
       "original": {
-        "owner": "me-osano",
-        "repo": "nocturnal-qs",
-        "type": "github"
+        "rev": "41828c4180fb921df7992a5405f5ff05d2ac2fff",
+        "type": "git",
+        "url": "https://git.outfoxxed.me/quickshell/quickshell"
       }
     },
     "root": {
       "inputs": {
         "nixpkgs": "nixpkgs",
-        "nocturnal-qs": "nocturnal-qs"
+        "quickshell": "quickshell"
       }
     }
   },

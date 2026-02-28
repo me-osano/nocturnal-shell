@@ -3,82 +3,73 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nocturnal-qs = {
-      url = "github:noctalia-dev/noctalia-qs";
+    quickshell = {
+      url = "git+https://git.outfoxxed.me/quickshell/quickshell?rev=41828c4180fb921df7992a5405f5ff05d2ac2fff";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      nocturnal-qs,
-      ...
-    }:
-    let
-      eachSystem = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.linux;
-      pkgsFor = eachSystem (
-        system:
+  outputs = {
+    self,
+    nixpkgs,
+    quickshell,
+    ...
+  }: let
+    eachSystem = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.linux;
+    pkgsFor = eachSystem (
+      system:
         nixpkgs.legacyPackages.${system}.appendOverlays [
           self.overlays.default
-          nocturnal-qs.overlays.default
+          quickshell.overlays.default
         ]
-      );
-    in
-    {
-      formatter = eachSystem (system: pkgsFor.${system}.nixfmt);
+    );
+  in {
+    formatter = eachSystem (system: pkgsFor.${system}.nixfmt);
 
-      packages = eachSystem (system: {
-        default = pkgsFor.${system}.nocturnal-shell;
-      });
+    packages = eachSystem (system: {
+      default = pkgsFor.${system}.nocturnal-shell;
+    });
 
-      overlays = {
-        default = final: prev: {
-          nocturnal-shell = final.callPackage ./nix/package.nix {
-            version =
-              let
-                mkDate =
-                  longDate:
-                  final.lib.concatStringsSep "-" [
-                    (builtins.substring 0 4 longDate)
-                    (builtins.substring 4 2 longDate)
-                    (builtins.substring 6 2 longDate)
-                  ];
-              in
-              mkDate (self.lastModifiedDate or "19700101") + "_" + (self.shortRev or "dirty");
-          };
+    overlays = {
+      default = final: prev: {
+        nocturnal-shell = final.callPackage ./nix/package.nix {
+          version = let
+            mkDate = longDate:
+              final.lib.concatStringsSep "-" [
+                (builtins.substring 0 4 longDate)
+                (builtins.substring 4 2 longDate)
+                (builtins.substring 6 2 longDate)
+              ];
+          in
+            mkDate (self.lastModifiedDate or "19700101") + "_" + (self.shortRev or "dirty");
         };
       };
-
-      devShells = eachSystem (system: {
-        default = pkgsFor.${system}.callPackage ./nix/shell.nix { };
-      });
-
-      homeModules.default =
-        {
-          pkgs,
-          lib,
-          ...
-        }:
-        {
-          imports = [ ./nix/home-module.nix ];
-          programs.nocturnal-shell.package =
-            lib.mkDefault
-              self.packages.${pkgs.stdenv.hostPlatform.system}.default;
-        };
-
-      nixosModules.default =
-        {
-          pkgs,
-          lib,
-          ...
-        }:
-        {
-          imports = [ ./nix/nixos-module.nix ];
-          services.nocturnal-shell.package =
-            lib.mkDefault
-              self.packages.${pkgs.stdenv.hostPlatform.system}.default;
-        };
     };
+
+    devShells = eachSystem (system: {
+      default = pkgsFor.${system}.callPackage ./nix/shell.nix {};
+    });
+
+    homeModules.default = {
+      pkgs,
+      lib,
+      ...
+    }: {
+      imports = [./nix/home-module.nix];
+      programs.nocturnal-shell.package =
+        lib.mkDefault
+        self.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    };
+
+    nixosModules.default = {
+      pkgs,
+      lib,
+      ...
+    }: {
+      imports = [./nix/nixos-module.nix];
+      services.nocturnal-shell.package =
+        lib.mkDefault
+        self.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    };
+  };
 }
