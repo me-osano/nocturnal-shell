@@ -203,6 +203,9 @@ PanelWindow {
   }
 
   // Blur behind the bar and open panels — attached to PanelWindow (required by BackgroundEffect API)
+  // Note: BackgroundEffect is not available in the current Quickshell version
+  // Commenting out for now — blur effect will not be applied until BackgroundEffect API is available
+  /*
   BackgroundEffect.blurRegion: Region {
     // ── Non-framed bar (simple/floating): single rectangle with bar corner states ──
     Region {
@@ -261,6 +264,7 @@ PanelWindow {
       bottomRightCorner: backgroundBlur.closingPanelBg ? backgroundBlur.closingPanelBg.bottomRightCornerState : CornerState.Normal
     }
   }
+  */
 
   // --------------------------------------
   // Container for all UI elements
