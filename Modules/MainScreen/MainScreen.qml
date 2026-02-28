@@ -409,22 +409,7 @@ PanelWindow {
       screen: root.screen
     }
 
-    // ----------------------------------------------
-    // Plugin panel slots
-    // ----------------------------------------------
-    PluginPanelSlot {
-      id: pluginPanel1
-      objectName: "pluginPanel1-" + (root.screen?.name || "unknown")
-      screen: root.screen
-      slotNumber: 1
-    }
-
-    PluginPanelSlot {
-      id: pluginPanel2
-      objectName: "pluginPanel2-" + (root.screen?.name || "unknown")
-      screen: root.screen
-      slotNumber: 2
-    }
+    // Plugin system has been disabled
 
     // ----------------------------------------------
     // Bar background placeholder - just for background positioning (actual bar content is in BarContentWindow)

@@ -49,8 +49,8 @@ ShellRoot {
     Logger.i("Shell", "---------------------------");
     Logger.i("Shell", "Nocturnal Hello!");
 
-    // Initialize plugin system early so Settings can validate plugin widgets
-    PluginRegistry.init();
+    // Plugin system has been disabled
+    // PluginRegistry.init();
   }
 
   Connections {
@@ -150,6 +150,8 @@ ShellRoot {
       // IPCService is a singleton, initialized via init() in deferred services block
 
       // Container for plugins Main.qml instances (must be in graphics scene)
+      // Plugin system has been disabled
+      /*
       Item {
         id: pluginContainer
         visible: false
@@ -159,6 +161,7 @@ ShellRoot {
           PluginService.screenDetector = screenDetector;
         }
       }
+      */
     }
   }
 
