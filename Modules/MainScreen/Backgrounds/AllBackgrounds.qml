@@ -38,60 +38,81 @@ Item {
 
       // Enable layer caching to prevent continuous re-rendering
       layer.enabled: true
-      opacity: Settings.data.ui.panelBackgroundOpacity
 
-      Shape {
-        id: unifiedBackgroundsShape
+      Item {
         anchors.fill: parent
-        preferredRendererType: Shape.CurveRenderer
-        enabled: false
+        opacity: Settings.data.ui.panelBackgroundOpacity
 
-        Component.onCompleted: {
-          Logger.d("AllBackgrounds", "AllBackgrounds initialized");
-        }
+        Shape {
+          id: unifiedBackgroundsShape
+          anchors.fill: parent
+          preferredRendererType: Shape.CurveRenderer
+          enabled: false
 
-        /**
-        *  Bar
-        */
-        BarBackground {
-          bar: root.bar
-          shapeContainer: unifiedBackgroundsShape
-          windowRoot: root.windowRoot
-          backgroundColor: panelBackgroundColor
-        }
-
-        /**
-        *  Panel Background Slots
-        *  Only 2 slots needed: one for currently open/opening panel, one for closing panel
-        */
-
-        // Slot 0: Currently open/opening panel
-        PanelBackground {
-          assignedPanel: {
-            var p = PanelService.backgroundSlotAssignments[0];
-            // Only render if this panel belongs to this screen
-            return (p && p.screen === root.windowRoot.screen) ? p : null;
+          Component.onCompleted: {
+            Logger.d("AllBackgrounds", "AllBackgrounds initialized");
           }
-          shapeContainer: unifiedBackgroundsShape
-          defaultBackgroundColor: panelBackgroundColor
+
+          /**
+          *  Panel Background Slots
+          *  Only 2 slots needed: one for currently open/opening panel, one for closing panel
+          */
+
+          // Slot 0: Currently open/opening panel
+          PanelBackground {
+            assignedPanel: {
+              var p = PanelService.backgroundSlotAssignments[0];
+              // Only render if this panel belongs to this screen
+              return (p && p.screen === root.windowRoot.screen) ? p : null;
+            }
+            shapeContainer: unifiedBackgroundsShape
+            defaultBackgroundColor: panelBackgroundColor
+          }
+
+          // Slot 1: Closing panel (during transitions)
+          PanelBackground {
+            assignedPanel: {
+              var p = PanelService.backgroundSlotAssignments[1];
+              // Only render if this panel belongs to this screen
+              return (p && p.screen === root.windowRoot.screen) ? p : null;
+            }
+            shapeContainer: unifiedBackgroundsShape
+            defaultBackgroundColor: panelBackgroundColor
+          }
         }
 
-        // Slot 1: Closing panel (during transitions)
-        PanelBackground {
-          assignedPanel: {
-            var p = PanelService.backgroundSlotAssignments[1];
-            // Only render if this panel belongs to this screen
-            return (p && p.screen === root.windowRoot.screen) ? p : null;
-          }
-          shapeContainer: unifiedBackgroundsShape
-          defaultBackgroundColor: panelBackgroundColor
+        // Apply shadow to the panel backgrounds
+        NDropShadow {
+          anchors.fill: parent
+          source: unifiedBackgroundsShape
         }
       }
 
-      // Apply shadow to the unified backgrounds
-      NDropShadow {
+      // Bar background with its own opacity when not using separate opacity mode
+      Item {
         anchors.fill: parent
-        source: unifiedBackgroundsShape
+
+        layer.enabled: true
+        opacity: Settings.data.bar.backgroundOpacity
+
+        Shape {
+          id: barBackgroundShape
+          anchors.fill: parent
+          preferredRendererType: Shape.CurveRenderer
+          enabled: false
+
+          BarBackground {
+            bar: root.bar
+            shapeContainer: barBackgroundShape
+            windowRoot: root.windowRoot
+            backgroundColor: panelBackgroundColor
+          }
+        }
+
+        NDropShadow {
+          anchors.fill: parent
+          source: barBackgroundShape
+        }
       }
     }
 
