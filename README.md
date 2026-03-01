@@ -13,7 +13,6 @@ A beautiful, minimal desktop shell for Wayland that actually gets out of your wa
 - 🔒 Lock screen
 - 🧩 Desktop widgets (clock, media player and more)
 - 💡 OSD for volume and brightness
-- 🪄 Setup wizard for first-time users
 - ⚡ Built on Quickshell for performance
 ---
 

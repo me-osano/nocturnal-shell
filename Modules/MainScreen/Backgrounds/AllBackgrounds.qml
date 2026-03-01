@@ -96,14 +96,14 @@ Item {
         opacity: Settings.data.bar.backgroundOpacity
 
         Shape {
-          id: barBackgroundShape
+          id: barBackgroundShapeUnified
           anchors.fill: parent
           preferredRendererType: Shape.CurveRenderer
           enabled: false
 
           BarBackground {
             bar: root.bar
-            shapeContainer: barBackgroundShape
+            shapeContainer: barBackgroundShapeUnified
             windowRoot: root.windowRoot
             backgroundColor: panelBackgroundColor
           }
@@ -111,7 +111,7 @@ Item {
 
         NDropShadow {
           anchors.fill: parent
-          source: barBackgroundShape
+          source: barBackgroundShapeUnified
         }
       }
     }

@@ -20,11 +20,6 @@ ColumnLayout {
       tabIndex: 0
       checked: subTabBar.currentIndex === 0
     }
-    NTabButton {
-      text: "Supporters"
-      tabIndex: 1
-      checked: subTabBar.currentIndex === 1
-    }
   }
 
   Item {
@@ -37,6 +32,5 @@ ColumnLayout {
     currentIndex: subTabBar.currentIndex
 
     VersionSubTab {}
-    SupportersSubTab {}
   }
 }

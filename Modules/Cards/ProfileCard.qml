@@ -42,7 +42,7 @@ NBox {
         font.weight: Style.fontWeightBold
       }
       NText {
-        text: "Uptime: {uptime}"
+        text: `Uptime: ${uptimeText}`
         pointSize: Style.fontSizeS
         color: Color.mOnSurfaceVariant
       }

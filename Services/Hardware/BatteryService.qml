@@ -254,11 +254,11 @@ Singleton {
     if (!device || device.changeRate === undefined) {
       return "";
     }
-    const rate = Math.abs(device.changeRate);
+    const rate = Math.abs(device.changeRate).toFixed(2);
     if (device.timeToFull > 0) {
-      return "Charging rate: {rate} W";
+      return `Charging rate: ${rate} W`;
     } else if (device.timeToEmpty > 0) {
-      return "Discharging rate: {rate} W";
+      return `Discharging rate: ${rate} W`;
     }
   }
 
@@ -269,9 +269,9 @@ Singleton {
     if (isPluggedIn(device)) {
       return "Plugged in";
     } else if (device.timeToFull > 0) {
-      return "Time until full: {time}";
+      return `Time until full: ${Time.formatVagueHumanReadableDuration(device.timeToFull)}`;
     } else if (device.timeToEmpty > 0) {
-      return "Time left: {time}";
+      return `Time left: ${Time.formatVagueHumanReadableDuration(device.timeToEmpty)}`;
     }
     return "Idle";
   }

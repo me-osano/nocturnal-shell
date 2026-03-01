@@ -161,18 +161,6 @@ ColumnLayout {
     Layout.fillWidth: true
 
     NButton {
-      icon: "wand"
-      text: "Setup wizard"
-      outlined: true
-      Layout.fillWidth: true
-      enabled: false
-      opacity: 0.5
-      onClicked: {
-        // Setup wizard has been removed
-      }
-    }
-
-    NButton {
       icon: "external-link"
       text: "Documentation"
       outlined: true

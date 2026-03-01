@@ -482,20 +482,7 @@ ColumnLayout {
     rowSpacing: Style.marginM
     columnSpacing: Style.marginM
 
-    columns: (changelogBtn.implicitWidth + copyBtn.implicitWidth + supportBtn.implicitWidth + 2 * columnSpacing) < root.width ? 3 : 1
-
-    NButton {
-      id: changelogBtn
-      icon: "sparkles"
-      text: "View changelog"
-      outlined: true
-      Layout.alignment: Qt.AlignHCenter
-      enabled: false
-      opacity: 0.5
-      onClicked: {
-        // Changelog feature has been removed
-      }
-    }
+    columns: (copyBtn.implicitWidth + supportBtn.implicitWidth + columnSpacing) < root.width ? 2 : 1
 
     NButton {
       id: copyBtn
