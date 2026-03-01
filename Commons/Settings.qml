@@ -454,9 +454,6 @@ Singleton {
             "id": "PowerProfile"
           },
           {
-            "id": "KeepAwake"
-          },
-          {
             "id": "NightLight"
           }
         ]

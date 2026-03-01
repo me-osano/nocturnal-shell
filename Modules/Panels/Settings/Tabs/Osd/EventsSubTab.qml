@@ -17,34 +17,31 @@ ColumnLayout {
     model: [
       {
         type: OSD.Type.Volume,
-        key: "types-volume"
+        label: "Volume",
+        description: "Show on volume changes"
       },
       {
         type: OSD.Type.InputVolume,
-        key: "types-input-volume"
+        label: "Input Volume",
+        description: "Show on input volume changes"
       },
       {
         type: OSD.Type.Brightness,
-        key: "types-brightness"
+        label: "Brightness",
+        description: "Show on brightness changes"
       },
       {
         type: OSD.Type.LockKey,
-        key: "types-lockkey"
+        label: "Lock Key",
+        description: "Show when caps lock or num lock is toggled"
       }
     ]
     delegate: NCheckbox {
       required property var modelData
       Layout.fillWidth: true
-      function humanizeKey(key) {
-        if (!key) return "";
-        var s = key.replace(/^.*\./, "");
-        s = s.replace(/[-_]/g, " ");
-        s = s.replace(/\b\w/g, function(m) { return m.toUpperCase(); });
-        return s;
-      }
 
-      label: humanizeKey("panels.osd." + modelData.key + "-label")
-      description: humanizeKey("panels.osd." + modelData.key + "-description")
+      label: modelData.label
+      description: modelData.description
       checked: (Settings.data.osd.enabledTypes || []).includes(modelData.type)
       onToggled: checked => {
                    if (checked) {

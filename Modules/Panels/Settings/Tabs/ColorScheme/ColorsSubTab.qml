@@ -74,14 +74,6 @@ ColumnLayout {
     cacheVersion++;
   }
 
-  function humanizeKey(key) {
-    if (!key) return "";
-    var s = key.replace(/^.*\./, "");
-    s = s.replace(/[-_]/g, " ");
-    s = s.replace(/\b\w/g, function(m) { return m.toUpperCase(); });
-    return s;
-  }
-
   Connections {
     target: ColorSchemeService
     function onSchemesChanged() {
@@ -279,7 +271,7 @@ ColumnLayout {
       NText {
         width: parent.width
         wrapMode: Text.WordWrap
-        text: humanizeKey("panels.color-scheme.method-description." + Settings.data.colorSchemes.generationMethod)
+        text: "Color scheme will be generated from the current wallpaper"
         pointSize: Style.fontSizeS
         color: Color.mOnSurfaceVariant
       }
@@ -314,7 +306,7 @@ ColumnLayout {
     enabled: !Settings.data.colorSchemes.useWallpaperColors
 
     NHeader {
-      label: humanizeKey("panels.color-scheme.predefined-title")
+      label: "Predefined Themes"
       description: "Choose from a collection of predefined color schemes."
       Layout.fillWidth: true
     }

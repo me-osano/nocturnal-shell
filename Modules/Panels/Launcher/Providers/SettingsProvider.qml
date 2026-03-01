@@ -35,16 +35,6 @@ Item {
     Logger.d("SettingsProvider", "Initialized");
   }
 
-  function humanizeKey(key) {
-    if (!key) return "";
-    // Remove namespace prefixes like 'panels.settings.'
-    var s = key.replace(/^.*\./, "");
-    // Replace dashes/underscores with spaces and title-case
-    s = s.replace(/[-_]/g, " ");
-    s = s.replace(/\b\w/g, function(m) { return m.toUpperCase(); });
-    return s;
-  }
-
   // Check if this provider handles the command
   function handleCommand(searchText) {
     return searchText.startsWith(">settings");
@@ -88,21 +78,19 @@ Item {
         return [];
     }
 
-    // Build searchable items with resolved translations
+    // Build searchable items
     let items = [];
     for (let j = 0; j < searchIndex.length; j++) {
       const entry = searchIndex[j];
       items.push({
-                   "labelKey": entry.labelKey,
-                   "descriptionKey": entry.descriptionKey,
+                   "label": entry.label || "",
+                   "description": entry.description || "",
                    "widget": entry.widget,
                    "tab": entry.tab,
                    "tabLabel": entry.tabLabel,
                    "subTab": entry.subTab,
                    "subTabLabel": entry.subTabLabel || null,
-                    "label": humanizeKey(entry.labelKey),
-                    "description": entry.descriptionKey ? humanizeKey(entry.descriptionKey) : "",
-                    "subTabName": entry.subTabLabel ? humanizeKey(entry.subTabLabel) : ""
+                   "subTabName": entry.subTabLabel || ""
                  });
     }
 
@@ -121,7 +109,7 @@ Item {
     for (let i = 0; i < results.length; i++) {
       const entry = results[i].obj;
       const score = results[i].score;
-      const tabName = humanizeKey(entry.tabLabel);
+      const tabName = entry.tabLabel || "";
       const subTabName = entry.subTabName || "";
       const breadcrumb = subTabName ? (tabName + " › " + subTabName) : tabName;
 
@@ -145,9 +133,9 @@ Item {
 
     for (var j = 0; j < searchIndex.length; j++) {
       var entry = searchIndex[j];
-      var label = humanizeKey(entry.labelKey);
-      var tabName = humanizeKey(entry.tabLabel);
-      var subTabName = entry.subTabLabel ? humanizeKey(entry.subTabLabel) : "";
+      var label = entry.label || "";
+      var tabName = entry.tabLabel || "";
+      var subTabName = entry.subTabLabel || "";
       var breadcrumb = subTabName ? (tabName + " › " + subTabName) : tabName;
 
       launcherItems.push({
@@ -159,8 +147,8 @@ Item {
                            "_score": 0,
                            "provider": root,
                            "onActivate": createActivateHandler({
-                                                                 "labelKey": entry.labelKey,
-                                                                 "descriptionKey": entry.descriptionKey,
+                                                                 "label": entry.label,
+                                                                 "description": entry.description,
                                                                  "widget": entry.widget,
                                                                  "tab": entry.tab,
                                                                  "tabLabel": entry.tabLabel,

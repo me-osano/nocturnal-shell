@@ -1,2144 +1,1991 @@
 [
   {
-    "labelKey": "panels.audio.devices-output-device-label",
-    "descriptionKey": "panels.audio.devices-output-device-description",
+    "label": "Output device",
+    "description": "Select the desired audio output device.",
     "widget": "NLabel",
-    "tab": 14,
-    "tabLabel": "panels.audio.title",
+    "tab": 13,
+    "tabLabel": "Audio",
     "subTab": 1,
-    "subTabLabel": "common.devices"
+    "subTabLabel": "Devices"
   },
   {
-    "labelKey": "panels.audio.devices-input-device-label",
-    "descriptionKey": "panels.audio.devices-input-device-description",
+    "label": "Input device",
+    "description": "Select the desired audio input device.",
     "widget": "NLabel",
-    "tab": 14,
-    "tabLabel": "panels.audio.title",
+    "tab": 13,
+    "tabLabel": "Audio",
     "subTab": 1,
-    "subTabLabel": "common.devices"
+    "subTabLabel": "Devices"
   },
   {
-    "labelKey": "panels.audio.media-primary-player-label",
-    "descriptionKey": "panels.audio.media-primary-player-description",
+    "label": "Primary player",
+    "description": "Enter a keyword to identify your main player.",
     "widget": "NTextInput",
-    "tab": 14,
-    "tabLabel": "panels.audio.title",
+    "tab": 13,
+    "tabLabel": "Audio",
     "subTab": 2,
-    "subTabLabel": "common.media"
+    "subTabLabel": "Media"
   },
   {
-    "labelKey": "panels.audio.media-excluded-player-label",
-    "descriptionKey": "panels.audio.media-excluded-player-description",
+    "label": "Excluded player",
+    "description": "Add keywords for players you want the system to ignore. Each keyword should be on a new line.",
     "widget": "NTextInputButton",
-    "tab": 14,
-    "tabLabel": "panels.audio.title",
+    "tab": 13,
+    "tabLabel": "Audio",
     "subTab": 2,
-    "subTabLabel": "common.media"
+    "subTabLabel": "Media"
   },
   {
-    "labelKey": "panels.audio.visualizer-type-label",
-    "descriptionKey": "panels.audio.visualizer-type-description",
+    "label": "Visualization type",
+    "description": "Choose a visualization type for media playback.",
     "widget": "NComboBox",
-    "tab": 14,
-    "tabLabel": "panels.audio.title",
+    "tab": 13,
+    "tabLabel": "Audio",
     "subTab": 3,
-    "subTabLabel": "common.visualizer"
+    "subTabLabel": "Visualizer"
   },
   {
-    "labelKey": "panels.audio.media-frame-rate-label",
-    "descriptionKey": "panels.audio.media-frame-rate-description",
+    "label": "Frame rate",
+    "description": "Higher rates are smoother but use more resources.",
     "widget": "NComboBox",
-    "tab": 14,
-    "tabLabel": "panels.audio.title",
+    "tab": 13,
+    "tabLabel": "Audio",
     "subTab": 3,
-    "subTabLabel": "common.visualizer"
+    "subTabLabel": "Visualizer"
   },
   {
-    "labelKey": "panels.osd.types-volume-label",
-    "descriptionKey": "panels.audio.volumes-output-volume-description",
+    "label": "Output volume",
+    "description": "System-wide volume level.",
     "widget": "NValueSlider",
-    "tab": 14,
-    "tabLabel": "panels.audio.title",
+    "tab": 13,
+    "tabLabel": "Audio",
     "subTab": 0,
-    "subTabLabel": "common.volumes"
+    "subTabLabel": "Volumes"
   },
   {
-    "labelKey": "panels.audio.volumes-mute-output-label",
-    "descriptionKey": "panels.audio.volumes-mute-output-description",
+    "label": "Mute audio output",
+    "description": "Mute the system's main audio output.",
     "widget": "NToggle",
-    "tab": 14,
-    "tabLabel": "panels.audio.title",
+    "tab": 13,
+    "tabLabel": "Audio",
     "subTab": 0,
-    "subTabLabel": "common.volumes"
+    "subTabLabel": "Volumes"
   },
   {
-    "labelKey": "panels.audio.volumes-volume-feedback-label",
-    "descriptionKey": "panels.audio.volumes-volume-feedback-description",
+    "label": "Play volume feedback sound",
+    "description": "Play a feedback sound when adjusting volume.",
     "widget": "NToggle",
-    "tab": 14,
-    "tabLabel": "panels.audio.title",
+    "tab": 13,
+    "tabLabel": "Audio",
     "subTab": 0,
-    "subTabLabel": "common.volumes"
+    "subTabLabel": "Volumes"
   },
   {
-    "labelKey": "panels.audio.volumes-feedback-sound-file-label",
-    "descriptionKey": "panels.audio.volumes-feedback-sound-file-description",
+    "label": "Volume feedback sound file",
+    "description": "Path to the sound file played when changing volume.",
     "widget": "NLabel",
-    "tab": 14,
-    "tabLabel": "panels.audio.title",
+    "tab": 13,
+    "tabLabel": "Audio",
     "subTab": 0,
-    "subTabLabel": "common.volumes"
+    "subTabLabel": "Volumes"
   },
   {
-    "labelKey": "panels.osd.types-input-volume-label",
-    "descriptionKey": "panels.audio.volumes-input-volume-description",
+    "label": "Input volume",
+    "description": "Microphone input volume level.",
     "widget": "NValueSlider",
-    "tab": 14,
-    "tabLabel": "panels.audio.title",
+    "tab": 13,
+    "tabLabel": "Audio",
     "subTab": 0,
-    "subTabLabel": "common.volumes"
+    "subTabLabel": "Volumes"
   },
   {
-    "labelKey": "panels.audio.volumes-mute-input-label",
-    "descriptionKey": "panels.audio.volumes-mute-input-description",
+    "label": "Mute audio input",
+    "description": "Mute the default audio input (microphone).",
     "widget": "NToggle",
-    "tab": 14,
-    "tabLabel": "panels.audio.title",
+    "tab": 13,
+    "tabLabel": "Audio",
     "subTab": 0,
-    "subTabLabel": "common.volumes"
+    "subTabLabel": "Volumes"
   },
   {
-    "labelKey": "panels.audio.volumes-step-size-label",
-    "descriptionKey": "panels.audio.volumes-step-size-description",
+    "label": "Volume step size",
+    "description": "Adjust the step size for volume changes (scroll wheel, keyboard shortcuts).",
     "widget": "NSpinBox",
-    "tab": 14,
-    "tabLabel": "panels.audio.title",
+    "tab": 13,
+    "tabLabel": "Audio",
     "subTab": 0,
-    "subTabLabel": "common.volumes"
+    "subTabLabel": "Volumes"
   },
   {
-    "labelKey": "panels.audio.volumes-volume-overdrive-label",
-    "descriptionKey": "panels.audio.volumes-volume-overdrive-description",
+    "label": "Allow volume overdrive",
+    "description": "Allow raising volume above 100%. May not be supported by all hardware.",
     "widget": "NToggle",
-    "tab": 14,
-    "tabLabel": "panels.audio.title",
+    "tab": 13,
+    "tabLabel": "Audio",
     "subTab": 0,
-    "subTabLabel": "common.volumes"
+    "subTabLabel": "Volumes"
   },
   {
-    "labelKey": "panels.bar.appearance-position-label",
-    "descriptionKey": "panels.bar.appearance-position-description",
+    "label": "Bar position",
+    "description": "Choose where to place the bar on the screen.",
     "widget": "NComboBox",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.appearance-density-label",
-    "descriptionKey": "panels.bar.appearance-density-description",
+    "label": "Bar density",
+    "description": "Adjust the bar's padding for a compact or spacious look.",
     "widget": "NComboBox",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.appearance-type-label",
-    "descriptionKey": "panels.bar.appearance-type-description",
+    "label": "Bar type",
+    "description": "Choose the style of the bar: Simple, Floating or Framed.",
     "widget": "NComboBox",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "common.display-mode",
-    "descriptionKey": "panels.bar.appearance-display-mode-description",
+    "label": "Display mode",
+    "description": "Choose when the bar is visible.",
     "widget": "NComboBox",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.appearance-use-separate-opacity-label",
-    "descriptionKey": "panels.bar.appearance-use-separate-opacity-description",
+    "label": "Use separate bar opacity",
+    "description": "Enable to use a separate opacity value for the bar background.",
     "widget": "NToggle",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.appearance-background-opacity-label",
-    "descriptionKey": "panels.bar.appearance-background-opacity-description",
+    "label": "Bar background opacity",
+    "description": "Set the background opacity specifically for the bar.",
     "widget": "NValueSlider",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.appearance-font-scale-label",
-    "descriptionKey": "panels.bar.appearance-font-scale-description",
+    "label": "Font scale",
+    "description": "Adjust the font size scale for text displayed in the bar.",
     "widget": "NValueSlider",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.appearance-widget-spacing-label",
-    "descriptionKey": "panels.bar.appearance-widget-spacing-description",
+    "label": "Widget spacing",
+    "description": "Adjust the spacing between each widget in the bar.",
     "widget": "NValueSlider",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.appearance-content-padding-label",
-    "descriptionKey": "panels.bar.appearance-content-padding-description",
+    "label": "Content padding",
+    "description": "Adjust the padding between bar edges and widgets.",
     "widget": "NValueSlider",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.appearance-show-outline-label",
-    "descriptionKey": "panels.bar.appearance-show-outline-description",
+    "label": "Show widget outlines",
+    "description": "Displays a visible border around every widget.",
     "widget": "NToggle",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.appearance-show-capsule-label",
-    "descriptionKey": "panels.bar.appearance-show-capsule-description",
+    "label": "Show capsule",
+    "description": "Show widget backgrounds.",
     "widget": "NToggle",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.appearance-capsule-opacity-label",
-    "descriptionKey": "panels.bar.appearance-capsule-opacity-description",
+    "label": "Capsule opacity",
+    "description": "Set the opacity level for widget backgrounds when capsule is shown.",
     "widget": "NValueSlider",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.appearance-hide-on-overview-label",
-    "descriptionKey": "panels.bar.appearance-hide-on-overview-description",
+    "label": "Hide bar on overview",
+    "description": "Hide the bar and close panels when the compositor overview is active.",
     "widget": "NToggle",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.appearance-outer-corners-label",
-    "descriptionKey": "panels.bar.appearance-outer-corners-description",
+    "label": "Outer corners",
+    "description": "Display outwardly curved corners on the bar.",
     "widget": "NToggle",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.appearance-frame-settings-label",
-    "descriptionKey": "panels.bar.appearance-frame-settings-description",
+    "label": "Frame Settings",
+    "description": "Adjust frame thickness and inner corner radius",
     "widget": "NLabel",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.appearance-frame-thickness",
-    "descriptionKey": null,
+    "label": "Thickness",
+    "description": "",
     "widget": "NValueSlider",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.appearance-frame-radius",
-    "descriptionKey": null,
+    "label": "Inner Radius",
+    "description": "",
     "widget": "NValueSlider",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.appearance-margins-label",
-    "descriptionKey": "panels.bar.appearance-margins-description",
+    "label": "Margins",
+    "description": "Adjust the margins around the floating bar.",
     "widget": "NLabel",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.appearance-margins-vertical",
-    "descriptionKey": null,
+    "label": "Vertical",
+    "description": "",
     "widget": "NValueSlider",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.appearance-margins-horizontal",
-    "descriptionKey": null,
+    "label": "Horizontal",
+    "description": "",
     "widget": "NValueSlider",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.appearance-auto-hide-delay-label",
-    "descriptionKey": "panels.bar.appearance-auto-hide-delay-description",
+    "label": "Hide Delay",
+    "description": "Time before bar hides after mouse leaves",
     "widget": "NValueSlider",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.appearance-auto-show-delay-label",
-    "descriptionKey": "panels.bar.appearance-auto-show-delay-description",
+    "label": "Show Delay",
+    "description": "Time before bar shows when mouse enters edge",
     "widget": "NValueSlider",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.appearance-show-on-workspace-switch-label",
-    "descriptionKey": "panels.bar.appearance-show-on-workspace-switch-description",
+    "label": "Show bar on workspace switch",
+    "description": "Automatically show the bar briefly when the workspace changes.",
     "widget": "NToggle",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.bar.monitor-override-settings",
-    "descriptionKey": "panels.bar.monitor-override-settings-description",
+    "label": "Override global settings",
+    "description": "Use custom settings for this monitor.",
     "widget": "NToggle",
     "tab": 4,
-    "tabLabel": "panels.bar.title",
+    "tabLabel": "Bar",
     "subTab": 2,
-    "subTabLabel": "common.monitors"
+    "subTabLabel": "Monitors"
   },
   {
-    "labelKey": "tooltips.switch-to-dark-mode",
-    "descriptionKey": "panels.color-scheme.dark-mode-switch-description",
+    "label": "Dark Mode",
+    "description": "Switches to a darker theme for easier viewing at night.",
     "widget": "NToggle",
     "tab": 2,
-    "tabLabel": "panels.color-scheme.title",
+    "tabLabel": "Color Scheme",
     "subTab": 0,
-    "subTabLabel": "common.colors"
+    "subTabLabel": "Colors"
   },
   {
-    "labelKey": "panels.color-scheme.dark-mode-mode-label",
-    "descriptionKey": "panels.color-scheme.dark-mode-mode-description",
+    "label": "Dark Mode schedule",
+    "description": "Enables automatic switching between Light and Dark Mode.",
     "widget": "NComboBox",
     "tab": 2,
-    "tabLabel": "panels.color-scheme.title",
+    "tabLabel": "Color Scheme",
     "subTab": 0,
-    "subTabLabel": "common.colors"
+    "subTabLabel": "Colors"
   },
   {
-    "labelKey": "panels.display.night-light-manual-schedule-label",
-    "descriptionKey": "panels.display.night-light-manual-schedule-description",
+    "label": "Manual scheduling",
+    "description": "Set custom times for sunrise and sunset.",
     "widget": "NLabel",
     "tab": 2,
-    "tabLabel": "panels.color-scheme.title",
+    "tabLabel": "Color Scheme",
     "subTab": 0,
-    "subTabLabel": "common.colors"
+    "subTabLabel": "Colors"
   },
   {
-    "labelKey": "panels.color-scheme.color-source-use-wallpaper-colors-label",
-    "descriptionKey": "panels.color-scheme.color-source-use-wallpaper-colors-description",
+    "label": "Use wallpaper colors",
+    "description": "Generate color schemes from your wallpaper. Automatically extracts colors to create a cohesive theme.",
     "widget": "NToggle",
     "tab": 2,
-    "tabLabel": "panels.color-scheme.title",
+    "tabLabel": "Color Scheme",
     "subTab": 0,
-    "subTabLabel": "common.colors"
+    "subTabLabel": "Colors"
   },
   {
-    "labelKey": "panels.color-scheme.wallpaper-monitor-source-label",
-    "descriptionKey": "panels.color-scheme.wallpaper-monitor-source-description",
+    "label": "Color generation source",
+    "description": "Select which monitor to use for extracting wallpaper colors.",
     "widget": "NComboBox",
     "tab": 2,
-    "tabLabel": "panels.color-scheme.title",
+    "tabLabel": "Color Scheme",
     "subTab": 0,
-    "subTabLabel": "common.colors"
+    "subTabLabel": "Colors"
   },
   {
-    "labelKey": "panels.color-scheme.wallpaper-method-label",
-    "descriptionKey": "panels.color-scheme.wallpaper-method-description",
+    "label": "Palette generation method",
+    "description": "Choose your favorite palette generation method.",
     "widget": "NComboBox",
     "tab": 2,
-    "tabLabel": "panels.color-scheme.title",
+    "tabLabel": "Color Scheme",
     "subTab": 0,
-    "subTabLabel": "common.colors"
+    "subTabLabel": "Colors"
   },
   {
-    "labelKey": "panels.color-scheme.templates-misc-user-templates-label",
-    "descriptionKey": "panels.color-scheme.templates-misc-user-templates-description",
+    "label": "Enable user templates",
+    "description": "Only enable if you know what you are doing \u2014 refer to our online documentation.",
     "widget": "NCheckbox",
     "tab": 2,
-    "tabLabel": "panels.color-scheme.title",
+    "tabLabel": "Color Scheme",
     "subTab": 1,
-    "subTabLabel": "common.templates"
+    "subTabLabel": "Templates"
   },
   {
-    "labelKey": "common.bluetooth",
-    "descriptionKey": null,
+    "label": "Bluetooth",
+    "description": "",
     "widget": "NToggle",
-    "tab": 16,
-    "tabLabel": "panels.connections.title",
+    "tab": 15,
+    "tabLabel": "Connections",
     "subTab": 1,
-    "subTabLabel": "common.bluetooth"
+    "subTabLabel": "Bluetooth"
   },
   {
-    "labelKey": "bluetooth.panel.connected-devices",
-    "descriptionKey": null,
+    "label": "Connected devices",
+    "description": "",
     "widget": "NLabel",
-    "tab": 16,
-    "tabLabel": "panels.connections.title",
+    "tab": 15,
+    "tabLabel": "Connections",
     "subTab": 1,
-    "subTabLabel": "common.bluetooth"
+    "subTabLabel": "Bluetooth"
   },
   {
-    "labelKey": "bluetooth.panel.paired-devices",
-    "descriptionKey": null,
+    "label": "Paired devices",
+    "description": "",
     "widget": "NLabel",
-    "tab": 16,
-    "tabLabel": "panels.connections.title",
+    "tab": 15,
+    "tabLabel": "Connections",
     "subTab": 1,
-    "subTabLabel": "common.bluetooth"
+    "subTabLabel": "Bluetooth"
   },
   {
-    "labelKey": "bluetooth.panel.available-devices",
-    "descriptionKey": null,
+    "label": "Available devices",
+    "description": "",
     "widget": "NLabel",
-    "tab": 16,
-    "tabLabel": "panels.connections.title",
+    "tab": 15,
+    "tabLabel": "Connections",
     "subTab": 1,
-    "subTabLabel": "common.bluetooth"
+    "subTabLabel": "Bluetooth"
   },
   {
-    "labelKey": "panels.connections.hide-unnamed-devices-label",
-    "descriptionKey": "panels.connections.hide-unnamed-devices-description",
+    "label": "Hide unnamed devices",
+    "description": "Hide devices that appear only as Bluetooth addresses.",
     "widget": "NToggle",
-    "tab": 16,
-    "tabLabel": "panels.connections.title",
+    "tab": 15,
+    "tabLabel": "Connections",
     "subTab": 1,
-    "subTabLabel": "common.bluetooth"
+    "subTabLabel": "Bluetooth"
   },
   {
-    "labelKey": "panels.connections.disable-discoverability-label",
-    "descriptionKey": "panels.connections.disable-discoverability-description",
+    "label": "Disable device visibility",
+    "description": "Hide your device from nearby Bluetooth devices.",
     "widget": "NToggle",
-    "tab": 16,
-    "tabLabel": "panels.connections.title",
+    "tab": 15,
+    "tabLabel": "Connections",
     "subTab": 1,
-    "subTabLabel": "common.bluetooth"
+    "subTabLabel": "Bluetooth"
   },
   {
-    "labelKey": "panels.connections.bluetooth-rssi-polling-label",
-    "descriptionKey": "panels.connections.bluetooth-rssi-polling-description",
+    "label": "Bluetooth signal polling",
+    "description": "Periodically sample RSSI for connected devices via bluetoothctl. May not be available for all devices; uses minimal resources when enabled.",
     "widget": "NToggle",
-    "tab": 16,
-    "tabLabel": "panels.connections.title",
+    "tab": 15,
+    "tabLabel": "Connections",
     "subTab": 1,
-    "subTabLabel": "common.bluetooth"
+    "subTabLabel": "Bluetooth"
   },
   {
-    "labelKey": "panels.connections.bluetooth-rssi-polling-interval-label",
-    "descriptionKey": "panels.connections.bluetooth-rssi-polling-interval-description",
+    "label": "Polling interval",
+    "description": "Configure how often to update signal strength for connected devices.",
     "widget": "NSpinBox",
-    "tab": 16,
-    "tabLabel": "panels.connections.title",
+    "tab": 15,
+    "tabLabel": "Connections",
     "subTab": 1,
-    "subTabLabel": "common.bluetooth"
+    "subTabLabel": "Bluetooth"
   },
   {
-    "labelKey": "toast.airplane-mode.title",
-    "descriptionKey": null,
+    "label": "Airplane Mode",
+    "description": "",
     "widget": "NToggle",
-    "tab": 16,
-    "tabLabel": "panels.connections.title",
+    "tab": 15,
+    "tabLabel": "Connections",
     "subTab": 0,
-    "subTabLabel": "common.wifi"
+    "subTabLabel": "Wi Fi"
   },
   {
-    "labelKey": "common.wifi",
-    "descriptionKey": null,
+    "label": "Wi-Fi",
+    "description": "",
     "widget": "NToggle",
-    "tab": 16,
-    "tabLabel": "panels.connections.title",
+    "tab": 15,
+    "tabLabel": "Connections",
     "subTab": 0,
-    "subTabLabel": "common.wifi"
+    "subTabLabel": "Wi Fi"
   },
   {
-    "labelKey": "common.position",
-    "descriptionKey": "panels.control-center.position-description",
+    "label": "Position",
+    "description": "Choose where the control center panel appears when opened.",
     "widget": "NComboBox",
     "tab": 7,
-    "tabLabel": "panels.control-center.title",
+    "tabLabel": "Control Center",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.control-center.system-monitor-disk-path-label",
-    "descriptionKey": "panels.control-center.system-monitor-disk-path-description",
+    "label": "System monitor disk path",
+    "description": "Select which disk mount point the system monitor card in the control center should monitor.",
     "widget": "NComboBox",
     "tab": 7,
-    "tabLabel": "panels.control-center.title",
+    "tabLabel": "Control Center",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.desktop-widgets.enabled-label",
-    "descriptionKey": "panels.desktop-widgets.enabled-description",
+    "label": "Enable desktop widgets",
+    "description": "Enable or disable desktop widgets entirely.",
     "widget": "NToggle",
     "tab": 6,
-    "tabLabel": "panels.desktop-widgets.title",
+    "tabLabel": "Desktop Widgets",
     "subTab": null
   },
   {
-    "labelKey": "panels.desktop-widgets.overview-enabled-label",
-    "descriptionKey": "panels.desktop-widgets.overview-enabled-description",
+    "label": "Show in overview",
+    "description": "Show desktop widgets while the compositor overview is open.",
     "widget": "NToggle",
     "tab": 6,
-    "tabLabel": "panels.desktop-widgets.title",
+    "tabLabel": "Desktop Widgets",
     "subTab": null
   },
   {
-    "labelKey": "panels.display.monitors-backlight-device-label",
-    "descriptionKey": "panels.display.monitors-backlight-device-description",
+    "label": "Backlight device",
+    "description": "Select a backlight device for this output.",
     "widget": "NComboBox",
-    "tab": 15,
-    "tabLabel": "panels.display.title",
+    "tab": 14,
+    "tabLabel": "Display",
     "subTab": 0,
-    "subTabLabel": "common.brightness"
+    "subTabLabel": "Brightness"
   },
   {
-    "labelKey": "panels.display.monitors-brightness-step-label",
-    "descriptionKey": "panels.display.monitors-brightness-step-description",
+    "label": "Brightness step size",
+    "description": "Adjust the step size for brightness changes (scroll wheel and keyboard shortcuts).",
     "widget": "NSpinBox",
-    "tab": 15,
-    "tabLabel": "panels.display.title",
+    "tab": 14,
+    "tabLabel": "Display",
     "subTab": 0,
-    "subTabLabel": "common.brightness"
+    "subTabLabel": "Brightness"
   },
   {
-    "labelKey": "panels.display.monitors-enforce-minimum-label",
-    "descriptionKey": "panels.display.monitors-enforce-minimum-description",
+    "label": "Enforce minimum brightness (1%)",
+    "description": "Solves the problem of backlight completely turning off on some displays at 0% brightness.",
     "widget": "NToggle",
-    "tab": 15,
-    "tabLabel": "panels.display.title",
+    "tab": 14,
+    "tabLabel": "Display",
     "subTab": 0,
-    "subTabLabel": "common.brightness"
+    "subTabLabel": "Brightness"
   },
   {
-    "labelKey": "panels.display.monitors-external-brightness-label",
-    "descriptionKey": "panels.display.monitors-external-brightness-description",
+    "label": "External brightness support",
+    "description": "Enable DDCUtil support for controlling brightness on external displays via DDC/CI protocol.",
     "widget": "NToggle",
-    "tab": 15,
-    "tabLabel": "panels.display.title",
+    "tab": 14,
+    "tabLabel": "Display",
     "subTab": 0,
-    "subTabLabel": "common.brightness"
+    "subTabLabel": "Brightness"
   },
   {
-    "labelKey": "panels.display.night-light-enable-label",
-    "descriptionKey": "panels.display.night-light-enable-description",
+    "label": "Enable Night Light",
+    "description": "Apply a warm color filter to reduce blue light emission.",
     "widget": "NToggle",
-    "tab": 15,
-    "tabLabel": "panels.display.title",
+    "tab": 14,
+    "tabLabel": "Display",
     "subTab": 1,
-    "subTabLabel": "common.night-light"
+    "subTabLabel": "Night Light"
   },
   {
-    "labelKey": "panels.display.night-light-temperature-night",
-    "descriptionKey": "panels.display.night-light-temperature-night-description",
+    "label": "Night",
+    "description": "Controls the temperature during nighttime.",
     "widget": "NLabel",
-    "tab": 15,
-    "tabLabel": "panels.display.title",
+    "tab": 14,
+    "tabLabel": "Display",
     "subTab": 1,
-    "subTabLabel": "common.night-light"
+    "subTabLabel": "Night Light"
   },
   {
-    "labelKey": "panels.display.night-light-temperature-day",
-    "descriptionKey": "panels.display.night-light-temperature-day-description",
+    "label": "Day",
+    "description": "Controls the temperature during daytime.",
     "widget": "NLabel",
-    "tab": 15,
-    "tabLabel": "panels.display.title",
+    "tab": 14,
+    "tabLabel": "Display",
     "subTab": 1,
-    "subTabLabel": "common.night-light"
+    "subTabLabel": "Night Light"
   },
   {
-    "labelKey": "panels.display.night-light-auto-schedule-label",
-    "descriptionKey": "panels.display.night-light-auto-schedule-description",
+    "label": "Automatic scheduling",
+    "description": "Based on the sunset and sunrise time in <i>{location}</i> \u2014 recommended.",
     "widget": "NToggle",
-    "tab": 15,
-    "tabLabel": "panels.display.title",
+    "tab": 14,
+    "tabLabel": "Display",
     "subTab": 1,
-    "subTabLabel": "common.night-light"
+    "subTabLabel": "Night Light"
   },
   {
-    "labelKey": "panels.display.night-light-force-activation-label",
-    "descriptionKey": "panels.display.night-light-force-activation-description",
+    "label": "Force activation",
+    "description": "Ignores the schedule and applies the night filter immediately.",
     "widget": "NToggle",
-    "tab": 15,
-    "tabLabel": "panels.display.title",
+    "tab": 14,
+    "tabLabel": "Display",
     "subTab": 1,
-    "subTabLabel": "common.night-light"
+    "subTabLabel": "Night Light"
   },
   {
-    "labelKey": "panels.dock.enabled-label",
-    "descriptionKey": "panels.dock.enabled-description",
+    "label": "Enable dock",
+    "description": "Show or hide the dock entirely.",
     "widget": "NToggle",
     "tab": 5,
-    "tabLabel": "panels.dock.title",
+    "tabLabel": "Dock",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.dock.appearance-position-label",
-    "descriptionKey": "panels.dock.appearance-position-description",
+    "label": "Dock style",
+    "description": "Choose between a floating pill or a static bar attached to the edge.",
     "widget": "NComboBox",
     "tab": 5,
-    "tabLabel": "panels.dock.title",
+    "tabLabel": "Dock",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.dock.appearance-type-label",
-    "descriptionKey": "panels.dock.appearance-type-description",
+    "label": "Display",
+    "description": "Choose how the dock behaves.",
     "widget": "NComboBox",
     "tab": 5,
-    "tabLabel": "panels.dock.title",
+    "tabLabel": "Dock",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.display.title",
-    "descriptionKey": "panels.dock.appearance-display-description",
-    "widget": "NComboBox",
-    "tab": 5,
-    "tabLabel": "panels.dock.title",
-    "subTab": 0,
-    "subTabLabel": "common.appearance"
-  },
-  {
-    "labelKey": "panels.dock.appearance-sit-on-frame-label",
-    "descriptionKey": "panels.dock.appearance-sit-on-frame-description",
+    "label": "Dock sits on frame",
+    "description": "Align the dock inside the frame border instead of sitting on top.",
     "widget": "NToggle",
     "tab": 5,
-    "tabLabel": "panels.dock.title",
+    "tabLabel": "Dock",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.dock.appearance-frame-indicator-label",
-    "descriptionKey": "panels.dock.appearance-frame-indicator-description",
+    "label": "Frame dock indicator",
+    "description": "Show a small indicator on the frame when the dock is hidden.",
     "widget": "NToggle",
     "tab": 5,
-    "tabLabel": "panels.dock.title",
+    "tabLabel": "Dock",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.osd.background-opacity-label",
-    "descriptionKey": "panels.dock.appearance-background-opacity-description",
+    "label": "Background opacity",
+    "description": "Adjust the dock's background opacity.",
     "widget": "NValueSlider",
     "tab": 5,
-    "tabLabel": "panels.dock.title",
+    "tabLabel": "Dock",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.dock.appearance-dead-opacity-label",
-    "descriptionKey": "panels.dock.appearance-dead-opacity-description",
+    "label": "Dead opacity",
+    "description": "Adjust the opacity of app icons that are not running.",
     "widget": "NValueSlider",
     "tab": 5,
-    "tabLabel": "panels.dock.title",
+    "tabLabel": "Dock",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.dock.appearance-floating-distance-label",
-    "descriptionKey": "panels.dock.appearance-floating-distance-description",
+    "label": "Dock floating distance",
+    "description": "Set the distance between the dock and the edge of the screen.",
     "widget": "NValueSlider",
     "tab": 5,
-    "tabLabel": "panels.dock.title",
+    "tabLabel": "Dock",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.dock.appearance-icon-size-label",
-    "descriptionKey": "panels.dock.appearance-icon-size-description",
+    "label": "Dock size",
+    "description": "Adjust the overall size of the dock.",
     "widget": "NValueSlider",
     "tab": 5,
-    "tabLabel": "panels.dock.title",
+    "tabLabel": "Dock",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.dock.appearance-hide-show-speed-label",
-    "descriptionKey": "panels.dock.appearance-hide-show-speed-description",
+    "label": "Hide/show speed",
+    "description": "Adjust the speed of the dock hide/show animation.",
     "widget": "NValueSlider",
     "tab": 5,
-    "tabLabel": "panels.dock.title",
+    "tabLabel": "Dock",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.dock.appearance-inactive-indicators-label",
-    "descriptionKey": "panels.dock.appearance-inactive-indicators-description",
+    "label": "Running indicators",
+    "description": "Display indicator pills for all apps, not just the currently active one.",
     "widget": "NToggle",
     "tab": 5,
-    "tabLabel": "panels.dock.title",
+    "tabLabel": "Dock",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.dock.appearance-pinned-static-label",
-    "descriptionKey": "panels.dock.appearance-pinned-static-description",
+    "label": "Static pinned apps",
+    "description": "Always push pinned app icons to the left in static order.",
     "widget": "NToggle",
     "tab": 5,
-    "tabLabel": "panels.dock.title",
+    "tabLabel": "Dock",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.dock.appearance-group-apps-label",
-    "descriptionKey": "panels.dock.appearance-group-apps-description",
+    "label": "Group same apps",
+    "description": "Group multiple windows from the same app into one dock entry.",
     "widget": "NToggle",
     "tab": 5,
-    "tabLabel": "panels.dock.title",
+    "tabLabel": "Dock",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.dock.appearance-group-click-action-label",
-    "descriptionKey": "panels.dock.appearance-group-click-action-description",
+    "label": "Grouped app click action",
+    "description": "Choose what left-click does for grouped apps.",
     "widget": "NComboBox",
     "tab": 5,
-    "tabLabel": "panels.dock.title",
+    "tabLabel": "Dock",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.dock.appearance-group-context-menu-mode-label",
-    "descriptionKey": "panels.dock.appearance-group-context-menu-mode-description",
+    "label": "Grouped app menu mode",
+    "description": "Choose how the context menu behaves for grouped apps.",
     "widget": "NComboBox",
     "tab": 5,
-    "tabLabel": "panels.dock.title",
+    "tabLabel": "Dock",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.dock.appearance-group-indicator-style-label",
-    "descriptionKey": "panels.dock.appearance-group-indicator-style-description",
+    "label": "Grouped indicator style",
+    "description": "Choose how grouped running indicators display focused window state.",
     "widget": "NComboBox",
     "tab": 5,
-    "tabLabel": "panels.dock.title",
+    "tabLabel": "Dock",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.dock.monitors-only-same-monitor-label",
-    "descriptionKey": "panels.dock.monitors-only-same-monitor-description",
+    "label": "Only apps from same monitor",
+    "description": "Show only apps from the monitor where the dock is located.",
     "widget": "NToggle",
     "tab": 5,
-    "tabLabel": "panels.dock.title",
+    "tabLabel": "Dock",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.dock.appearance-colorize-icons-label",
-    "descriptionKey": "panels.dock.appearance-colorize-icons-description",
+    "label": "Colorize icons",
+    "description": "Apply theme colors to dock app icons (non-focused apps only).",
     "widget": "NToggle",
     "tab": 5,
-    "tabLabel": "panels.dock.title",
+    "tabLabel": "Dock",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.dock.appearance-show-launcher-icon-label",
-    "descriptionKey": "panels.dock.appearance-show-launcher-icon-description",
+    "label": "Show app launcher",
+    "description": "Show the application launcher icon in the dock.",
     "widget": "NToggle",
     "tab": 5,
-    "tabLabel": "panels.dock.title",
+    "tabLabel": "Dock",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.dock.appearance-launcher-position-label",
-    "descriptionKey": "panels.dock.appearance-launcher-position-description",
+    "label": "Launcher position",
+    "description": "Choose where the launcher icon appears in the dock.",
     "widget": "NComboBox",
     "tab": 5,
-    "tabLabel": "panels.dock.title",
+    "tabLabel": "Dock",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.general.profile-picture-label",
-    "descriptionKey": "panels.general.profile-picture-description",
+    "label": "Profile picture",
+    "description": "Your profile picture that appears throughout the interface.",
     "widget": "NTextInputButton",
     "tab": 0,
-    "tabLabel": "common.general",
+    "tabLabel": "General",
     "subTab": null
   },
   {
-    "labelKey": "panels.general.fonts-default-label",
-    "descriptionKey": "panels.general.fonts-default-description",
+    "label": "Default font",
+    "description": "Main font used throughout the interface.",
     "widget": "NSearchableComboBox",
     "tab": 0,
-    "tabLabel": "common.general",
+    "tabLabel": "General",
     "subTab": null
   },
   {
-    "labelKey": "panels.general.fonts-monospace-label",
-    "descriptionKey": "panels.general.fonts-monospace-description",
+    "label": "Monospaced font",
+    "description": "Monospaced font used for numbers and stats display.",
     "widget": "NSearchableComboBox",
     "tab": 0,
-    "tabLabel": "common.general",
+    "tabLabel": "General",
     "subTab": null
   },
   {
-    "labelKey": "panels.general.fonts-default-scale-label",
-    "descriptionKey": "panels.general.fonts-default-scale-description",
+    "label": "Default font size",
+    "description": "Increase or decrease the size of the standard text.",
     "widget": "NValueSlider",
     "tab": 0,
-    "tabLabel": "common.general",
+    "tabLabel": "General",
     "subTab": null
   },
   {
-    "labelKey": "panels.general.fonts-monospace-scale-label",
-    "descriptionKey": "panels.general.fonts-monospace-scale-description",
+    "label": "Monospaced font size",
+    "description": "Increase or decrease the size of the monospaced text.",
     "widget": "NValueSlider",
     "tab": 0,
-    "tabLabel": "common.general",
+    "tabLabel": "General",
     "subTab": null
   },
   {
-    "labelKey": "panels.general.reverse-scrolling-label",
-    "descriptionKey": "panels.general.reverse-scrolling-description",
+    "label": "Reverse scrolling",
+    "description": "Reverse the interpreted scroll direction",
     "widget": "NToggle",
     "tab": 0,
-    "tabLabel": "common.general",
+    "tabLabel": "General",
     "subTab": null
   },
   {
-    "labelKey": "panels.general.keybinds-title",
-    "descriptionKey": "panels.general.keybinds-description",
+    "label": "Navigation keybinds",
+    "description": "Configure global navigation keys for panels and launcher.",
     "widget": "NLabel",
     "tab": 0,
-    "tabLabel": "common.general",
+    "tabLabel": "General",
     "subTab": null
   },
   {
-    "labelKey": "panels.hooks.system-hooks-enable-label",
-    "descriptionKey": "panels.hooks.system-hooks-enable-description",
+    "label": "Enable hooks",
+    "description": "Enable or disable all hook commands.",
     "widget": "NToggle",
-    "tab": 20,
-    "tabLabel": "panels.hooks.title",
+    "tab": 18,
+    "tabLabel": "Hooks",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.hooks.info-parameters-label",
-    "descriptionKey": "panels.hooks.info-parameters-description",
+    "label": "Available parameters",
+    "description": "\u2022 Wallpaper hook: $1 = wallpaper path, $2 = screen name<br>\u2022 Theme toggle hook: $1 = true/false (Dark Mode state)<br>\u2022 Screen lock/unlock hooks: No parameters<br>\u2022 Performance mode hooks: No parameters<br>\u2022 Session hook: $1 = action (shutdown/reboot)",
     "widget": "NLabel",
-    "tab": 20,
-    "tabLabel": "panels.hooks.title",
+    "tab": 18,
+    "tabLabel": "Hooks",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.hooks.nocturnal-started-label",
-    "descriptionKey": "panels.hooks.nocturnal-started-description",
+    "label": "Nocturnal Started",
+    "description": "Command to execute when Nocturnal has finished loading.",
     "widget": "HookRow",
-    "tab": 20,
-    "tabLabel": "panels.hooks.title",
+    "tab": 18,
+    "tabLabel": "Hooks",
     "subTab": 1,
-    "subTabLabel": "panels.hooks.title"
+    "subTabLabel": "Hooks"
   },
   {
-    "labelKey": "panels.hooks.wallpaper-changed-label",
-    "descriptionKey": "panels.hooks.wallpaper-changed-description",
+    "label": "Wallpaper changed",
+    "description": "Command to be executed when wallpaper changes.",
     "widget": "HookRow",
-    "tab": 20,
-    "tabLabel": "panels.hooks.title",
+    "tab": 18,
+    "tabLabel": "Hooks",
     "subTab": 1,
-    "subTabLabel": "panels.hooks.title"
+    "subTabLabel": "Hooks"
   },
   {
-    "labelKey": "panels.hooks.theme-changed-label",
-    "descriptionKey": "panels.hooks.theme-changed-description",
+    "label": "Theme changed",
+    "description": "Command to be executed when theme toggles between Dark and Light Mode.",
     "widget": "HookRow",
-    "tab": 20,
-    "tabLabel": "panels.hooks.title",
+    "tab": 18,
+    "tabLabel": "Hooks",
     "subTab": 1,
-    "subTabLabel": "panels.hooks.title"
+    "subTabLabel": "Hooks"
   },
   {
-    "labelKey": "panels.hooks.screen-lock-label",
-    "descriptionKey": "panels.hooks.screen-lock-description",
+    "label": "Screen locked",
+    "description": "Command to be executed when the screen is locked.",
     "widget": "HookRow",
-    "tab": 20,
-    "tabLabel": "panels.hooks.title",
+    "tab": 18,
+    "tabLabel": "Hooks",
     "subTab": 1,
-    "subTabLabel": "panels.hooks.title"
+    "subTabLabel": "Hooks"
   },
   {
-    "labelKey": "panels.hooks.screen-unlock-label",
-    "descriptionKey": "panels.hooks.screen-unlock-description",
+    "label": "Screen unlocked",
+    "description": "Command to be executed when the lock screen is unlocked.",
     "widget": "HookRow",
-    "tab": 20,
-    "tabLabel": "panels.hooks.title",
+    "tab": 18,
+    "tabLabel": "Hooks",
     "subTab": 1,
-    "subTabLabel": "panels.hooks.title"
+    "subTabLabel": "Hooks"
   },
   {
-    "labelKey": "panels.hooks.performance-mode-enabled-label",
-    "descriptionKey": "panels.hooks.performance-mode-enabled-description",
+    "label": "Performance mode enabled",
+    "description": "Command to be executed when Nocturnal Performance Mode is enabled.",
     "widget": "HookRow",
-    "tab": 20,
-    "tabLabel": "panels.hooks.title",
+    "tab": 18,
+    "tabLabel": "Hooks",
     "subTab": 1,
-    "subTabLabel": "panels.hooks.title"
+    "subTabLabel": "Hooks"
   },
   {
-    "labelKey": "panels.hooks.performance-mode-disabled-label",
-    "descriptionKey": "panels.hooks.performance-mode-disabled-description",
+    "label": "Performance mode disabled",
+    "description": "Command to be executed when Nocturnal Performance Mode is disabled.",
     "widget": "HookRow",
-    "tab": 20,
-    "tabLabel": "panels.hooks.title",
+    "tab": 18,
+    "tabLabel": "Hooks",
     "subTab": 1,
-    "subTabLabel": "panels.hooks.title"
+    "subTabLabel": "Hooks"
   },
   {
-    "labelKey": "panels.hooks.session-label",
-    "descriptionKey": "panels.hooks.session-description",
+    "label": "Session end",
+    "description": "Command to be executed before shutdown or reboot. Receives action type as $1 (shutdown/reboot).",
     "widget": "HookRow",
-    "tab": 20,
-    "tabLabel": "panels.hooks.title",
+    "tab": 18,
+    "tabLabel": "Hooks",
     "subTab": 1,
-    "subTabLabel": "panels.hooks.title"
+    "subTabLabel": "Hooks"
   },
   {
-    "labelKey": "panels.idle.enable-label",
-    "descriptionKey": "panels.idle.enable-description",
-    "widget": "NToggle",
-    "tab": 13,
-    "tabLabel": "common.idle",
-    "subTab": 0,
-    "subTabLabel": "panels.idle.tab-behavior"
-  },
-  {
-    "labelKey": "panels.idle.status-label",
-    "descriptionKey": "panels.idle.status-description",
-    "widget": "NLabel",
-    "tab": 13,
-    "tabLabel": "common.idle",
-    "subTab": 0,
-    "subTabLabel": "panels.idle.tab-behavior"
-  },
-  {
-    "labelKey": "panels.idle.timeouts-label",
-    "descriptionKey": "panels.idle.timeouts-description",
-    "widget": "NLabel",
-    "tab": 13,
-    "tabLabel": "common.idle",
-    "subTab": 0,
-    "subTabLabel": "panels.idle.tab-behavior"
-  },
-  {
-    "labelKey": "panels.idle.screen-off-label",
-    "descriptionKey": "panels.idle.screen-off-description",
-    "widget": "NSpinBox",
-    "tab": 13,
-    "tabLabel": "common.idle",
-    "subTab": 0,
-    "subTabLabel": "panels.idle.tab-behavior"
-  },
-  {
-    "labelKey": "panels.idle.lock-label",
-    "descriptionKey": "panels.idle.lock-description",
-    "widget": "NSpinBox",
-    "tab": 13,
-    "tabLabel": "common.idle",
-    "subTab": 0,
-    "subTabLabel": "panels.idle.tab-behavior"
-  },
-  {
-    "labelKey": "common.suspend",
-    "descriptionKey": "panels.idle.suspend-description",
-    "widget": "NSpinBox",
-    "tab": 13,
-    "tabLabel": "common.idle",
-    "subTab": 0,
-    "subTabLabel": "panels.idle.tab-behavior"
-  },
-  {
-    "labelKey": "panels.idle.fade-duration-label",
-    "descriptionKey": "panels.idle.fade-duration-description",
-    "widget": "NSpinBox",
-    "tab": 13,
-    "tabLabel": "common.idle",
-    "subTab": 0,
-    "subTabLabel": "panels.idle.tab-behavior"
-  },
-  {
-    "labelKey": "panels.idle.custom-label",
-    "descriptionKey": "panels.idle.custom-description",
-    "widget": "NLabel",
-    "tab": 13,
-    "tabLabel": "common.idle",
-    "subTab": 1,
-    "subTabLabel": "panels.idle.tab-custom"
-  },
-  {
-    "labelKey": "panels.idle.custom-entry-timeout",
-    "descriptionKey": null,
-    "widget": "NSpinBox",
-    "tab": 13,
-    "tabLabel": "common.idle",
-    "subTab": 1,
-    "subTabLabel": "panels.idle.tab-custom"
-  },
-  {
-    "labelKey": "panels.idle.custom-entry-command",
-    "descriptionKey": null,
-    "widget": "NTextInput",
-    "tab": 13,
-    "tabLabel": "common.idle",
-    "subTab": 1,
-    "subTabLabel": "panels.idle.tab-custom"
-  },
-  {
-    "labelKey": "panels.launcher.settings-clipboard-history-label",
-    "descriptionKey": "panels.launcher.settings-clipboard-history-description",
+    "label": "Enable clipboard history",
+    "description": "Access previously copied items from the launcher.",
     "widget": "NToggle",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 1,
-    "subTabLabel": "common.clipboard"
+    "subTabLabel": "Clipboard"
   },
   {
-    "labelKey": "panels.launcher.settings-clip-preview-label",
-    "descriptionKey": "panels.launcher.settings-clip-preview-description",
+    "label": "Enable clip preview",
+    "description": "Show a preview of the clipboard content when using the >clip command.",
     "widget": "NToggle",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 1,
-    "subTabLabel": "common.clipboard"
+    "subTabLabel": "Clipboard"
   },
   {
-    "labelKey": "panels.launcher.settings-clip-wrap-text-label",
-    "descriptionKey": "panels.launcher.settings-clip-wrap-text-description",
+    "label": "Wrap clipboard text",
+    "description": "Wrap text in the clipboard list instead of truncating it.",
     "widget": "NToggle",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 1,
-    "subTabLabel": "common.clipboard"
+    "subTabLabel": "Clipboard"
   },
   {
-    "labelKey": "panels.launcher.settings-auto-paste-label",
-    "descriptionKey": "panels.launcher.settings-auto-paste-description",
+    "label": "Auto paste",
+    "description": "Automatically paste the selected clipboard item. Requires wtype.",
     "widget": "NToggle",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 1,
-    "subTabLabel": "common.clipboard"
+    "subTabLabel": "Clipboard"
   },
   {
-    "labelKey": "panels.launcher.settings-clipboard-watch-text-label",
-    "descriptionKey": "panels.launcher.settings-clipboard-watch-text-description",
+    "label": "Text watch command",
+    "description": "Full command string passed to wl-paste for text changes. (requires restart)",
     "widget": "NTextInput",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 1,
-    "subTabLabel": "common.clipboard"
+    "subTabLabel": "Clipboard"
   },
   {
-    "labelKey": "panels.launcher.settings-clipboard-watch-image-label",
-    "descriptionKey": "panels.launcher.settings-clipboard-watch-image-description",
+    "label": "Image watch command",
+    "description": "Full command string passed to wl-paste for image changes. (requires restart)",
     "widget": "NTextInput",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 1,
-    "subTabLabel": "common.clipboard"
+    "subTabLabel": "Clipboard"
   },
   {
-    "labelKey": "panels.launcher.settings-use-app2unit-label",
-    "descriptionKey": "panels.launcher.settings-use-app2unit-description",
+    "label": "Use App2Unit to launch applications",
+    "description": "Uses an alternative launch method to better manage app processes and prevent issues.",
     "widget": "NToggle",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 2,
-    "subTabLabel": "common.execute"
+    "subTabLabel": "Execute"
   },
   {
-    "labelKey": "panels.launcher.settings-terminal-command-label",
-    "descriptionKey": "panels.launcher.settings-terminal-command-description",
+    "label": "Terminal command",
+    "description": "Command to launch a terminal. E.g. 'kitty -e' or 'gnome-terminal --'.",
     "widget": "NTextInput",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 2,
-    "subTabLabel": "common.execute"
+    "subTabLabel": "Execute"
   },
   {
-    "labelKey": "panels.launcher.settings-custom-launch-prefix-enabled-label",
-    "descriptionKey": "panels.launcher.settings-custom-launch-prefix-enabled-description",
+    "label": "Enable custom launch prefix",
+    "description": "Use a custom prefix for launching applications instead of the default method.",
     "widget": "NToggle",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 2,
-    "subTabLabel": "common.execute"
+    "subTabLabel": "Execute"
   },
   {
-    "labelKey": "panels.launcher.settings-custom-launch-prefix-label",
-    "descriptionKey": "panels.launcher.settings-custom-launch-prefix-description",
+    "label": "Custom launch prefix",
+    "description": "Prefix commands with a custom launcher (e.g. 'runapp' for systemd integration).",
     "widget": "NTextInput",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 2,
-    "subTabLabel": "common.execute"
+    "subTabLabel": "Execute"
   },
   {
-    "labelKey": "panels.launcher.settings-annotation-tool-label",
-    "descriptionKey": "panels.launcher.settings-annotation-tool-description",
+    "label": "Annotation tool",
+    "description": "Command to run when clicking the annotate button in clipboard history. The image will be piped to this command.",
     "widget": "NTextInput",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 2,
-    "subTabLabel": "common.execute"
+    "subTabLabel": "Execute"
   },
   {
-    "labelKey": "panels.launcher.settings-overlay-layer-label",
-    "descriptionKey": "panels.launcher.settings-overlay-layer-description",
+    "label": "Show above fullscreen",
+    "description": "Display the launcher on the overlay layer, above fullscreen windows. When enabled, the launcher will not attach to the bar.",
     "widget": "NToggle",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.launcher.settings-view-mode-label",
-    "descriptionKey": "panels.launcher.settings-view-mode-description",
+    "label": "View mode",
+    "description": "Choose the layout for the launcher entries.",
     "widget": "NComboBox",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.launcher.settings-density-label",
-    "descriptionKey": "panels.launcher.settings-density-description",
+    "label": "Density",
+    "description": "Adjust the size of application icons and the density of the launcher.",
     "widget": "NComboBox",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.launcher.settings-show-categories-label",
-    "descriptionKey": "panels.launcher.settings-show-categories-description",
+    "label": "Show categories",
+    "description": "Show category tabs for filtering applications.",
     "widget": "NToggle",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.launcher.settings-icon-mode-label",
-    "descriptionKey": "panels.launcher.settings-icon-mode-description",
+    "label": "Use native icons",
+    "description": "Use native system icons instead of Tabler icons.",
     "widget": "NToggle",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.launcher.settings-show-icon-background-label",
-    "descriptionKey": "panels.launcher.settings-show-icon-background-description",
+    "label": "Show icon background",
+    "description": "Show a rounded rectangle background behind icons.",
     "widget": "NToggle",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.launcher.settings-sort-by-usage-label",
-    "descriptionKey": "panels.launcher.settings-sort-by-usage-description",
+    "label": "Sort by most used",
+    "description": "When enabled, frequently launched apps appear first in the list.",
     "widget": "NToggle",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.launcher.settings-enable-settings-search-label",
-    "descriptionKey": "panels.launcher.settings-enable-settings-search-description",
+    "label": "Enable settings search",
+    "description": "Show settings results when searching in the launcher.",
     "widget": "NToggle",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.launcher.settings-enable-windows-search-label",
-    "descriptionKey": "panels.launcher.settings-enable-windows-search-description",
+    "label": "Enable windows search",
+    "description": "Search and focus active windows.",
     "widget": "NToggle",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.launcher.settings-enable-session-search-label",
-    "descriptionKey": "panels.launcher.settings-enable-session-search-description",
+    "label": "Enable session search",
+    "description": "Show session actions (lock, shutdown, reboot, etc.) when searching in the launcher.",
     "widget": "NToggle",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.launcher.settings-ignore-mouse-input-label",
-    "descriptionKey": "panels.launcher.settings-ignore-mouse-input-description",
+    "label": "Ignore mouse input",
+    "description": "Disable mouse interaction and scrollwheel in the launcher.",
     "widget": "NToggle",
     "tab": 8,
-    "tabLabel": "panels.launcher.title",
+    "tabLabel": "Launcher",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.lock-screen.clock-style-label",
-    "descriptionKey": "panels.lock-screen.clock-style-description",
+    "label": "Clock style",
+    "description": "Choose the visual style of the clock on the lock screen.",
     "widget": "NComboBox",
     "tab": 11,
-    "tabLabel": "panels.lock-screen.title",
+    "tabLabel": "Lock Screen",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.lock-screen.clock-format-label",
-    "descriptionKey": "panels.lock-screen.clock-format-description",
+    "label": "Clock format",
+    "description": "Customize the clock format using date/time syntax tokens.",
     "widget": "NTextInput",
     "tab": 11,
-    "tabLabel": "panels.lock-screen.title",
+    "tabLabel": "Lock Screen",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.lock-screen.password-chars-label",
-    "descriptionKey": "panels.lock-screen.password-chars-description",
+    "label": "Random password icons",
+    "description": "Cute icons used to hide your password.",
     "widget": "NToggle",
     "tab": 11,
-    "tabLabel": "panels.lock-screen.title",
+    "tabLabel": "Lock Screen",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.lock-screen.compact-lockscreen-label",
-    "descriptionKey": "panels.lock-screen.compact-lockscreen-description",
+    "label": "Compact lock screen",
+    "description": "Show only the login input and system controls, hiding weather and media widgets.",
     "widget": "NToggle",
     "tab": 11,
-    "tabLabel": "panels.lock-screen.title",
+    "tabLabel": "Lock Screen",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.lock-screen.lock-screen-animations-label",
-    "descriptionKey": "panels.lock-screen.lock-screen-animations-description",
+    "label": "Lockscreen animations",
+    "description": "Enable or disable lockscreen animations.",
     "widget": "NToggle",
     "tab": 11,
-    "tabLabel": "panels.lock-screen.title",
+    "tabLabel": "Lock Screen",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.lock-screen.lock-screen-blur-strength-label",
-    "descriptionKey": "panels.lock-screen.lock-screen-blur-strength-description",
+    "label": "Lock screen blur strength",
+    "description": "Applies a blur effect to the lock screen wallpaper.",
     "widget": "NValueSlider",
     "tab": 11,
-    "tabLabel": "panels.lock-screen.title",
+    "tabLabel": "Lock Screen",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.lock-screen.lock-screen-tint-strength-label",
-    "descriptionKey": "panels.lock-screen.lock-screen-tint-strength-description",
+    "label": "Lock screen tint strength",
+    "description": "Applies a tint overlay to the lock screen wallpaper.",
     "widget": "NValueSlider",
     "tab": 11,
-    "tabLabel": "panels.lock-screen.title",
+    "tabLabel": "Lock Screen",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.lock-screen.lock-on-suspend-label",
-    "descriptionKey": "panels.lock-screen.lock-on-suspend-description",
+    "label": "Lock on suspend",
+    "description": "Automatically lock the screen when suspending the system.",
     "widget": "NToggle",
     "tab": 11,
-    "tabLabel": "panels.lock-screen.title",
+    "tabLabel": "Lock Screen",
     "subTab": 1,
-    "subTabLabel": "common.behavior"
+    "subTabLabel": "Behavior"
   },
   {
-    "labelKey": "panels.lock-screen.auto-start-auth-label",
-    "descriptionKey": "panels.lock-screen.auto-start-auth-description",
+    "label": "Auto-start authentication",
+    "description": "Automatically starts fingerprint authentication without requiring a key press or button click.",
     "widget": "NToggle",
     "tab": 11,
-    "tabLabel": "panels.lock-screen.title",
+    "tabLabel": "Lock Screen",
     "subTab": 1,
-    "subTabLabel": "common.behavior"
+    "subTabLabel": "Behavior"
   },
   {
-    "labelKey": "panels.lock-screen.allow-password-with-fprintd-label",
-    "descriptionKey": "panels.lock-screen.allow-password-with-fprintd-description",
+    "label": "Allow password login with fprintd",
+    "description": "When fprintd (fingerprint authentication) is active, this option lets you still login using your password instead of a fingerprint",
     "widget": "NToggle",
     "tab": 11,
-    "tabLabel": "panels.lock-screen.title",
+    "tabLabel": "Lock Screen",
     "subTab": 1,
-    "subTabLabel": "common.behavior"
+    "subTabLabel": "Behavior"
   },
   {
-    "labelKey": "panels.lock-screen.show-session-buttons-label",
-    "descriptionKey": "panels.lock-screen.show-session-buttons-description",
+    "label": "Power controls",
+    "description": "Allow access to power settings from the lock screen.",
     "widget": "NToggle",
     "tab": 11,
-    "tabLabel": "panels.lock-screen.title",
+    "tabLabel": "Lock Screen",
     "subTab": 1,
-    "subTabLabel": "common.behavior"
+    "subTabLabel": "Behavior"
   },
   {
-    "labelKey": "panels.lock-screen.show-hibernate-label",
-    "descriptionKey": "panels.lock-screen.show-hibernate-description",
+    "label": "Show hibernate",
+    "description": "Show the option 'hibernate' in the power controls.",
     "widget": "NToggle",
     "tab": 11,
-    "tabLabel": "panels.lock-screen.title",
+    "tabLabel": "Lock Screen",
     "subTab": 1,
-    "subTabLabel": "common.behavior"
+    "subTabLabel": "Behavior"
   },
   {
-    "labelKey": "panels.session-menu.enable-countdown-label",
-    "descriptionKey": "panels.session-menu.enable-countdown-description",
+    "label": "Enable countdown timer",
+    "description": "Show a countdown timer before executing power actions.",
     "widget": "NToggle",
     "tab": 11,
-    "tabLabel": "panels.lock-screen.title",
+    "tabLabel": "Lock Screen",
     "subTab": 1,
-    "subTabLabel": "common.behavior"
+    "subTabLabel": "Behavior"
   },
   {
-    "labelKey": "panels.session-menu.countdown-duration-label",
-    "descriptionKey": "panels.session-menu.countdown-duration-description",
+    "label": "Countdown duration",
+    "description": "Set how long the countdown timer lasts before executing power actions.",
     "widget": "NValueSlider",
     "tab": 11,
-    "tabLabel": "panels.lock-screen.title",
+    "tabLabel": "Lock Screen",
     "subTab": 1,
-    "subTabLabel": "common.behavior"
+    "subTabLabel": "Behavior"
   },
   {
-    "labelKey": "panels.notifications.duration-respect-expire-label",
-    "descriptionKey": "panels.notifications.duration-respect-expire-description",
+    "label": "Respect expire timeout",
+    "description": "Use the expire timeout set in the notification.",
     "widget": "NToggle",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 1,
-    "subTabLabel": "common.duration"
+    "subTabLabel": "Duration"
   },
   {
-    "labelKey": "panels.notifications.duration-low-urgency-label",
-    "descriptionKey": "panels.notifications.duration-low-urgency-description",
+    "label": "Low urgency",
+    "description": "How long low priority notifications stay visible.",
     "widget": "NValueSlider",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 1,
-    "subTabLabel": "common.duration"
+    "subTabLabel": "Duration"
   },
   {
-    "labelKey": "panels.notifications.duration-normal-urgency-label",
-    "descriptionKey": "panels.notifications.duration-normal-urgency-description",
+    "label": "Normal urgency",
+    "description": "How long normal priority notifications stay visible.",
     "widget": "NValueSlider",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 1,
-    "subTabLabel": "common.duration"
+    "subTabLabel": "Duration"
   },
   {
-    "labelKey": "panels.notifications.duration-critical-urgency-label",
-    "descriptionKey": "panels.notifications.duration-critical-urgency-description",
+    "label": "Critical urgency",
+    "description": "How long critical priority notifications stay visible.",
     "widget": "NValueSlider",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 1,
-    "subTabLabel": "common.duration"
+    "subTabLabel": "Duration"
   },
   {
-    "labelKey": "panels.notifications.settings-enabled-label",
-    "descriptionKey": "panels.notifications.settings-enabled-description",
+    "label": "Enable notifications",
+    "description": "Enable or disable the notification daemon, requires a restart of Nocturnal shell.",
     "widget": "NToggle",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.notifications.settings-density-label",
-    "descriptionKey": "panels.notifications.settings-density-description",
-    "widget": "NComboBox",
-    "tab": 9,
-    "tabLabel": "common.notifications",
-    "subTab": 0,
-    "subTabLabel": "common.appearance"
-  },
-  {
-    "labelKey": "tooltips.do-not-disturb-enabled",
-    "descriptionKey": "panels.notifications.settings-do-not-disturb-description",
+    "label": "Do Not Disturb",
+    "description": "Disable all notification popups when enabled.",
     "widget": "NToggle",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.osd.always-on-top-label",
-    "descriptionKey": "panels.notifications.settings-always-on-top-description",
+    "label": "Always on top",
+    "description": "Display notifications above fullscreen windows and other layers.",
     "widget": "NToggle",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.notifications.history-clear-dismiss-label",
-    "descriptionKey": "panels.notifications.history-clear-dismiss-description",
+    "label": "Clear on dismissed",
+    "description": "Clear notification from history when dismissed.",
     "widget": "NToggle",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 2,
-    "subTabLabel": "common.history"
+    "subTabLabel": "History"
   },
   {
-    "labelKey": "panels.notifications.settings-markdown-label",
-    "descriptionKey": "panels.notifications.settings-markdown-description",
+    "label": "Enable Markdown",
+    "description": "Render notification content using Markdown formatting.",
     "widget": "NToggle",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 2,
-    "subTabLabel": "common.history"
+    "subTabLabel": "History"
   },
   {
-    "labelKey": "panels.notifications.history-low-urgency-label",
-    "descriptionKey": "panels.notifications.history-low-urgency-description",
+    "label": "Save low urgency to history",
+    "description": "Save low priority notifications to history.",
     "widget": "NToggle",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 2,
-    "subTabLabel": "common.history"
+    "subTabLabel": "History"
   },
   {
-    "labelKey": "panels.notifications.history-normal-urgency-label",
-    "descriptionKey": "panels.notifications.history-normal-urgency-description",
+    "label": "Save normal urgency to history",
+    "description": "Save normal priority notifications to history.",
     "widget": "NToggle",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 2,
-    "subTabLabel": "common.history"
+    "subTabLabel": "History"
   },
   {
-    "labelKey": "panels.notifications.history-critical-urgency-label",
-    "descriptionKey": "panels.notifications.history-critical-urgency-description",
+    "label": "Save critical urgency to history",
+    "description": "Save critical priority notifications to history.",
     "widget": "NToggle",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 2,
-    "subTabLabel": "common.history"
+    "subTabLabel": "History"
   },
   {
-    "labelKey": "panels.notifications.sounds-unavailable-label",
-    "descriptionKey": "panels.notifications.sounds-unavailable-description",
+    "label": "Notification sounds unavailable",
+    "description": "Install Qt6 Multimedia to enable notification sounds.",
     "widget": "NLabel",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 3,
-    "subTabLabel": "common.sound"
+    "subTabLabel": "Sound"
   },
   {
-    "labelKey": "panels.notifications.sounds-enabled-label",
-    "descriptionKey": "panels.notifications.sounds-enabled-description",
+    "label": "Enable notification sounds",
+    "description": "Enable sound effects for incoming notifications.",
     "widget": "NToggle",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 3,
-    "subTabLabel": "common.sound"
+    "subTabLabel": "Sound"
   },
   {
-    "labelKey": "panels.notifications.sounds-volume-label",
-    "descriptionKey": "panels.notifications.sounds-volume-description",
+    "label": "Sound volume",
+    "description": "Adjust the volume level for notification sounds.",
     "widget": "NValueSlider",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 3,
-    "subTabLabel": "common.sound"
+    "subTabLabel": "Sound"
   },
   {
-    "labelKey": "panels.notifications.sounds-separate-label",
-    "descriptionKey": "panels.notifications.sounds-separate-description",
+    "label": "Use different sounds per priority",
+    "description": "Use different sound files for low, normal, and critical priority notifications.",
     "widget": "NToggle",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 3,
-    "subTabLabel": "common.sound"
+    "subTabLabel": "Sound"
   },
   {
-    "labelKey": "panels.notifications.sounds-files-unified-label",
-    "descriptionKey": "panels.notifications.sounds-files-unified-description",
+    "label": "Notification sound",
+    "description": "Path to the sound file played for notifications.",
     "widget": "NLabel",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 3,
-    "subTabLabel": "common.sound"
+    "subTabLabel": "Sound"
   },
   {
-    "labelKey": "panels.notifications.sounds-files-low-label",
-    "descriptionKey": "panels.notifications.sounds-files-low-description",
+    "label": "Low urgency sound",
+    "description": "Path to the sound file played for low priority notifications.",
     "widget": "NLabel",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 3,
-    "subTabLabel": "common.sound"
+    "subTabLabel": "Sound"
   },
   {
-    "labelKey": "panels.notifications.sounds-files-normal-label",
-    "descriptionKey": "panels.notifications.sounds-files-normal-description",
+    "label": "Normal urgency sound",
+    "description": "Path to the sound file played for normal priority notifications.",
     "widget": "NLabel",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 3,
-    "subTabLabel": "common.sound"
+    "subTabLabel": "Sound"
   },
   {
-    "labelKey": "panels.notifications.sounds-files-critical-label",
-    "descriptionKey": "panels.notifications.sounds-files-critical-description",
+    "label": "Critical urgency sound",
+    "description": "Path to the sound file played for critical priority notifications.",
     "widget": "NLabel",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 3,
-    "subTabLabel": "common.sound"
+    "subTabLabel": "Sound"
   },
   {
-    "labelKey": "panels.notifications.sounds-excluded-apps-label",
-    "descriptionKey": "panels.notifications.sounds-excluded-apps-description",
+    "label": "Excluded applications",
+    "description": "Skip playing the configured notification sound for specific applications that have their own built-in sounds.",
     "widget": "NLabel",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 3,
-    "subTabLabel": "common.sound"
+    "subTabLabel": "Sound"
   },
   {
-    "labelKey": "panels.notifications.toast-media-label",
-    "descriptionKey": "panels.notifications.toast-media-description",
+    "label": "Media",
+    "description": "Show a toast when media playback state changes.",
     "widget": "NCheckbox",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 4,
-    "subTabLabel": "common.toast"
+    "subTabLabel": "Toast"
   },
   {
-    "labelKey": "panels.notifications.toast-keyboard-label",
-    "descriptionKey": "panels.notifications.toast-keyboard-description",
+    "label": "Keyboard layout",
+    "description": "Show a toast when the keyboard layout changes.",
     "widget": "NCheckbox",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 4,
-    "subTabLabel": "common.toast"
+    "subTabLabel": "Toast"
   },
   {
-    "labelKey": "panels.notifications.toast-battery-label",
-    "descriptionKey": "panels.notifications.toast-battery-description",
+    "label": "Battery warning",
+    "description": "Show a warning when the battery level falls below this percentage.",
     "widget": "NCheckbox",
     "tab": 9,
-    "tabLabel": "common.notifications",
+    "tabLabel": "Notifications",
     "subTab": 4,
-    "subTabLabel": "common.toast"
+    "subTabLabel": "Toast"
   },
   {
-    "labelKey": "panels.osd.enabled-label",
-    "descriptionKey": "panels.osd.enabled-description",
+    "label": "Enable on-screen display",
+    "description": "Show volume and brightness changes in real-time.",
     "widget": "NToggle",
     "tab": 10,
-    "tabLabel": "panels.osd.title",
+    "tabLabel": "Osd",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.osd.duration-auto-hide-label",
-    "descriptionKey": "panels.osd.duration-auto-hide-description",
+    "label": "Auto-hide after",
+    "description": "Adjust the time before OSD disappears.",
     "widget": "NValueSlider",
     "tab": 10,
-    "tabLabel": "panels.osd.title",
+    "tabLabel": "Osd",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.plugins.available-no-plugins-label",
-    "descriptionKey": "panels.plugins.available-no-plugins-description",
-    "widget": "NLabel",
-    "tab": 19,
-    "tabLabel": "panels.plugins.title",
+    "label": "Use analog style clock",
+    "description": "Show an analog style clock on the calendar window.",
+    "widget": "NToggle",
+    "tab": 16,
+    "tabLabel": "Region",
+    "subTab": 2,
+    "subTabLabel": "Calendar Panel"
+  },
+  {
+    "label": "Show week numbers",
+    "description": "Display the week of the year (e.g. week 38) in the calendar.",
+    "widget": "NToggle",
+    "tab": 16,
+    "tabLabel": "Region",
+    "subTab": 2,
+    "subTabLabel": "Calendar Panel"
+  },
+  {
+    "label": "Show calendar events",
+    "description": "Display events in the calendar panel.",
+    "widget": "NToggle",
+    "tab": 16,
+    "tabLabel": "Region",
+    "subTab": 2,
+    "subTabLabel": "Calendar Panel"
+  },
+  {
+    "label": "Use 12-hour time format",
+    "description": "Display time in 12-hour format on the lock screen and calendar. The bar clock has its own settings.",
+    "widget": "NToggle",
+    "tab": 16,
+    "tabLabel": "Region",
     "subTab": 1,
-    "subTabLabel": "common.available"
+    "subTabLabel": "Date"
   },
   {
-    "labelKey": "panels.plugins.auto-update",
-    "descriptionKey": "panels.plugins.auto-update-description",
-    "widget": "NToggle",
-    "tab": 19,
-    "tabLabel": "panels.plugins.title",
-    "subTab": 0,
-    "subTabLabel": "common.installed"
-  },
-  {
-    "labelKey": "panels.plugins.installed-no-plugins-label",
-    "descriptionKey": "panels.plugins.installed-no-plugins-description",
-    "widget": "NLabel",
-    "tab": 19,
-    "tabLabel": "panels.plugins.title",
-    "subTab": 0,
-    "subTabLabel": "common.installed"
-  },
-  {
-    "labelKey": "panels.plugins.sources-add-dialog-name",
-    "descriptionKey": null,
-    "widget": "NTextInput",
-    "tab": 19,
-    "tabLabel": "panels.plugins.title",
-    "subTab": 2,
-    "subTabLabel": "common.sources"
-  },
-  {
-    "labelKey": "panels.plugins.sources-add-dialog-url",
-    "descriptionKey": null,
-    "widget": "NTextInput",
-    "tab": 19,
-    "tabLabel": "panels.plugins.title",
-    "subTab": 2,
-    "subTabLabel": "common.sources"
-  },
-  {
-    "labelKey": "panels.location.date-time-use-analog-label",
-    "descriptionKey": "panels.location.date-time-use-analog-description",
-    "widget": "NToggle",
-    "tab": 17,
-    "tabLabel": "panels.region.title",
-    "subTab": 2,
-    "subTabLabel": "common.calendar-panel"
-  },
-  {
-    "labelKey": "panels.location.date-time-week-numbers-label",
-    "descriptionKey": "panels.location.date-time-week-numbers-description",
-    "widget": "NToggle",
-    "tab": 17,
-    "tabLabel": "panels.region.title",
-    "subTab": 2,
-    "subTabLabel": "common.calendar-panel"
-  },
-  {
-    "labelKey": "panels.location.date-time-show-events-label",
-    "descriptionKey": "panels.location.date-time-show-events-description",
-    "widget": "NToggle",
-    "tab": 17,
-    "tabLabel": "panels.region.title",
-    "subTab": 2,
-    "subTabLabel": "common.calendar-panel"
-  },
-  {
-    "labelKey": "panels.location.date-time-12hour-format-label",
-    "descriptionKey": "panels.location.date-time-12hour-format-description",
-    "widget": "NToggle",
-    "tab": 17,
-    "tabLabel": "panels.region.title",
-    "subTab": 1,
-    "subTabLabel": "common.date"
-  },
-  {
-    "labelKey": "panels.location.date-time-first-day-of-week-label",
-    "descriptionKey": "panels.location.date-time-first-day-of-week-description",
+    "label": "First day of week",
+    "description": "Choose which day starts the week in the calendar.",
     "widget": "NComboBox",
-    "tab": 17,
-    "tabLabel": "panels.region.title",
+    "tab": 16,
+    "tabLabel": "Region",
     "subTab": 1,
-    "subTabLabel": "common.date"
+    "subTabLabel": "Date"
   },
   {
-    "labelKey": "panels.general.language-select-label",
-    "descriptionKey": "panels.general.language-select-description",
+    "label": "Application language",
+    "description": "Select the language used in the application's interface.",
     "widget": "NComboBox",
-    "tab": 17,
-    "tabLabel": "panels.region.title",
+    "tab": 16,
+    "tabLabel": "Region",
     "subTab": 0,
-    "subTabLabel": "common.location"
+    "subTabLabel": "Location"
   },
   {
-    "labelKey": "panels.location.location-search-label",
-    "descriptionKey": "panels.location.location-search-description",
+    "label": "Search for a location",
+    "description": "e.g. Toronto, ON",
     "widget": "NTextInput",
-    "tab": 17,
-    "tabLabel": "panels.region.title",
+    "tab": 16,
+    "tabLabel": "Region",
     "subTab": 0,
-    "subTabLabel": "common.location"
+    "subTabLabel": "Location"
   },
   {
-    "labelKey": "panels.location.weather-enabled-label",
-    "descriptionKey": "panels.location.weather-enabled-description",
+    "label": "Enable weather",
+    "description": "Show weather information throughout the interface and fetch weather data. When disabled, all weather elements will be hidden and no network requests will be made.",
     "widget": "NToggle",
-    "tab": 17,
-    "tabLabel": "panels.region.title",
+    "tab": 16,
+    "tabLabel": "Region",
     "subTab": 0,
-    "subTabLabel": "common.location"
+    "subTabLabel": "Location"
   },
   {
-    "labelKey": "panels.location.weather-fahrenheit-label",
-    "descriptionKey": "panels.location.weather-fahrenheit-description",
+    "label": "Display temperature in Fahrenheit (\u00b0F)",
+    "description": "Display temperature in Fahrenheit instead of Celsius.",
     "widget": "NToggle",
-    "tab": 17,
-    "tabLabel": "panels.region.title",
+    "tab": 16,
+    "tabLabel": "Region",
     "subTab": 0,
-    "subTabLabel": "common.location"
+    "subTabLabel": "Location"
   },
   {
-    "labelKey": "panels.location.weather-show-effects-label",
-    "descriptionKey": "panels.location.weather-show-effects-description",
+    "label": "Display weather effects",
+    "description": "Show additional visual effects (like rain, snow, or lightning) on the weather card.",
     "widget": "NToggle",
-    "tab": 17,
-    "tabLabel": "panels.region.title",
+    "tab": 16,
+    "tabLabel": "Region",
     "subTab": 0,
-    "subTabLabel": "common.location"
+    "subTabLabel": "Location"
   },
   {
-    "labelKey": "panels.location.weather-hide-city-label",
-    "descriptionKey": "panels.location.weather-hide-city-description",
+    "label": "Hide city name",
+    "description": "Hide the city name from weather displays throughout the interface.",
     "widget": "NToggle",
-    "tab": 17,
-    "tabLabel": "panels.region.title",
+    "tab": 16,
+    "tabLabel": "Region",
     "subTab": 0,
-    "subTabLabel": "common.location"
+    "subTabLabel": "Location"
   },
   {
-    "labelKey": "panels.location.weather-hide-timezone-label",
-    "descriptionKey": "panels.location.weather-hide-timezone-description",
+    "label": "Hide timezone",
+    "description": "Hide the timezone abbreviation from weather displays throughout the interface.",
     "widget": "NToggle",
-    "tab": 17,
-    "tabLabel": "panels.region.title",
+    "tab": 16,
+    "tabLabel": "Region",
     "subTab": 0,
-    "subTabLabel": "common.location"
+    "subTabLabel": "Location"
   },
   {
-    "labelKey": "panels.session-menu.large-buttons-style-label",
-    "descriptionKey": "panels.session-menu.large-buttons-style-description",
+    "label": "Large buttons style",
+    "description": "Display the session menu with large buttons in a grid layout.",
     "widget": "NToggle",
     "tab": 12,
-    "tabLabel": "session-menu.title",
+    "tabLabel": "Session Menu",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.session-menu.large-buttons-layout-label",
-    "descriptionKey": "panels.session-menu.large-buttons-layout-description",
+    "label": "Large buttons layout",
+    "description": "Choose how session menu buttons are displayed.",
     "widget": "NComboBox",
     "tab": 12,
-    "tabLabel": "session-menu.title",
+    "tabLabel": "Session Menu",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.session-menu.show-header-label",
-    "descriptionKey": "panels.session-menu.show-header-description",
+    "label": "Show header",
+    "description": "Display the title and close button at the top of the session menu.",
     "widget": "NToggle",
     "tab": 12,
-    "tabLabel": "session-menu.title",
+    "tabLabel": "Session Menu",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.session-menu.show-keybinds-label",
-    "descriptionKey": "panels.session-menu.show-keybinds-description",
+    "label": "Show keybinds",
+    "description": "Display keybind hints on session options.",
     "widget": "NToggle",
     "tab": 12,
-    "tabLabel": "session-menu.title",
+    "tabLabel": "Session Menu",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.system-monitor.enable-dgpu-monitoring-label",
-    "descriptionKey": "panels.system-monitor.enable-dgpu-monitoring-description",
+    "label": "Enable discrete GPU monitoring",
+    "description": "Warning: This will wake up your discrete GPU (NVIDIA/AMD), which may significantly impact battery life on laptops with hybrid graphics.",
     "widget": "NToggle",
-    "tab": 18,
-    "tabLabel": "system-monitor.title",
+    "tab": 17,
+    "tabLabel": "System Monitor",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.system-monitor.use-custom-highlight-colors-label",
-    "descriptionKey": "panels.system-monitor.use-custom-highlight-colors-description",
+    "label": "Use custom highlight colors",
+    "description": "When disabled, theme default highlight colors are used.",
     "widget": "NToggle",
-    "tab": 18,
-    "tabLabel": "system-monitor.title",
+    "tab": 17,
+    "tabLabel": "System Monitor",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.system-monitor.external-monitor-label",
-    "descriptionKey": "panels.system-monitor.external-monitor-description",
+    "label": "External system monitor command",
+    "description": "Enter the command or application path to launch when activating the external system monitor application.",
     "widget": "NTextInput",
-    "tab": 18,
-    "tabLabel": "system-monitor.title",
+    "tab": 17,
+    "tabLabel": "System Monitor",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.user-interface.tooltips-label",
-    "descriptionKey": "panels.user-interface.tooltips-description",
+    "label": "Show tooltips",
+    "description": "Enable or disable tooltips throughout the interface.",
     "widget": "NToggle",
     "tab": 1,
-    "tabLabel": "panels.user-interface.title",
+    "tabLabel": "User Interface",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.user-interface.box-border-label",
-    "descriptionKey": "panels.user-interface.box-border-description",
+    "label": "Container outline",
+    "description": "Display an outline around content areas.",
     "widget": "NToggle",
     "tab": 1,
-    "tabLabel": "panels.user-interface.title",
+    "tabLabel": "User Interface",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.user-interface.shadows-label",
-    "descriptionKey": "panels.user-interface.shadows-description",
+    "label": "Drop shadows",
+    "description": "Enables drop shadows under bars and panels.",
     "widget": "NToggle",
     "tab": 1,
-    "tabLabel": "panels.user-interface.title",
+    "tabLabel": "User Interface",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.user-interface.shadows-direction-label",
-    "descriptionKey": "panels.user-interface.shadows-direction-description",
+    "label": "Shadow direction",
+    "description": "Choose where the shadow is cast to.",
     "widget": "NComboBox",
     "tab": 1,
-    "tabLabel": "panels.user-interface.title",
+    "tabLabel": "User Interface",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.user-interface.scaling-label",
-    "descriptionKey": "panels.user-interface.scaling-description",
+    "label": "Interface scaling",
+    "description": "Changes the size of the general user interface, excluding the bar.",
     "widget": "NValueSlider",
     "tab": 1,
-    "tabLabel": "panels.user-interface.title",
+    "tabLabel": "User Interface",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.user-interface.box-border-radius-label",
-    "descriptionKey": "panels.user-interface.box-border-radius-description",
+    "label": "Container radius",
+    "description": "Adjusts the corner roundness of major layout sections, such as sidebars, cards, and content panels.",
     "widget": "NValueSlider",
     "tab": 1,
-    "tabLabel": "panels.user-interface.title",
+    "tabLabel": "User Interface",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.user-interface.control-border-radius-label",
-    "descriptionKey": "panels.user-interface.control-border-radius-description",
+    "label": "Input radius",
+    "description": "Controls the curvature of interactive elements, including buttons, toggles, and text fields.",
     "widget": "NValueSlider",
     "tab": 1,
-    "tabLabel": "panels.user-interface.title",
+    "tabLabel": "User Interface",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.user-interface.animation-disable-label",
-    "descriptionKey": "panels.user-interface.animation-disable-description",
+    "label": "Disable UI animations",
+    "description": "Disable all animations for a faster, more responsive experience.",
     "widget": "NToggle",
     "tab": 1,
-    "tabLabel": "panels.user-interface.title",
+    "tabLabel": "User Interface",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.user-interface.animation-speed-label",
-    "descriptionKey": "panels.user-interface.animation-speed-description",
+    "label": "Animation speed",
+    "description": "Adjust global animation speed.",
     "widget": "NValueSlider",
     "tab": 1,
-    "tabLabel": "panels.user-interface.title",
+    "tabLabel": "User Interface",
     "subTab": 0,
-    "subTabLabel": "common.appearance"
+    "subTabLabel": "Appearance"
   },
   {
-    "labelKey": "panels.user-interface.panels-attached-to-bar-label",
-    "descriptionKey": "panels.user-interface.panels-attached-to-bar-description",
+    "label": "Snap panels to edges",
+    "description": "Panels lock to the bar and screen edges, creating a seamless look with stylish inverted corners.",
     "widget": "NToggle",
     "tab": 1,
-    "tabLabel": "panels.user-interface.title",
+    "tabLabel": "User Interface",
     "subTab": 1,
-    "subTabLabel": "common.panels"
+    "subTabLabel": "Panels"
   },
   {
-    "labelKey": "panels.user-interface.allow-panels-without-bar-label",
-    "descriptionKey": "panels.user-interface.allow-panels-without-bar-description",
+    "label": "Allow panels on screens without a bar",
+    "description": "When enabled, panels can open on any screen. When disabled, panels will only open on screens that have a bar, which can reduce memory usage.",
     "widget": "NToggle",
     "tab": 1,
-    "tabLabel": "panels.user-interface.title",
+    "tabLabel": "User Interface",
     "subTab": 1,
-    "subTabLabel": "common.panels"
+    "subTabLabel": "Panels"
   },
   {
-    "labelKey": "panels.user-interface.panel-background-opacity-label",
-    "descriptionKey": "panels.user-interface.panel-background-opacity-description",
+    "label": "Panel background opacity",
+    "description": "Set the background opacity for all panels (bar, launcher, settings, etc...).",
     "widget": "NValueSlider",
     "tab": 1,
-    "tabLabel": "panels.user-interface.title",
+    "tabLabel": "User Interface",
     "subTab": 1,
-    "subTabLabel": "common.panels"
+    "subTabLabel": "Panels"
   },
   {
-    "labelKey": "panels.user-interface.dimmer-opacity-label",
-    "descriptionKey": "panels.user-interface.dimmer-opacity-description",
+    "label": "Dimmed desktop opacity",
+    "description": "Set the opacity level for desktop dimming.",
     "widget": "NValueSlider",
     "tab": 1,
-    "tabLabel": "panels.user-interface.title",
+    "tabLabel": "User Interface",
     "subTab": 1,
-    "subTabLabel": "common.panels"
+    "subTabLabel": "Panels"
   },
   {
-    "labelKey": "panels.user-interface.settings-panel-mode-label",
-    "descriptionKey": "panels.user-interface.settings-panel-mode-description",
+    "label": "Settings panel mode",
+    "description": "Choose settings layout (may require reopening).",
     "widget": "NComboBox",
     "tab": 1,
-    "tabLabel": "panels.user-interface.title",
+    "tabLabel": "User Interface",
     "subTab": 1,
-    "subTabLabel": "common.panels"
+    "subTabLabel": "Panels"
   },
   {
-    "labelKey": "panels.user-interface.settings-panel-sidebar-card-style-label",
-    "descriptionKey": "panels.user-interface.settings-panel-sidebar-card-style-description",
+    "label": "Sidebar card style",
+    "description": "Wraps the settings sidebar in a filled background with rounded corners.",
     "widget": "NToggle",
     "tab": 1,
-    "tabLabel": "panels.user-interface.title",
+    "tabLabel": "User Interface",
     "subTab": 1,
-    "subTabLabel": "common.panels"
+    "subTabLabel": "Panels"
   },
   {
-    "labelKey": "panels.general.screen-corners-show-corners-label",
-    "descriptionKey": "panels.general.screen-corners-show-corners-description",
+    "label": "Show screen corners",
+    "description": "Display rounded corners on the edge of the screen.",
     "widget": "NToggle",
     "tab": 1,
-    "tabLabel": "panels.user-interface.title",
+    "tabLabel": "User Interface",
     "subTab": 2,
-    "subTabLabel": "common.screen-corners"
+    "subTabLabel": "Screen Corners"
   },
   {
-    "labelKey": "panels.general.screen-corners-solid-black-label",
-    "descriptionKey": "panels.general.screen-corners-solid-black-description",
+    "label": "Solid black corners",
+    "description": "Use solid black instead of the bar background color.",
     "widget": "NToggle",
     "tab": 1,
-    "tabLabel": "panels.user-interface.title",
+    "tabLabel": "User Interface",
     "subTab": 2,
-    "subTabLabel": "common.screen-corners"
+    "subTabLabel": "Screen Corners"
   },
   {
-    "labelKey": "panels.general.screen-corners-radius-label",
-    "descriptionKey": "panels.general.screen-corners-radius-description",
+    "label": "Screen corners radius",
+    "description": "Adjust the rounded corners of the screen.",
     "widget": "NValueSlider",
     "tab": 1,
-    "tabLabel": "panels.user-interface.title",
+    "tabLabel": "User Interface",
     "subTab": 2,
-    "subTabLabel": "common.screen-corners"
+    "subTabLabel": "Screen Corners"
   },
   {
-    "labelKey": "panels.wallpaper.automation-scheduled-change-label",
-    "descriptionKey": "panels.wallpaper.automation-scheduled-change-description",
+    "label": "Scheduled change",
+    "description": "Automatically change wallpapers at regular intervals.",
     "widget": "NToggle",
     "tab": 3,
-    "tabLabel": "common.wallpaper",
+    "tabLabel": "Wallpaper",
     "subTab": 2,
-    "subTabLabel": "common.automation"
+    "subTabLabel": "Automation"
   },
   {
-    "labelKey": "panels.wallpaper.automation-change-mode-label",
-    "descriptionKey": "panels.wallpaper.automation-change-mode-description",
+    "label": "Change mode",
+    "description": "Choose how wallpapers are selected when changing automatically.",
     "widget": "NComboBox",
     "tab": 3,
-    "tabLabel": "common.wallpaper",
+    "tabLabel": "Wallpaper",
     "subTab": 2,
-    "subTabLabel": "common.automation"
+    "subTabLabel": "Automation"
   },
   {
-    "labelKey": "panels.wallpaper.automation-interval-label",
-    "descriptionKey": "panels.wallpaper.automation-interval-description",
+    "label": "Wallpaper interval",
+    "description": "How often to change wallpapers automatically.",
     "widget": "NLabel",
     "tab": 3,
-    "tabLabel": "common.wallpaper",
+    "tabLabel": "Wallpaper",
     "subTab": 2,
-    "subTabLabel": "common.automation"
+    "subTabLabel": "Automation"
   },
   {
-    "labelKey": "panels.wallpaper.automation-custom-interval-label",
-    "descriptionKey": "panels.wallpaper.automation-custom-interval-description",
+    "label": "Custom interval",
+    "description": "Enter time as HH:MM (e.g. 01:30).",
     "widget": "NTextInput",
     "tab": 3,
-    "tabLabel": "common.wallpaper",
+    "tabLabel": "Wallpaper",
     "subTab": 2,
-    "subTabLabel": "common.automation"
+    "subTabLabel": "Automation"
   },
   {
-    "labelKey": "panels.wallpaper.settings-enable-management-label",
-    "descriptionKey": "panels.wallpaper.settings-enable-management-description",
+    "label": "Enable wallpaper management",
+    "description": "Manage wallpapers with Nocturnal. Uncheck if you prefer using another application.",
     "widget": "NToggle",
     "tab": 3,
-    "tabLabel": "common.wallpaper",
+    "tabLabel": "Wallpaper",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "tooltips.wallpaper-selector",
-    "descriptionKey": "panels.wallpaper.settings-selector-description",
+    "label": "Wallpaper selector",
+    "description": "Choose your wallpaper.",
     "widget": "NLabel",
     "tab": 3,
-    "tabLabel": "common.wallpaper",
+    "tabLabel": "Wallpaper",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.wallpaper.settings-view-mode-label",
-    "descriptionKey": "panels.wallpaper.settings-view-mode-description",
+    "label": "Viewing mode",
+    "description": "Choose how wallpapers are displayed from your directory.",
     "widget": "NComboBox",
     "tab": 3,
-    "tabLabel": "common.wallpaper",
+    "tabLabel": "Wallpaper",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.wallpaper.settings-folder-label",
-    "descriptionKey": "panels.wallpaper.settings-folder-description",
+    "label": "Wallpaper folder",
+    "description": "Path to your main wallpaper folder.",
     "widget": "NTextInputButton",
     "tab": 3,
-    "tabLabel": "common.wallpaper",
+    "tabLabel": "Wallpaper",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.wallpaper.settings-monitor-specific-label",
-    "descriptionKey": "panels.wallpaper.settings-monitor-specific-description",
+    "label": "Monitor-specific directories",
+    "description": "Set a different wallpaper folder for each monitor.",
     "widget": "NToggle",
     "tab": 3,
-    "tabLabel": "common.wallpaper",
+    "tabLabel": "Wallpaper",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.wallpaper.settings-enable-overview-label",
-    "descriptionKey": "panels.wallpaper.settings-enable-overview-description",
+    "label": "Enable overview wallpaper",
+    "description": "Applies a blurred and dimmed wallpaper to the overview screen.",
     "widget": "NToggle",
     "tab": 3,
-    "tabLabel": "common.wallpaper",
+    "tabLabel": "Wallpaper",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.wallpaper.settings-overview-blur-strength-label",
-    "descriptionKey": "panels.wallpaper.settings-overview-blur-strength-description",
+    "label": "Overview blur strength",
+    "description": "Applies the blur strength to the overview.",
     "widget": "NValueSlider",
     "tab": 3,
-    "tabLabel": "common.wallpaper",
+    "tabLabel": "Wallpaper",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.wallpaper.settings-overview-tint-label",
-    "descriptionKey": "panels.wallpaper.settings-overview-tint-description",
+    "label": "Overview tint strength",
+    "description": "Applies the tint strength to the overview.",
     "widget": "NValueSlider",
     "tab": 3,
-    "tabLabel": "common.wallpaper",
+    "tabLabel": "Wallpaper",
     "subTab": 0,
-    "subTabLabel": "common.general"
+    "subTabLabel": "General"
   },
   {
-    "labelKey": "panels.wallpaper.look-feel-fill-mode-label",
-    "descriptionKey": "panels.wallpaper.look-feel-fill-mode-description",
+    "label": "Fill mode",
+    "description": "Select how the image should scale to match your monitor's resolution.",
     "widget": "NComboBox",
     "tab": 3,
-    "tabLabel": "common.wallpaper",
+    "tabLabel": "Wallpaper",
     "subTab": 1,
-    "subTabLabel": "common.look"
+    "subTabLabel": "Look"
   },
   {
-    "labelKey": "bar.audio-visualizer.color-name-label",
-    "descriptionKey": "panels.wallpaper.look-feel-fill-color-description",
+    "label": "Fill color",
+    "description": "Choose a fill color that may appear behind the wallpaper.",
     "widget": "NLabel",
     "tab": 3,
-    "tabLabel": "common.wallpaper",
+    "tabLabel": "Wallpaper",
     "subTab": 1,
-    "subTabLabel": "common.look"
+    "subTabLabel": "Look"
   },
   {
-    "labelKey": "panels.wallpaper.look-feel-transition-type-label",
-    "descriptionKey": "panels.wallpaper.look-feel-transition-type-description",
+    "label": "Transition type",
+    "description": "Animation type when switching between wallpapers.",
     "widget": "NComboBox",
     "tab": 3,
-    "tabLabel": "common.wallpaper",
+    "tabLabel": "Wallpaper",
     "subTab": 1,
-    "subTabLabel": "common.look"
+    "subTabLabel": "Look"
   },
   {
-    "labelKey": "panels.wallpaper.look-feel-skip-startup-transition-label",
-    "descriptionKey": "panels.wallpaper.look-feel-skip-startup-transition-description",
+    "label": "Skip startup transition",
+    "description": "Skip the wallpaper animation when the shell starts.",
     "widget": "NToggle",
     "tab": 3,
-    "tabLabel": "common.wallpaper",
+    "tabLabel": "Wallpaper",
     "subTab": 1,
-    "subTabLabel": "common.look"
+    "subTabLabel": "Look"
   },
   {
-    "labelKey": "panels.wallpaper.look-feel-transition-duration-label",
-    "descriptionKey": "panels.wallpaper.look-feel-transition-duration-description",
+    "label": "Transition duration",
+    "description": "Duration of transition animations in seconds.",
     "widget": "NValueSlider",
     "tab": 3,
-    "tabLabel": "common.wallpaper",
+    "tabLabel": "Wallpaper",
     "subTab": 1,
-    "subTabLabel": "common.look"
+    "subTabLabel": "Look"
   },
   {
-    "labelKey": "panels.wallpaper.look-feel-edge-smoothness-label",
-    "descriptionKey": "panels.wallpaper.look-feel-edge-smoothness-description",
+    "label": "Soften transition edge",
+    "description": "Applies a soft, feathered effect to the edge of transitions.",
     "widget": "NValueSlider",
     "tab": 3,
-    "tabLabel": "common.wallpaper",
+    "tabLabel": "Wallpaper",
     "subTab": 1,
-    "subTabLabel": "common.look"
+    "subTabLabel": "Look"
   }
 ]

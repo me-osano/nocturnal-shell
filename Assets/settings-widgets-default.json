@@ -85,10 +85,6 @@
     "DarkMode": {
       "iconColor": "none"
     },
-    "KeepAwake": {
-      "iconColor": "none",
-      "textColor": "none"
-    },
     "KeyboardLayout": {
       "displayMode": "onhover",
       "showIcon": true,

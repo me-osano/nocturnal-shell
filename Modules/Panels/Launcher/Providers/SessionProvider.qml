@@ -18,37 +18,37 @@ Item {
   readonly property var sessionActions: [
     {
       "action": "lock",
-      "labelKey": "common.lock",
+      "label": "Lock",
       "icon": iconMode === "tabler" ? "lock" : "system-lock-screen",
       "keywords": ["lock", "screen", "secure"]
     },
     {
       "action": "suspend",
-      "labelKey": "common.suspend",
+      "label": "Suspend",
       "icon": iconMode === "tabler" ? "suspend" : "system-suspend",
       "keywords": ["suspend", "sleep", "standby"]
     },
     {
       "action": "hibernate",
-      "labelKey": "common.hibernate",
+      "label": "Hibernate",
       "icon": iconMode === "tabler" ? "hibernate" : "system-suspend-hibernate",
       "keywords": ["hibernate", "disk"]
     },
     {
       "action": "reboot",
-      "labelKey": "common.reboot",
+      "label": "Reboot",
       "icon": iconMode === "tabler" ? "reboot" : "system-reboot",
       "keywords": ["reboot", "restart", "reload"]
     },
     {
       "action": "logout",
-      "labelKey": "common.logout",
+      "label": "Logout",
       "icon": iconMode === "tabler" ? "logout" : "system-log-out",
       "keywords": ["logout", "sign out", "exit", "leave"]
     },
     {
       "action": "shutdown",
-      "labelKey": "common.shutdown",
+      "label": "Shutdown",
       "icon": iconMode === "tabler" ? "shutdown" : "system-shutdown",
       "keywords": ["shutdown", "power off", "turn off", "poweroff"]
     }
@@ -56,14 +56,6 @@ Item {
 
   function init() {
     Logger.d("SessionProvider", "Initialized");
-  }
-
-  function humanizeKey(key) {
-    if (!key) return "";
-    var s = key.replace(/^.*\./, "");
-    s = s.replace(/[-_]/g, " ");
-    s = s.replace(/\b\w/g, function(m) { return m.toUpperCase(); });
-    return s;
   }
 
   function getEnabledActions() {
@@ -82,7 +74,7 @@ Item {
       if (enabledSet[action.action]) {
         enabled.push({
                        "action": action.action,
-                       "labelKey": action.labelKey,
+                       "label": action.label,
                        "icon": action.icon,
                        "keywords": action.keywords,
                        "command": enabledSet[action.action].command || ""
@@ -105,17 +97,16 @@ Item {
     if (enabledActions.length === 0)
       return [];
 
-    // Build searchable items with resolved translations
+    // Build searchable items
     var items = [];
     for (var i = 0; i < enabledActions.length; i++) {
       var action = enabledActions[i];
-      var label = humanizeKey(action.labelKey);
       items.push({
                    "action": action.action,
                    "icon": action.icon,
-                   "label": label,
+                   "label": action.label,
                    "command": action.command,
-                   "searchText": [label.toLowerCase()].concat(action.keywords).join(" ")
+                   "searchText": [action.label.toLowerCase()].concat(action.keywords).join(" ")
                  });
     }
 

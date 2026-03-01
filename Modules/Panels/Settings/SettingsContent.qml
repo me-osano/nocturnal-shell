@@ -48,26 +48,6 @@ Item {
   // Track if sidebar was collapsed before searching started
   property bool wasCollapsedBeforeSearch: false
 
-  // Simple English-only humanizer for translation keys (e.g. "panels.audio.title" -> "Title")
-  function humanizeKey(key) {
-    if (!key) return "";
-    try {
-      // Remove ".title" suffix if present
-      var part = key.replace(/\.title$/, '');
-      // Take everything after the last dot
-      part = part.split('.').pop();
-      part = part.replace(/-/g, ' ');
-      var words = part.split(' ');
-      for (var i = 0; i < words.length; i++) {
-        if (words[i].length > 0)
-          words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
-      }
-      return words.join(' ');
-    } catch (e) {
-      return key;
-    }
-  }
-
   // Search state
   property string searchText: ""
   property var searchIndex: []
@@ -132,21 +112,19 @@ Item {
     if (searchIndex.length === 0)
       return;
 
-    // Build searchable items with humanized English labels
+    // Build searchable items
     let items = [];
     for (let j = 0; j < searchIndex.length; j++) {
       const entry = searchIndex[j];
       items.push({
-                   "labelKey": entry.labelKey,
-                   "descriptionKey": entry.descriptionKey,
+                   "label": entry.label,
+                   "description": entry.description,
                    "widget": entry.widget,
                    "tab": entry.tab,
                    "tabLabel": entry.tabLabel,
                    "subTab": entry.subTab,
                    "subTabLabel": entry.subTabLabel || null,
-                   "label": humanizeKey(entry.labelKey),
-                   "description": entry.descriptionKey ? humanizeKey(entry.descriptionKey) : "",
-                   "subTabName": entry.subTabLabel ? humanizeKey(entry.subTabLabel) : ""
+                   "subTabName": entry.subTabLabel || ""
                  });
     }
 
@@ -177,7 +155,7 @@ Item {
     if (entry.tab < 0 || entry.tab >= tabsModel.length)
       return;
 
-    highlightLabelKey = entry.labelKey;
+    highlightLabelKey = entry.label;
     _pendingSubTab = (entry.subTab !== null && entry.subTab !== undefined) ? entry.subTab : -1;
 
     const alreadyOnTab = (currentTabIndex === entry.tab);
@@ -367,7 +345,7 @@ Item {
       return null;
 
     // Check if this item has a matching label.
-    if (item.hasOwnProperty("label") && item.label === humanizeKey(labelKey) && item.width > 0 && item.height > 0) {
+    if (item.hasOwnProperty("label") && item.label === labelKey && item.width > 0 && item.height > 0) {
       return item;
     }
 
@@ -999,21 +977,19 @@ Item {
                   anchors.bottomMargin: Style.marginM
                   spacing: 0
 
-                  NText {
-                    text: humanizeKey(modelData.labelKey)
-                    pointSize: Style.fontSizeM
-                    font.weight: Style.fontWeightSemiBold
-                    color: (resultItem.effectiveHover || resultItem.selected) ? Color.mOnHover : Color.mOnSurface
-                    Layout.fillWidth: true
-                    elide: Text.ElideRight
-                    maximumLineCount: 1
-                  }
-
-                  NText {
+                NText {
+                  text: modelData.label
+                  pointSize: Style.fontSizeM
+                  font.weight: Style.fontWeightSemiBold
+                  color: (resultItem.effectiveHover || resultItem.selected) ? Color.mOnHover : Color.mOnSurface
+                  Layout.fillWidth: true
+                  elide: Text.ElideRight
+                  maximumLineCount: 1
+                }                  NText {
                     text: {
-                      let t = humanizeKey(modelData.tabLabel);
+                      let t = modelData.tabLabel;
                       if (modelData.subTabLabel)
-                        t += " › " + humanizeKey(modelData.subTabLabel);
+                        t += " › " + modelData.subTabLabel;
                       return t;
                     }
                     pointSize: Style.fontSizeXS
@@ -1096,7 +1072,7 @@ Item {
                   }
 
                   NText {
-                    text: humanizeKey(modelData.label)
+                    text: modelData.label
                     color: tabTextColor
                     pointSize: Style.fontSizeM
                     font.weight: Style.fontWeightSemiBold
@@ -1123,7 +1099,7 @@ Item {
                     tabItem.hovering = true;
                     // Show tooltip when sidebar is collapsed
                     if (!root.sidebarExpanded) {
-                      TooltipService.show(tabItem, humanizeKey(modelData.label));
+                      TooltipService.show(tabItem, modelData.label);
                     }
                   }
                   onExited: {
@@ -1197,7 +1173,7 @@ Item {
             }
 
             NText {
-              text: root.tabsModel[root.currentTabIndex]?.label ? humanizeKey(root.tabsModel[root.currentTabIndex].label) : ""
+              text: root.tabsModel[root.currentTabIndex]?.label ?? ""
               pointSize: Style.fontSizeXL
               font.weight: Style.fontWeightBold
               color: Color.mPrimary

@@ -39,8 +39,8 @@ WIDGET_TYPES = (
 RE_WIDGET_OPEN = re.compile(
     r"^\s*(" + "|".join(WIDGET_TYPES) + r")\s*\{", re.MULTILINE
 )
-RE_LABEL = re.compile(r'label:\s*I18n\.tr\("([^"]+)"')
-RE_DESCRIPTION = re.compile(r'description:\s*I18n\.tr\("([^"]+)"')
+RE_LABEL = re.compile(r'label:\s*"([^"]+)"')
+RE_DESCRIPTION = re.compile(r'description:\s*"([^"]+)"')
 
 
 def parse_component_declarations(content: str) -> dict[str, str]:
@@ -145,8 +145,8 @@ def get_subtab_info(parent_tab_file: Path) -> tuple[list[str], list[str | None]]
         if tabbar_depth <= 0:
             break
 
-        # Match text: I18n.tr("...") inside NTabButton
-        m = re.search(r'text:\s*I18n\.tr\("([^"]+)"', stripped)
+        # Match text: "..." inside NTabButton
+        m = re.search(r'text:\s*"([^"]+)"', stripped)
         if m:
             labels.append(m.group(1))
 
@@ -288,13 +288,13 @@ def extract_entries(
         if not label_match:
             continue
 
-        label_key = label_match.group(1)
+        label = label_match.group(1)
         desc_match = RE_DESCRIPTION.search(block)
-        desc_key = desc_match.group(1) if desc_match else None
+        description = desc_match.group(1) if desc_match else ""
 
         entry = {
-            "labelKey": label_key,
-            "descriptionKey": desc_key,
+            "label": label,
+            "description": description,
             "widget": widget_type,
             "tab": tab_index,
             "tabLabel": tab_label,
@@ -335,8 +335,8 @@ def main():
     for qml_file in sorted(TABS_DIR.rglob("*.qml")):
         entries = extract_entries(qml_file, type_to_index, type_to_label)
         for entry in entries:
-            if entry["labelKey"] not in seen_labels:
-                seen_labels.add(entry["labelKey"])
+            if entry["label"] not in seen_labels:
+                seen_labels.add(entry["label"])
                 all_entries.append(entry)
 
     # Write output
