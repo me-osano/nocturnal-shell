@@ -10,7 +10,11 @@ NBox {
   id: root
 
   property var screen
-  property int maxItems: 3
+  property int compactItems: 5
+  property bool showAll: false
+  readonly property real compactViewportHeight: Math.round(220 * Style.uiScaleRatio)
+  readonly property real expandedViewportHeight: Math.round(340 * Style.uiScaleRatio)
+  readonly property real listViewportHeight: showAll ? expandedViewportHeight : compactViewportHeight
   // 0 = All, 1 = Today, 2 = Yesterday, 3 = Earlier
   property int currentRange: 1
 
@@ -62,7 +66,9 @@ NBox {
     return list;
   }
 
-  implicitHeight: Math.max(Math.round(128 * Style.uiScaleRatio), content.implicitHeight + Style.margin2M)
+  readonly property bool canViewAll: filteredIndices.length > compactItems
+
+  implicitHeight: Math.max(Math.round(320 * Style.uiScaleRatio), content.implicitHeight + Style.margin2M)
 
   function dateOnly(dateObj) {
     return new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
@@ -197,6 +203,23 @@ NBox {
       }
     }
 
+    RowLayout {
+      visible: root.filteredIndices.length > 0 && root.canViewAll
+      Layout.fillWidth: true
+      spacing: Style.marginS
+
+      Item {
+        Layout.fillWidth: true
+      }
+
+      NButton {
+        icon: root.showAll ? "chevron-up" : "chevron-down"
+        text: root.showAll ? "Show less" : "View all"
+        outlined: true
+        onClicked: root.showAll = !root.showAll
+      }
+    }
+
     Loader {
       active: root.totalCount === 0 || root.filteredIndices.length === 0
       Layout.fillWidth: true
@@ -219,85 +242,93 @@ NBox {
       }
     }
 
-    ColumnLayout {
+    NScrollView {
       visible: root.filteredIndices.length > 0
       Layout.fillWidth: true
-      spacing: Style.marginXS
+      Layout.preferredHeight: root.listViewportHeight
+      horizontalPolicy: ScrollBar.AlwaysOff
+      verticalPolicy: ScrollBar.AsNeeded
+      reserveScrollbarSpace: false
 
-      Repeater {
-        model: root.filteredIndices.slice(0, root.maxItems)
+      ColumnLayout {
+        width: parent.width
+        spacing: Style.marginXS
 
-        delegate: Rectangle {
-          required property var modelData
+        Repeater {
+          model: root.showAll ? root.filteredIndices : root.filteredIndices.slice(0, root.compactItems)
 
-          readonly property int notifIndex: Number(modelData)
-          readonly property var notif: NotificationService.historyList.get(notifIndex)
-          readonly property real ts: notif && notif.timestamp ? (notif.timestamp instanceof Date ? notif.timestamp.getTime() : notif.timestamp) : 0
+          delegate: Rectangle {
+            required property var modelData
 
-          Layout.fillWidth: true
-          radius: Style.radiusS
-          color: itemMouseArea.containsMouse ? Color.mHover : "transparent"
-          implicitHeight: itemLayout.implicitHeight + Style.marginS
+            readonly property int notifIndex: Number(modelData)
+            readonly property var notif: NotificationService.historyList.get(notifIndex)
+            readonly property real ts: notif && notif.timestamp ? (notif.timestamp instanceof Date ? notif.timestamp.getTime() : notif.timestamp) : 0
 
-          Behavior on color {
-            enabled: !Color.isTransitioning
-            ColorAnimation {
-              duration: Style.animationFast
-              easing.type: Easing.InOutQuad
-            }
-          }
+            Layout.fillWidth: true
+            radius: Style.radiusS
+            color: itemMouseArea.containsMouse ? Color.mHover : "transparent"
+            implicitHeight: itemLayout.implicitHeight + Style.marginS
 
-          RowLayout {
-            id: itemLayout
-            anchors.fill: parent
-            anchors.leftMargin: Style.marginS
-            anchors.rightMargin: Style.marginS
-            anchors.topMargin: Style.marginXS
-            anchors.bottomMargin: Style.marginXS
-            spacing: Style.marginS
-
-            Rectangle {
-              visible: root.isUnread(ts)
-              width: 8
-              height: 8
-              radius: width / 2
-              color: Color.mPrimary
-              Layout.alignment: Qt.AlignTop
-              Layout.topMargin: Style.marginXS
-            }
-
-            ColumnLayout {
-              Layout.fillWidth: true
-              spacing: 0
-
-              NText {
-                text: (notif && notif.summary) ? notif.summary : "Notification"
-                font.weight: Style.fontWeightSemiBold
-                color: itemMouseArea.containsMouse ? Color.mOnHover : Color.mOnSurface
-                elide: Text.ElideRight
-                maximumLineCount: 1
-                Layout.fillWidth: true
-              }
-
-              NText {
-                text: (notif && notif.appName ? notif.appName + " • " : "") + root.formatTime(ts)
-                pointSize: Style.fontSizeXS
-                color: itemMouseArea.containsMouse ? Color.mOnHover : Color.mOnSurfaceVariant
-                elide: Text.ElideRight
-                maximumLineCount: 1
-                Layout.fillWidth: true
+            Behavior on color {
+              enabled: !Color.isTransitioning
+              ColorAnimation {
+                duration: Style.animationFast
+                easing.type: Easing.InOutQuad
               }
             }
-          }
 
-          MouseArea {
-            id: itemMouseArea
-            anchors.fill: parent
-            hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
-            onClicked: {
-              NotificationService.updateLastSeenTs();
-              PanelService.getPanel("controlCenterPanel", root.screen)?.open();
+            RowLayout {
+              id: itemLayout
+              anchors.fill: parent
+              anchors.leftMargin: Style.marginS
+              anchors.rightMargin: Style.marginS
+              anchors.topMargin: Style.marginXS
+              anchors.bottomMargin: Style.marginXS
+              spacing: Style.marginS
+
+              Rectangle {
+                visible: root.isUnread(ts)
+                width: 8
+                height: 8
+                radius: width / 2
+                color: Color.mPrimary
+                Layout.alignment: Qt.AlignTop
+                Layout.topMargin: Style.marginXS
+              }
+
+              ColumnLayout {
+                Layout.fillWidth: true
+                spacing: 0
+
+                NText {
+                  text: (notif && notif.summary) ? notif.summary : "Notification"
+                  font.weight: Style.fontWeightSemiBold
+                  color: itemMouseArea.containsMouse ? Color.mOnHover : Color.mOnSurface
+                  elide: Text.ElideRight
+                  maximumLineCount: 1
+                  Layout.fillWidth: true
+                }
+
+                NText {
+                  text: (notif && notif.appName ? notif.appName + " • " : "") + root.formatTime(ts)
+                  pointSize: Style.fontSizeXS
+                  color: itemMouseArea.containsMouse ? Color.mOnHover : Color.mOnSurfaceVariant
+                  elide: Text.ElideRight
+                  maximumLineCount: 1
+                  Layout.fillWidth: true
+                }
+              }
+            }
+
+            MouseArea {
+              id: itemMouseArea
+              anchors.fill: parent
+              hoverEnabled: true
+              cursorShape: Qt.PointingHandCursor
+              onClicked: {
+                NotificationService.updateLastSeenTs();
+                PanelService.getPanel("controlCenterPanel", root.screen)?.open();
+              }
             }
           }
         }
