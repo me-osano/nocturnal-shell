@@ -59,7 +59,7 @@ NIconButton {
   applyUiScale: false
   customRadius: Style.radiusL
   icon: NotificationService.doNotDisturb ? "bell-off" : "bell"
-  tooltipText: NotificationService.doNotDisturb ? "Notification history" : "Notification history"
+  tooltipText: NotificationService.doNotDisturb ? "Notifications" : "Notifications"
   tooltipDirection: BarService.getTooltipDirection(screen?.name)
   colorBg: Style.capsuleColor
   colorFg: Color.resolveColorKey(iconColorKey)
@@ -104,8 +104,8 @@ NIconButton {
   }
 
   onClicked: {
-    var panel = PanelService.getPanel("notificationHistoryPanel", screen);
-    panel?.toggle(this);
+    NotificationService.updateLastSeenTs();
+    PanelService.getPanel("controlCenterPanel", screen)?.toggle(this);
   }
 
   onRightClicked: {

@@ -588,7 +588,7 @@ SmartPanel {
       NText {
         id: timerText
         anchors.centerIn: parent
-        text: "{action} in {seconds} seconds..."
+        text: `${root.actionMetadata[root.pendingAction]?.title || root.pendingAction} in ${Math.max(1, Math.ceil(root.timeRemaining / 1000))} seconds...`
         font.weight: Style.fontWeightBold
         pointSize: Style.fontSizeL
         color: Color.mOnSurfaceVariant
@@ -652,7 +652,7 @@ SmartPanel {
           Layout.preferredHeight: Style.baseWidgetSize * 0.6
 
           NText {
-            text: timerActive ? "{action} in {seconds} seconds..." : "Session Menu"
+            text: timerActive ? `${root.actionMetadata[root.pendingAction]?.title || root.pendingAction} in ${Math.max(1, Math.ceil(root.timeRemaining / 1000))} seconds...` : "Session Menu"
             font.weight: Style.fontWeightBold
             pointSize: Style.fontSizeL
             color: timerActive ? Color.mPrimary : Color.mOnSurface

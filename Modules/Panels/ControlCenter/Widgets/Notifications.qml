@@ -11,6 +11,9 @@ NIconButtonHot {
   icon: NotificationService.doNotDisturb ? "bell-off" : "bell"
   hot: NotificationService.doNotDisturb
   tooltipText: "Notifications"
-  onClicked: PanelService.getPanel("notificationHistoryPanel", screen)?.toggle(this)
+  onClicked: {
+    NotificationService.updateLastSeenTs();
+    PanelService.getPanel("controlCenterPanel", screen)?.open();
+  }
   onRightClicked: NotificationService.doNotDisturb = !NotificationService.doNotDisturb
 }

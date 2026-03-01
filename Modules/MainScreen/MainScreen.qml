@@ -20,7 +20,6 @@ import qs.Modules.Panels.Dock
 import qs.Modules.Panels.Launcher
 import qs.Modules.Panels.Media
 import qs.Modules.Panels.Network
-import qs.Modules.Panels.NotificationHistory
 import qs.Modules.Panels.SessionMenu
 import qs.Modules.Panels.Settings
 import qs.Modules.Panels.SystemStats
@@ -343,12 +342,6 @@ PanelWindow {
     Launcher {
       id: launcherPanel
       objectName: "launcherPanel-" + (root.screen?.name || "unknown")
-      screen: root.screen
-    }
-
-    NotificationHistoryPanel {
-      id: notificationHistoryPanel
-      objectName: "notificationHistoryPanel-" + (root.screen?.name || "unknown")
       screen: root.screen
     }
 

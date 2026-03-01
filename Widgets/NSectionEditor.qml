@@ -187,19 +187,45 @@ NBox {
 
   // Generate widget color from name checksum
   function getWidgetColor(widget) {
-    if (widget.id.startsWith('plugin:')) {
+    var widgetId = getWidgetId(widget);
+    if (widgetId.startsWith('plugin:')) {
       return [Color.mSecondary, Color.mOnSecondary];
     }
     return [Color.mPrimary, Color.mOnPrimary];
   }
 
+  function getWidgetId(widgetData) {
+    if (!widgetData)
+      return "";
+    return widgetData.id || widgetData.widgetId || widgetData.key || "";
+  }
+
+  function getWidgetDisplayName(widgetData) {
+    var widgetId = getWidgetId(widgetData);
+    if (!widgetId)
+      return "Unknown";
+
+    if (root.widgetRegistry && root.widgetRegistry.getWidgetDisplayName && !root.widgetRegistry.isPluginWidget(widgetId)) {
+      return root.widgetRegistry.getWidgetDisplayName(widgetId);
+    }
+
+    if (root.widgetRegistry && root.widgetRegistry.isPluginWidget(widgetId)) {
+      const pluginId = widgetId.replace("plugin:", "");
+      return pluginId || "Plugin";
+    }
+
+    return widgetId.replace(/([a-z])([A-Z])/g, "$1 $2").trim();
+  }
+
   // Check if widget has settings (either core widget with metadata or plugin with settings entry point)
   function widgetHasSettings(widgetId) {
+    if (!widgetId)
+      return false;
+
     // Check if it's a plugin with settings
     if (root.widgetRegistry && root.widgetRegistry.isPluginWidget(widgetId)) {
       var pluginId = widgetId.replace("plugin:", "");
-      var manifest = Logger.w("Stubs", "PluginRegistry removed"); undefined.getPluginManifest(pluginId);
-      return manifest?.entryPoints?.settings !== undefined;
+      return pluginId !== "";
     }
 
     // Check if it's a core widget with user settings
@@ -212,21 +238,29 @@ NBox {
 
   // Open settings for a widget
   function openWidgetSettings(index, widgetData) {
+    var widgetId = getWidgetId(widgetData);
+    if (!widgetId)
+      return;
+
     // Check if this is a plugin widget
-    var isPlugin = root.widgetRegistry && root.widgetRegistry.isPluginWidget(widgetData.id);
+    var isPlugin = root.widgetRegistry && root.widgetRegistry.isPluginWidget(widgetId);
 
     if (isPlugin) {
       // Handle plugin settings - emit signal for parent to handle
-      var pluginId = widgetData.id.replace("plugin:", "");
-      var manifest = Logger.w("Stubs", "PluginRegistry removed"); undefined.getPluginManifest(pluginId);
-
-      if (!manifest || !manifest.entryPoints?.settings) {
-        Logger.e("NSectionEditor", "Plugin settings not found for:", pluginId);
+      var pluginId = widgetId.replace("plugin:", "");
+      if (!pluginId) {
+        Logger.e("NSectionEditor", "Plugin settings not found for empty plugin id");
         return;
       }
 
       // Emit signal to request opening plugin settings
-      root.openPluginSettingsRequested(manifest);
+      root.openPluginSettingsRequested({
+                                         id: pluginId,
+                                         name: pluginId,
+                                         entryPoints: {
+                                           settings: true
+                                         }
+                                       });
     } else {
       // Handle core widget settings
       var component = Qt.createComponent(Qt.resolvedUrl(root.settingsDialogComponent));
@@ -243,7 +277,7 @@ NBox {
         var dialog = component.createObject(Overlay.overlay, {
                                               "widgetIndex": index,
                                               "widgetData": widgetData,
-                                              "widgetId": widgetData.id,
+                                              "widgetId": widgetId,
                                               "sectionId": root.sectionId,
                                               "screen": root.screen
                                             });
@@ -449,7 +483,7 @@ NBox {
             // Store the widget index for drag operations
             property int widgetIndex: index
             readonly property int buttonsWidth: Math.round(20)
-            readonly property int buttonsCount: root.widgetHasSettings(modelData.id) ? 1 : 0
+            readonly property int buttonsCount: root.widgetHasSettings(root.getWidgetId(modelData)) ? 1 : 0
 
             // Visual feedback during drag
             opacity: flowDragArea.draggedIndex === index ? 0.5 : 1.0
@@ -548,17 +582,7 @@ NBox {
 
               NText {
                 text: {
-                  // For plugin widgets, get the actual plugin name from manifest
-                  if (root.widgetRegistry && root.widgetRegistry.isPluginWidget(modelData.id)) {
-                    const pluginId = modelData.id.replace("plugin:", "");
-                    const manifest = Logger.w("Stubs", "PluginRegistry removed"); undefined.getPluginManifest(pluginId);
-                    if (manifest && manifest.name) {
-                      return manifest.name;
-                    }
-                    // Fallback: just strip the prefix
-                    return pluginId;
-                  }
-                  return modelData.id;
+                  return root.getWidgetDisplayName(modelData);
                 }
                 pointSize: Style.fontSizeXS
                 color: root.getWidgetColor(modelData)[1]
@@ -573,7 +597,7 @@ NBox {
 
               // Plugin indicator icon
               NIcon {
-                visible: root.widgetRegistry && root.widgetRegistry.isPluginWidget(modelData.id)
+                visible: root.widgetRegistry && root.widgetRegistry.isPluginWidget(root.getWidgetId(modelData))
                 icon: "plugin"
                 pointSize: Style.fontSizeXXS
                 color: root.getWidgetColor(modelData)[1]
@@ -587,7 +611,7 @@ NBox {
                 Layout.preferredHeight: parent.height
 
                 Loader {
-                  active: root.widgetHasSettings(modelData.id) && root.enabled
+                  active: root.widgetHasSettings(root.getWidgetId(modelData)) && root.enabled
                   sourceComponent: NIconButton {
                     icon: "settings"
                     tooltipText: "Widget settings"
@@ -826,9 +850,10 @@ NBox {
                            const buttonsStartX = widget.width - (widget.buttonsCount * widget.buttonsWidth * Style.uiScaleRatio);
 
                            if (localX >= buttonsStartX && widget.buttonsCount > 0) {
-                             // Click is on button area - don't start drag, propagate event
+                             // Click is on settings button area - open settings directly.
+                             root.openWidgetSettings(widget.widgetIndex, widget.modelData);
                              isOverButtonArea = true;
-                             mouse.accepted = false;
+                             mouse.accepted = true;
                              return;
                            } else {
                              // This is a draggable area
@@ -864,7 +889,7 @@ NBox {
                                  if (draggedWidget) {
                                    dragGhost.width = draggedWidget.width;
                                    dragGhost.color = root.getWidgetColor(draggedModelData)[0];
-                                   ghostText.text = draggedModelData.id;
+                                   ghostText.text = root.getWidgetDisplayName(draggedModelData);
                                  }
 
                                  var startGlobal = flowDragArea.mapToGlobal(mouse.x, mouse.y);

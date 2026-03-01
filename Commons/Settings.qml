@@ -236,9 +236,6 @@ Singleton {
             "id": "Tray"
           },
           {
-            "id": "NotificationHistory"
-          },
-          {
             "id": "Battery"
           },
           {

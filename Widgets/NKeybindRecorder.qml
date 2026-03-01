@@ -44,7 +44,7 @@ Item {
     for (let i = 0; i < root.currentKeybinds.length; i++) {
       if (i !== root.recordingIndex && String(root.currentKeybinds[i]).toLowerCase() === keyStr.toLowerCase()) {
         hasConflict = true;
-        ToastService.showWarning("Keybind conflict", "The key combination is already assigned to {action}.");
+        ToastService.showWarning("Keybind conflict", "The key combination is already assigned to this action.");
         conflictTimer.restart();
         return;
       }
@@ -54,7 +54,7 @@ Item {
     const conflict = Keybinds.getKeybindConflict(keyStr, root.settingsPath, Settings.data);
     if (conflict) {
       hasConflict = true;
-      ToastService.showWarning("Keybind conflict", "The key combination is already assigned to {action}.");
+      ToastService.showWarning("Keybind conflict", `The key combination is already assigned to ${conflict}.`);
       conflictTimer.restart();
       return;
     }

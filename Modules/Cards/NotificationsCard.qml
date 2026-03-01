@@ -11,6 +11,8 @@ NBox {
 
   property var screen
   property int maxItems: 3
+  // 0 = All, 1 = Today, 2 = Yesterday, 3 = Earlier
+  property int currentRange: 1
 
   readonly property int totalCount: NotificationService.historyList.count
   readonly property int unreadCount: {
@@ -26,7 +28,59 @@ NBox {
     return count;
   }
 
+  readonly property var rangeCounts: {
+    var counts = [0, 0, 0, 0];
+    var model = NotificationService.historyList;
+    counts[0] = model.count;
+    for (var i = 0; i < model.count; i++) {
+      var item = model.get(i);
+      if (!item || item.timestamp === undefined)
+        continue;
+      var ts = item.timestamp instanceof Date ? item.timestamp.getTime() : Number(item.timestamp);
+      if (!isFinite(ts))
+        continue;
+      var range = rangeForTimestamp(ts);
+      counts[range + 1] = counts[range + 1] + 1;
+    }
+    return counts;
+  }
+
+  readonly property var filteredIndices: {
+    var list = [];
+    var model = NotificationService.historyList;
+    for (var i = 0; i < model.count; i++) {
+      var item = model.get(i);
+      if (!item || item.timestamp === undefined)
+        continue;
+      var ts = item.timestamp instanceof Date ? item.timestamp.getTime() : Number(item.timestamp);
+      if (!isFinite(ts))
+        continue;
+      if (currentRange === 0 || rangeForTimestamp(ts) === (currentRange - 1)) {
+        list.push(i);
+      }
+    }
+    return list;
+  }
+
   implicitHeight: Math.max(Math.round(128 * Style.uiScaleRatio), content.implicitHeight + Style.margin2M)
+
+  function dateOnly(dateObj) {
+    return new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
+  }
+
+  function rangeForTimestamp(ts) {
+    var dt = new Date(ts);
+    var today = dateOnly(new Date());
+    var thatDay = dateOnly(dt);
+    var diffMs = today - thatDay;
+    var diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 0)
+      return 0;
+    if (diffDays === 1)
+      return 1;
+    return 2;
+  }
 
   function formatTime(ts) {
     var date = new Date(ts);
@@ -81,9 +135,9 @@ NBox {
       }
 
       NIconButton {
-        icon: "external-link"
-        tooltipText: "Open notification history"
-        onClicked: PanelService.getPanel("notificationHistoryPanel", root.screen)?.open()
+        icon: "check"
+        tooltipText: "Mark all as read"
+        onClicked: NotificationService.updateLastSeenTs()
       }
 
       NIconButton {
@@ -103,8 +157,48 @@ NBox {
       Layout.fillWidth: true
     }
 
+    NTabBar {
+      id: rangeTabs
+      visible: root.totalCount > 0
+      Layout.fillWidth: true
+      currentIndex: root.currentRange
+      distributeEvenly: true
+
+      NTabButton {
+        tabIndex: 0
+        text: "All (" + root.rangeCounts[0] + ")"
+        checked: rangeTabs.currentIndex === 0
+        onClicked: root.currentRange = 0
+        pointSize: Style.fontSizeXS
+      }
+
+      NTabButton {
+        tabIndex: 1
+        text: "Today (" + root.rangeCounts[1] + ")"
+        checked: rangeTabs.currentIndex === 1
+        onClicked: root.currentRange = 1
+        pointSize: Style.fontSizeXS
+      }
+
+      NTabButton {
+        tabIndex: 2
+        text: "Yesterday (" + root.rangeCounts[2] + ")"
+        checked: rangeTabs.currentIndex === 2
+        onClicked: root.currentRange = 2
+        pointSize: Style.fontSizeXS
+      }
+
+      NTabButton {
+        tabIndex: 3
+        text: "Earlier (" + root.rangeCounts[3] + ")"
+        checked: rangeTabs.currentIndex === 3
+        onClicked: root.currentRange = 3
+        pointSize: Style.fontSizeXS
+      }
+    }
+
     Loader {
-      active: root.totalCount === 0
+      active: root.totalCount === 0 || root.filteredIndices.length === 0
       Layout.fillWidth: true
       sourceComponent: ColumnLayout {
         Layout.fillWidth: true
@@ -118,7 +212,7 @@ NBox {
         }
 
         NText {
-          text: "No notifications"
+          text: root.totalCount === 0 ? "No notifications" : "No notifications in this range"
           color: Color.mOnSurfaceVariant
           Layout.alignment: Qt.AlignHCenter
         }
@@ -126,17 +220,18 @@ NBox {
     }
 
     ColumnLayout {
-      visible: root.totalCount > 0
+      visible: root.filteredIndices.length > 0
       Layout.fillWidth: true
       spacing: Style.marginXS
 
       Repeater {
-        model: Math.min(root.maxItems, NotificationService.historyList.count)
+        model: root.filteredIndices.slice(0, root.maxItems)
 
         delegate: Rectangle {
-          required property int index
+          required property var modelData
 
-          readonly property var notif: NotificationService.historyList.get(index)
+          readonly property int notifIndex: Number(modelData)
+          readonly property var notif: NotificationService.historyList.get(notifIndex)
           readonly property real ts: notif && notif.timestamp ? (notif.timestamp instanceof Date ? notif.timestamp.getTime() : notif.timestamp) : 0
 
           Layout.fillWidth: true
@@ -202,7 +297,7 @@ NBox {
             cursorShape: Qt.PointingHandCursor
             onClicked: {
               NotificationService.updateLastSeenTs();
-              PanelService.getPanel("notificationHistoryPanel", root.screen)?.open();
+              PanelService.getPanel("controlCenterPanel", root.screen)?.open();
             }
           }
         }

@@ -168,10 +168,10 @@ Singleton {
   IpcHandler {
     target: "notifications"
     function toggleHistory() {
-      // Will attempt to open the panel next to the bar button if any.
+      // Notifications are now centralized in Control Center.
       root.screenDetector.withCurrentScreen(screen => {
-                                              var notificationHistoryPanel = PanelService.getPanel("notificationHistoryPanel", screen);
-                                              notificationHistoryPanel.toggle(null, "NotificationHistory");
+                                              var controlCenterPanel = PanelService.getPanel("controlCenterPanel", screen);
+                                              controlCenterPanel.toggle(null, "NotificationHistory");
                                             });
     }
     function toggleDND() {

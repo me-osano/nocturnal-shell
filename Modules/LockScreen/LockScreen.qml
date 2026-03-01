@@ -240,7 +240,7 @@ Loader {
                     }
 
                     NText {
-                      text: "{action} in {seconds} seconds..."
+                      text: `${panelComponent.pendingAction ? (panelComponent.pendingAction.charAt(0).toUpperCase() + panelComponent.pendingAction.slice(1)) : "Action"} in ${Math.max(1, Math.ceil(panelComponent.timeRemaining / 1000))} seconds...`
                       color: Color.mOnSurface
                       pointSize: Style.fontSizeL
                       horizontalAlignment: Text.AlignHCenter

@@ -138,20 +138,27 @@ Singleton {
   function formatRelativeTime(date) {
     if (!date)
       return "";
-    const diff = Date.now() - date.getTime();
+    const timestamp = date instanceof Date ? date.getTime() : Number(date);
+    if (!isFinite(timestamp))
+      return "";
+
+    const diff = Date.now() - timestamp;
+    const minutes = Math.max(1, Math.floor(diff / 60000));
+    const hours = Math.max(1, Math.floor(diff / 3600000));
+    const days = Math.max(1, Math.floor(diff / 86400000));
     if (diff < 60000)
       return "now";
     if (diff < 120000)
       return "1 minute ago";
     if (diff < 3600000)
-      return "{diff} minutes ago";
+      return `${minutes} minutes ago`;
     if (diff < 7200000)
       return "1 hour ago";
     if (diff < 86400000)
-      return "{diff} hours ago";
+      return `${hours} hours ago`;
     if (diff < 172800000)
       return "1 day ago";
-    return "{diff} days ago";
+    return `${days} days ago`;
   }
 
   // Timer functions

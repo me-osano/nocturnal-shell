@@ -130,15 +130,10 @@ ColumnLayout {
     const widgets = BarWidgetRegistry.getAvailableWidgets();
     widgets.forEach(entry => {
                       const isPlugin = BarWidgetRegistry.isPluginWidget(entry);
-                      let displayName = entry;
+                      let displayName = BarWidgetRegistry.getWidgetDisplayName(entry);
                       if (isPlugin) {
                         const pluginId = entry.replace("plugin:", "");
-                        const manifest = Logger.w("Stubs", "PluginRegistry removed"); undefined.getPluginManifest(pluginId);
-                        if (manifest && manifest.name) {
-                          displayName = manifest.name;
-                        } else {
-                          displayName = pluginId;
-                        }
+                        displayName = pluginId;
                       }
                       availableWidgets.append({
                                                 "key": entry,

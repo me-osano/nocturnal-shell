@@ -418,6 +418,46 @@ Singleton {
     return Object.keys(widgets);
   }
 
+  property var widgetDisplayNames: ({
+                                      "ActiveWindow": "Active Window",
+                                      "AudioVisualizer": "Audio Visualizer",
+                                      "Battery": "Battery",
+                                      "Bluetooth": "Bluetooth",
+                                      "Brightness": "Brightness",
+                                      "Clock": "Clock",
+                                      "ControlCenter": "Control Center",
+                                      "CustomButton": "Custom Button",
+                                      "DarkMode": "Dark Mode",
+                                      "KeyboardLayout": "Keyboard Layout",
+                                      "LockKeys": "Lock Keys",
+                                      "Launcher": "Launcher",
+                                      "MediaMini": "Media Mini",
+                                      "Microphone": "Microphone",
+                                      "Network": "Network",
+                                      "NightLight": "Night Light",
+                                      "NocturnalPerformance": "Nocturnal Performance",
+                                      "NotificationHistory": "Notifications",
+                                      "PowerProfile": "Power Profile",
+                                      "SessionMenu": "Session Menu",
+                                      "Settings": "Settings",
+                                      "Spacer": "Spacer",
+                                      "SystemMonitor": "System Monitor",
+                                      "Taskbar": "Taskbar",
+                                      "Tray": "Tray",
+                                      "Volume": "Volume",
+                                      "VPN": "VPN",
+                                      "WallpaperSelector": "Wallpaper Selector",
+                                      "Workspace": "Workspace"
+                                    })
+
+  function getWidgetDisplayName(id) {
+    if (!id)
+      return "";
+    if (widgetDisplayNames[id] !== undefined)
+      return widgetDisplayNames[id];
+    return id.replace(/([a-z])([A-Z])/g, '$1 $2').trim();
+  }
+
   // Helper function to check if widget has user settings
   function widgetHasUserSettings(id) {
     return widgetMetadata[id] !== undefined;
