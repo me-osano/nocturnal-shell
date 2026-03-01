@@ -197,6 +197,8 @@ NBox {
   function getWidgetId(widgetData) {
     if (!widgetData)
       return "";
+    if (typeof widgetData === "string")
+      return widgetData;
     return widgetData.id || widgetData.widgetId || widgetData.key || "";
   }
 
@@ -206,7 +208,9 @@ NBox {
       return "Unknown";
 
     if (root.widgetRegistry && root.widgetRegistry.getWidgetDisplayName && !root.widgetRegistry.isPluginWidget(widgetId)) {
-      return root.widgetRegistry.getWidgetDisplayName(widgetId);
+      var displayName = root.widgetRegistry.getWidgetDisplayName(widgetId);
+      if (displayName && displayName !== "")
+        return displayName;
     }
 
     if (root.widgetRegistry && root.widgetRegistry.isPluginWidget(widgetId)) {
@@ -214,7 +218,7 @@ NBox {
       return pluginId || "Plugin";
     }
 
-    return widgetId.replace(/([a-z])([A-Z])/g, "$1 $2").trim();
+    return String(widgetId).replace(/([a-z])([A-Z])/g, "$1 $2").trim();
   }
 
   // Check if widget has settings (either core widget with metadata or plugin with settings entry point)
@@ -482,7 +486,7 @@ NBox {
 
             // Store the widget index for drag operations
             property int widgetIndex: index
-            readonly property int buttonsWidth: Math.round(20)
+            readonly property int buttonsWidth: Math.round(miniButtonSize + Style.marginS)
             readonly property int buttonsCount: root.widgetHasSettings(root.getWidgetId(modelData)) ? 1 : 0
 
             // Visual feedback during drag
@@ -847,7 +851,8 @@ NBox {
                        if (widget && widget.widgetIndex !== undefined) {
                          if (mouse.x >= widget.x && mouse.x <= widget.x + widget.width && mouse.y >= widget.y && mouse.y <= widget.y + widget.height) {
                            const localX = mouse.x - widget.x;
-                           const buttonsStartX = widget.width - (widget.buttonsCount * widget.buttonsWidth * Style.uiScaleRatio);
+                           const clickTolerance = Style.marginS;
+                           const buttonsStartX = widget.width - (widget.buttonsCount * widget.buttonsWidth * Style.uiScaleRatio) - clickTolerance;
 
                            if (localX >= buttonsStartX && widget.buttonsCount > 0) {
                              // Click is on settings button area - open settings directly.

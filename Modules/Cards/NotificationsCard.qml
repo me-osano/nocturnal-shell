@@ -68,7 +68,7 @@ NBox {
 
   readonly property bool canViewAll: filteredIndices.length > compactItems
 
-  implicitHeight: Math.max(Math.round(320 * Style.uiScaleRatio), content.implicitHeight + Style.margin2M)
+  implicitHeight: Math.max(Math.round(240 * Style.uiScaleRatio), content.implicitHeight + Style.margin2M)
 
   function dateOnly(dateObj) {
     return new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());

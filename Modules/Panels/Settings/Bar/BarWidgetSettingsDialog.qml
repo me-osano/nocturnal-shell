@@ -16,6 +16,11 @@ Popup {
   property string sectionId: ""
   property var screen: null
   property var settingsCache: ({})
+  readonly property string widgetDisplayName: {
+    if (!widgetId)
+      return "Widget";
+    return BarWidgetRegistry.getWidgetDisplayName(widgetId) || widgetId;
+  }
 
   readonly property real maxHeight: (screen ? screen.height : (parent ? parent.height : 800)) * 0.8
 
@@ -62,7 +67,7 @@ Popup {
         Layout.preferredHeight: implicitHeight
 
         NText {
-          text: "{widget} Settings"
+          text: root.widgetDisplayName + " Settings"
           pointSize: Style.fontSizeL
           font.weight: Style.fontWeightBold
           color: Color.mPrimary
