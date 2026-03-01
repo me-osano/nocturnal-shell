@@ -183,6 +183,7 @@ Singleton {
       // Bar background opacity settings
       property real backgroundOpacity: 0.93
       property bool useSeparateOpacity: false
+      property bool forceContentOverlay: true
 
       // Floating bar settings
       property bool floating: false
@@ -473,6 +474,10 @@ Singleton {
         {
           "id": "brightness-card",
           "enabled": false
+        },
+        {
+          "id": "notifications-card",
+          "enabled": true
         },
         {
           "id": "weather-card",

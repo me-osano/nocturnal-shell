@@ -140,6 +140,16 @@ ColumnLayout {
     text: Math.floor(Settings.data.bar.backgroundOpacity * 100) + "%"
   }
 
+  NToggle {
+    Layout.fillWidth: true
+    visible: Settings.data.bar.useSeparateOpacity
+    label: "Force bar content above background"
+    description: "Keeps bar capsules and widgets above the bar background layer. Disable only if your compositor has overlay-layer issues."
+    checked: Settings.data.bar.forceContentOverlay !== false
+    defaultValue: Settings.getDefaultValue("bar.forceContentOverlay")
+    onToggled: checked => Settings.data.bar.forceContentOverlay = checked
+  }
+
   NValueSlider {
     Layout.fillWidth: true
     label: "Font scale"

@@ -14,6 +14,7 @@
     "fontScale": 1,
     "backgroundOpacity": 0.93,
     "useSeparateOpacity": false,
+    "forceContentOverlay": true,
     "floating": false,
     "marginVertical": 4,
     "marginHorizontal": 4,
@@ -281,6 +282,10 @@
       {
         "enabled": false,
         "id": "brightness-card"
+      },
+      {
+        "enabled": true,
+        "id": "notifications-card"
       },
       {
         "enabled": true,

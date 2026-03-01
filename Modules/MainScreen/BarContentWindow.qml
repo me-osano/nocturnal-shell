@@ -29,7 +29,9 @@ PanelWindow {
 
   // Wayland layer configuration
   WlrLayershell.namespace: "nocturnal-bar-content-" + (barWindow.screen?.name || "unknown")
-  WlrLayershell.layer: WlrLayer.Top
+  // Keep bar widgets above MainScreen's background Shape window when enabled.
+  // This prevents bar background opacity changes from visually covering capsules/widgets.
+  WlrLayershell.layer: (Settings.data.bar.forceContentOverlay !== false) ? WlrLayer.Overlay : WlrLayer.Top
   WlrLayershell.exclusionMode: ExclusionMode.Ignore // Don't reserve space - BarExclusionZone in MainScreen handles that
 
   // Position and size to match bar location (per-screen)

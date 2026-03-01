@@ -497,121 +497,121 @@ Item {
     let newTabs = [
           {
             "id": SettingsPanel.Tab.General,
-            "label": "common.general",
+            "label": "General",
             "icon": "settings-general",
             "source": generalTab
           },
           {
             "id": SettingsPanel.Tab.UserInterface,
-            "label": "panels.user-interface.title",
+            "label": "User Interface",
             "icon": "settings-user-interface",
             "source": userInterfaceTab
           },
           {
             "id": SettingsPanel.Tab.ColorScheme,
-            "label": "panels.color-scheme.title",
+            "label": "Color Scheme",
             "icon": "settings-color-scheme",
             "source": colorSchemeTab
           },
           {
             "id": SettingsPanel.Tab.Wallpaper,
-            "label": "common.wallpaper",
+            "label": "Wallpaper",
             "icon": "settings-wallpaper",
             "source": wallpaperTab
           },
           {
             "id": SettingsPanel.Tab.Bar,
-            "label": "panels.bar.title",
+            "label": "Bar",
             "icon": "settings-bar",
             "source": barTab
           },
           {
             "id": SettingsPanel.Tab.Dock,
-            "label": "panels.dock.title",
+            "label": "Dock",
             "icon": "settings-dock",
             "source": dockTab
           },
           {
             "id": SettingsPanel.Tab.DesktopWidgets,
-            "label": "panels.desktop-widgets.title",
+            "label": "Desktop Widgets",
             "icon": "clock",
             "source": desktopWidgetsTab
           },
           {
             "id": SettingsPanel.Tab.ControlCenter,
-            "label": "panels.control-center.title",
+            "label": "Control Center",
             "icon": "settings-control-center",
             "source": controlCenterTab
           },
           {
             "id": SettingsPanel.Tab.Launcher,
-            "label": "panels.launcher.title",
+            "label": "Launcher",
             "icon": "settings-launcher",
             "source": launcherTab
           },
           {
             "id": SettingsPanel.Tab.Notifications,
-            "label": "common.notifications",
+            "label": "Notifications",
             "icon": "settings-notifications",
             "source": notificationsTab
           },
           {
             "id": SettingsPanel.Tab.OSD,
-            "label": "panels.osd.title",
+            "label": "OSD",
             "icon": "settings-osd",
             "source": osdTab
           },
           {
             "id": SettingsPanel.Tab.LockScreen,
-            "label": "panels.lock-screen.title",
+            "label": "Lock Screen",
             "icon": "settings-lock-screen",
             "source": lockScreenTab
           },
           {
             "id": SettingsPanel.Tab.SessionMenu,
-            "label": "session-menu.title",
+            "label": "Session Menu",
             "icon": "settings-session-menu",
             "source": sessionMenuTab
           },
           {
             "id": SettingsPanel.Tab.Audio,
-            "label": "panels.audio.title",
+            "label": "Audio",
             "icon": "settings-audio",
             "source": audioTab
           },
           {
             "id": SettingsPanel.Tab.Display,
-            "label": "panels.display.title",
+            "label": "Display",
             "icon": "settings-display",
             "source": displayTab
           },
           {
             "id": SettingsPanel.Tab.Connections,
-            "label": "panels.connections.title",
+            "label": "Connections",
             "icon": "settings-network",
             "source": connectionsTab
           },
           {
             "id": SettingsPanel.Tab.Location,
-            "label": "panels.region.title",
+            "label": "Region",
             "icon": "settings-location",
             "source": regionTab
           },
           {
             "id": SettingsPanel.Tab.SystemMonitor,
-            "label": "system-monitor.title",
+            "label": "System Monitor",
             "icon": "settings-system-monitor",
             "source": systemMonitorTab
           },
           {
             "id": SettingsPanel.Tab.Hooks,
-            "label": "panels.hooks.title",
+            "label": "Hooks",
             "icon": "settings-hooks",
             "source": hooksTab
           },
           {
             "id": SettingsPanel.Tab.About,
-            "label": "panels.about.title",
+            "label": "About",
             "icon": "settings-about",
             "source": aboutTab
           }

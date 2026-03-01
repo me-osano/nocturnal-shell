@@ -209,7 +209,7 @@ Singleton {
                                   "NotificationHistory": {
                                     "showUnreadBadge": true,
                                     "hideWhenZero": false,
-                                    "hideWhenZeroUnread": false,
+                                    "hideWhenZeroUnread": true,
                                     "unreadBadgeColor": "primary",
                                     "iconColor": "none"
                                   },

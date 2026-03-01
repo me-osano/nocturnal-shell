@@ -38,6 +38,12 @@ ColumnLayout {
       "required": false
     },
     {
+      "id": "notifications-card",
+      "text": "Notifications Panel",
+      "enabled": true,
+      "required": false
+    },
+    {
       "id": "weather-card",
       "text": "Weather",
       "enabled": true,

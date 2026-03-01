@@ -32,11 +32,45 @@ SmartPanel {
   panelAnchorTop: !shouldCenter && controlCenterPosition !== "close_to_bar_button" && controlCenterPosition.startsWith("top_")
 
   preferredWidth: Math.round(440 * Style.uiScaleRatio)
+  readonly property var cardsForRender: {
+    const sourceCards = Settings.data.controlCenter.cards || [];
+    let cards = [];
+    for (var i = 0; i < sourceCards.length; i++) {
+      cards.push(sourceCards[i]);
+    }
+
+    var notificationsIndex = -1;
+    var weatherIndex = -1;
+    for (var j = 0; j < cards.length; j++) {
+      if (cards[j].id === "notifications-card")
+        notificationsIndex = j;
+      if (cards[j].id === "weather-card")
+        weatherIndex = j;
+    }
+
+    if (notificationsIndex === -1) {
+      const notificationCard = {
+        "enabled": true,
+        "id": "notifications-card"
+      };
+      if (weatherIndex >= 0) {
+        cards.splice(weatherIndex, 0, notificationCard);
+      } else {
+        cards.push(notificationCard);
+      }
+    } else if (weatherIndex >= 0 && notificationsIndex > weatherIndex) {
+      const moved = cards.splice(notificationsIndex, 1)[0];
+      cards.splice(weatherIndex, 0, moved);
+    }
+
+    return cards;
+  }
+
   preferredHeight: {
     var height = 0;
     var count = 0;
-    for (var i = 0; i < Settings.data.controlCenter.cards.length; i++) {
-      const card = Settings.data.controlCenter.cards[i];
+    for (var i = 0; i < cardsForRender.length; i++) {
+      const card = cardsForRender[i];
       if (!card.enabled)
         continue;
       const contributes = (card.id !== "weather-card" || Settings.data.location.weatherEnabled);
@@ -56,6 +90,9 @@ SmartPanel {
       case "brightness-card":
         height += brightnessHeight;
         break;
+      case "notifications-card":
+        height += notificationsHeight;
+        break;
       case "weather-card":
         height += weatherHeight;
         break;
@@ -73,6 +110,7 @@ SmartPanel {
   readonly property int shortcutsHeight: Math.round(52 * Style.uiScaleRatio)
   readonly property int audioHeight: Math.round(60 * Style.uiScaleRatio)
   readonly property int brightnessHeight: Math.round(60 * Style.uiScaleRatio)
+  property int notificationsHeight: Math.round(136 * Style.uiScaleRatio)
   readonly property int mediaSysMonHeight: Math.round(260 * Style.uiScaleRatio)
 
   // We keep a dynamic weather height due to a more complex layout and font scaling
@@ -97,7 +135,7 @@ SmartPanel {
       spacing: Style.marginL
 
       Repeater {
-        model: Settings.data.controlCenter.cards
+        model: root.cardsForRender
         Loader {
           active: modelData.enabled && (modelData.id !== "weather-card" || Settings.data.location.weatherEnabled)
           visible: active
@@ -112,6 +150,8 @@ SmartPanel {
               return audioHeight;
             case "brightness-card":
               return brightnessHeight;
+            case "notifications-card":
+              return notificationsHeight;
             case "weather-card":
               return weatherHeight;
             case "media-sysmon-card":
@@ -130,6 +170,8 @@ SmartPanel {
               return audioCard;
             case "brightness-card":
               return brightnessCard;
+            case "notifications-card":
+              return notificationsCard;
             case "weather-card":
               return weatherCard;
             case "media-sysmon-card":
@@ -158,6 +200,14 @@ SmartPanel {
     Component {
       id: brightnessCard
       BrightnessCard {}
+    }
+
+    Component {
+      id: notificationsCard
+      NotificationsCard {
+        screen: root.screen
+        onHeightChanged: root.notificationsHeight = this.height
+      }
     }
 
     Component {
