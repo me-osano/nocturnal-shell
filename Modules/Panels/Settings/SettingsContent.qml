@@ -52,7 +52,10 @@ Item {
   function humanizeKey(key) {
     if (!key) return "";
     try {
-      var part = key.split('.').pop();
+      // Remove ".title" suffix if present
+      var part = key.replace(/\.title$/, '');
+      // Take everything after the last dot
+      part = part.split('.').pop();
       part = part.replace(/-/g, ' ');
       var words = part.split(' ');
       for (var i = 0; i < words.length; i++) {
