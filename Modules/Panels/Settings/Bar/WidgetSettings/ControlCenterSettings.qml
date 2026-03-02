@@ -18,17 +18,17 @@ ColumnLayout {
   signal settingsChanged(var settings)
 
   // Local state - Display mode
-  property string valueDisplayMode: widgetData.displayMode !== undefined ? widgetData.displayMode : widgetMetadata.displayMode
-  property bool valueShowNetworkIcon: widgetData.showNetworkIcon !== undefined ? widgetData.showNetworkIcon : widgetMetadata.showNetworkIcon
-  property bool valueShowBluetoothIcon: widgetData.showBluetoothIcon !== undefined ? widgetData.showBluetoothIcon : widgetMetadata.showBluetoothIcon
-  property bool valueShowNotificationIcon: widgetData.showNotificationIcon !== undefined ? widgetData.showNotificationIcon : widgetMetadata.showNotificationIcon
+  property string valueDisplayMode: (widgetData && widgetData.displayMode !== undefined) ? widgetData.displayMode : ((widgetMetadata && widgetMetadata.displayMode) || "icon")
+  property bool valueShowNetworkIcon: (widgetData && widgetData.showNetworkIcon !== undefined) ? widgetData.showNetworkIcon : ((widgetMetadata && widgetMetadata.showNetworkIcon !== undefined) ? widgetMetadata.showNetworkIcon : true)
+  property bool valueShowBluetoothIcon: (widgetData && widgetData.showBluetoothIcon !== undefined) ? widgetData.showBluetoothIcon : ((widgetMetadata && widgetMetadata.showBluetoothIcon !== undefined) ? widgetMetadata.showBluetoothIcon : true)
+  property bool valueShowNotificationIcon: (widgetData && widgetData.showNotificationIcon !== undefined) ? widgetData.showNotificationIcon : ((widgetMetadata && widgetMetadata.showNotificationIcon !== undefined) ? widgetMetadata.showNotificationIcon : true)
 
   // Local state - Icon mode
-  property string valueIcon: widgetData.icon !== undefined ? widgetData.icon : widgetMetadata.icon
-  property bool valueUseDistroLogo: widgetData.useDistroLogo !== undefined ? widgetData.useDistroLogo : widgetMetadata.useDistroLogo
-  property string valueCustomIconPath: widgetData.customIconPath !== undefined ? widgetData.customIconPath : widgetMetadata.customIconPath
-  property bool valueEnableColorization: widgetData.enableColorization !== undefined ? widgetData.enableColorization : widgetMetadata.enableColorization
-  property string valueColorizeSystemIcon: widgetData.colorizeSystemIcon !== undefined ? widgetData.colorizeSystemIcon : widgetMetadata.colorizeSystemIcon
+  property string valueIcon: (widgetData && widgetData.icon !== undefined) ? widgetData.icon : ((widgetMetadata && widgetMetadata.icon) || "nocturnal")
+  property bool valueUseDistroLogo: (widgetData && widgetData.useDistroLogo !== undefined) ? widgetData.useDistroLogo : ((widgetMetadata && widgetMetadata.useDistroLogo) || false)
+  property string valueCustomIconPath: (widgetData && widgetData.customIconPath !== undefined) ? widgetData.customIconPath : ((widgetMetadata && widgetMetadata.customIconPath) || "")
+  property bool valueEnableColorization: (widgetData && widgetData.enableColorization !== undefined) ? widgetData.enableColorization : ((widgetMetadata && widgetMetadata.enableColorization) || false)
+  property string valueColorizeSystemIcon: (widgetData && widgetData.colorizeSystemIcon !== undefined) ? widgetData.colorizeSystemIcon : ((widgetMetadata && widgetMetadata.colorizeSystemIcon) || "none")
 
   function saveSettings() {
     var settings = Object.assign({}, widgetData || {});

@@ -253,7 +253,8 @@ SmartPanel {
       NotificationsCard {
         screen: root.screen
         expanded: root.notificationsCardExpanded
-        onHeightChanged: root.notificationsHeight = this.height
+        onTargetHeightChanged: root.notificationsHeight = targetHeight
+        Component.onCompleted: root.notificationsHeight = targetHeight
       }
     }
 

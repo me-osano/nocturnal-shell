@@ -108,19 +108,6 @@ NBox {
         onToggled: checked => BluetoothService.setBluetoothEnabled(checked)
         baseSize: Style.baseWidgetSize * 0.65
       }
-
-      // Collapse button
-      NIconButton {
-        icon: "chevron-up"
-        baseSize: Style.baseWidgetSize * 0.8
-        tooltipText: "Collapse"
-        onClicked: {
-          var panel = PanelService.getPanel("controlCenterPanel", screen);
-          if (panel) {
-            panel.bluetoothCardExpanded = false;
-          }
-        }
-      }
     }
 
     NDivider {
@@ -339,14 +326,16 @@ NBox {
             text: "No devices"
             pointSize: Style.fontSizeM
             color: Color.mOnSurfaceVariant
-            Layout.alignment: Qt.AlignHCenter
+            horizontalAlignment: Text.AlignHCenter
+            Layout.fillWidth: true
           }
 
           NText {
             text: "Pair devices in Settings"
             pointSize: Style.fontSizeXS
             color: Color.mOnSurfaceVariant
-            Layout.alignment: Qt.AlignHCenter
+            horizontalAlignment: Text.AlignHCenter
+            Layout.fillWidth: true
           }
 
           Item { Layout.preferredHeight: Style.marginM }

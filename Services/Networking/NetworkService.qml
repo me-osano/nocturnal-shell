@@ -1259,7 +1259,7 @@ Singleton {
         root.connecting = false;
         root.connectingTo = "";
         Logger.i("Network", "Connected to network: '" + connectProcess.ssid + "'");
-        ToastService.showNotice("Wi-Fi", "Connected to '{ssid}'", "wifi");
+        ToastService.showNotice("Wi-Fi", "Connected to '" + connectProcess.ssid + "'", "wifi");
 
         // Still do a scan to get accurate signal and security info
         delayedScanTimer.interval = 5000;
@@ -1303,7 +1303,7 @@ Singleton {
     stdout: StdioCollector {
       onStreamFinished: {
         Logger.i("Network", "Disconnected from network: '" + disconnectProcess.ssid + "'");
-        ToastService.showNotice("Wi-Fi", "Disconnected from '{ssid}'", "wifi-off");
+        ToastService.showNotice("Wi-Fi", "Disconnected from '" + disconnectProcess.ssid + "'", "wifi-off");
 
         // Immediately update UI on successful disconnect
         root.updateNetworkStatus(disconnectProcess.ssid, false);

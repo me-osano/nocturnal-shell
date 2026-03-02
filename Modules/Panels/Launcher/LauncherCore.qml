@@ -1469,7 +1469,7 @@ Rectangle {
             return "";
           }
           var prefix = root.activeProvider && root.activeProvider.name ? root.activeProvider.name + ": " : "";
-          return prefix + ((root.results.length) == 1 ? "{count} result" : "{count} results");
+          return prefix + root.results.length + ((root.results.length) == 1 ? " result" : " results");
         }
         pointSize: Style.fontSizeXS
         color: Color.mOnSurfaceVariant

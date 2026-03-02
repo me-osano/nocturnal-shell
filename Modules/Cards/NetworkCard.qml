@@ -26,6 +26,18 @@ NBox {
   // Tab selection: 0 = WiFi, 1 = Ethernet
   property int currentTab: 0
 
+  // Connected WiFi SSID
+  readonly property string connectedSsid: {
+    if (!Settings.data.network.wifiEnabled)
+      return "";
+    for (const net in NetworkService.networks) {
+      if (NetworkService.networks[net].connected) {
+        return net;
+      }
+    }
+    return "";
+  }
+
   // Computed network lists
   readonly property var knownNetworks: {
     if (!Settings.data.network.wifiEnabled)
@@ -94,7 +106,17 @@ NBox {
       Layout.fillWidth: true
       spacing: Style.marginS
 
-      // Settings button (top-left)
+      // Refresh button (top-left)
+      NIconButton {
+        visible: root.currentTab === 0
+        icon: "refresh"
+        baseSize: Style.baseWidgetSize * 0.8
+        tooltipText: "Scan for networks"
+        enabled: Settings.data.network.wifiEnabled && !NetworkService.scanning
+        onClicked: NetworkService.scan()
+      }
+
+      // Settings button
       NIconButton {
         icon: "settings"
         baseSize: Style.baseWidgetSize * 0.8
@@ -126,14 +148,15 @@ NBox {
         Layout.fillWidth: true
       }
 
-      // Refresh button (WiFi only)
-      NIconButton {
-        visible: root.currentTab === 0
-        icon: "refresh"
-        baseSize: Style.baseWidgetSize * 0.8
-        tooltipText: "Scan for networks"
-        enabled: Settings.data.network.wifiEnabled && !NetworkService.scanning
-        onClicked: NetworkService.scan()
+      // Connected network name (top-right)
+      NText {
+        visible: root.currentTab === 0 && root.connectedSsid !== ""
+        text: root.connectedSsid
+        pointSize: Style.fontSizeS
+        font.weight: Style.fontWeightMedium
+        color: Color.mPrimary
+        elide: Text.ElideRight
+        Layout.maximumWidth: 120
       }
 
       // WiFi toggle (WiFi tab only)
@@ -144,19 +167,6 @@ NBox {
         enabled: !Settings.data.network.airplaneModeEnabled && NetworkService.wifiAvailable
         onToggled: checked => NetworkService.setWifiEnabled(checked)
         baseSize: Style.baseWidgetSize * 0.65
-      }
-
-      // Collapse button
-      NIconButton {
-        icon: "chevron-up"
-        baseSize: Style.baseWidgetSize * 0.8
-        tooltipText: "Collapse"
-        onClicked: {
-          var panel = PanelService.getPanel("controlCenterPanel", screen);
-          if (panel) {
-            panel.networkCardExpanded = false;
-          }
-        }
       }
     }
 
@@ -219,14 +229,16 @@ NBox {
         text: "Wi-Fi is disabled"
         pointSize: Style.fontSizeM
         color: Color.mOnSurfaceVariant
-        Layout.alignment: Qt.AlignHCenter
+        horizontalAlignment: Text.AlignHCenter
+        Layout.fillWidth: true
       }
 
       NText {
         text: "Enable Wi-Fi to see available networks"
         pointSize: Style.fontSizeXS
         color: Color.mOnSurfaceVariant
-        Layout.alignment: Qt.AlignHCenter
+        horizontalAlignment: Text.AlignHCenter
+        Layout.fillWidth: true
       }
     }
 
@@ -253,7 +265,8 @@ NBox {
           text: "Searching for networks..."
           pointSize: Style.fontSizeS
           color: Color.mOnSurfaceVariant
-          Layout.alignment: Qt.AlignHCenter
+          horizontalAlignment: Text.AlignHCenter
+          Layout.fillWidth: true
         }
       }
 
@@ -274,7 +287,8 @@ NBox {
           text: "No networks found"
           pointSize: Style.fontSizeM
           color: Color.mOnSurfaceVariant
-          Layout.alignment: Qt.AlignHCenter
+          horizontalAlignment: Text.AlignHCenter
+          Layout.fillWidth: true
         }
 
         NButton {
@@ -407,14 +421,16 @@ NBox {
           text: "No Ethernet connection"
           pointSize: Style.fontSizeS
           color: Color.mOnSurfaceVariant
-          Layout.alignment: Qt.AlignHCenter
+          horizontalAlignment: Text.AlignHCenter
+          Layout.fillWidth: true
         }
 
         NText {
           text: "Connect an Ethernet cable to get started"
           pointSize: Style.fontSizeXS
           color: Color.mOnSurfaceVariant
-          Layout.alignment: Qt.AlignHCenter
+          horizontalAlignment: Text.AlignHCenter
+          Layout.fillWidth: true
         }
       }
     }

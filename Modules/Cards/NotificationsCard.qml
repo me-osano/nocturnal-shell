@@ -180,14 +180,6 @@ NBox {
         baseSize: Style.baseWidgetSize * 0.8
         onClicked: NotificationService.clearHistory()
       }
-
-      // Expand/collapse button
-      NIconButton {
-        icon: root.expanded ? "chevron-up" : "chevron-down"
-        baseSize: Style.baseWidgetSize * 0.8
-        tooltipText: root.expanded ? "Collapse" : "Expand"
-        onClicked: root.expanded = !root.expanded
-      }
     }
 
     // Collapsible content
