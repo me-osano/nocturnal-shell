@@ -119,9 +119,9 @@ ColumnLayout {
     }
   }
 
-  // Inline network panel - appears when WiFi shortcut is clicked
-  NetworkInlinePanel {
-    id: networkInlinePanel
+  // Inline network card - appears when WiFi shortcut is clicked
+  NetworkCard {
+    id: networkCard
     Layout.fillWidth: true
     screen: root.screen
     expanded: shortcutsRoot.networkPanelExpanded

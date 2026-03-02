@@ -39,7 +39,7 @@ ColumnLayout {
     },
     {
       "id": "notifications-card",
-      "text": "Notifications Panel",
+      "text": "Notifications",
       "enabled": true,
       "required": false
     },
