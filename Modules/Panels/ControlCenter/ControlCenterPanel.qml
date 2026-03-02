@@ -115,7 +115,7 @@ SmartPanel {
   readonly property int brightnessHeight: Math.round(60 * Style.uiScaleRatio)
   property int notificationsHeight: Math.round(136 * Style.uiScaleRatio)
   readonly property int mediaSysMonHeight: Math.round(260 * Style.uiScaleRatio)
-  property int networkHeight: Math.round(500 * Style.uiScaleRatio)
+  readonly property int networkHeight: Math.round(100 * Style.uiScaleRatio)
 
   // We keep a dynamic weather height due to a more complex layout and font scaling
   property int weatherHeight: Math.round(210 * Style.uiScaleRatio)

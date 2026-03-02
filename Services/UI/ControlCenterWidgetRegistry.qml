@@ -99,4 +99,9 @@ Singleton {
     return false;
     return cpuIntensiveWidgets.indexOf(id) >= 0;
   }
+
+  // Check if a widget is a plugin widget
+  function isPluginWidget(id) {
+    return id.startsWith("plugin:");
+  }
 }

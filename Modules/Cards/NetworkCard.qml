@@ -8,7 +8,7 @@ import qs.Services.Networking
 import qs.Services.UI
 import qs.Widgets
 
-// Network card: embedded network panel for the control center
+// Network card: network status and quick controls
 NBox {
   id: root
 
@@ -126,15 +126,11 @@ NBox {
       }
     }
 
-    // Embedded network panel content
-    Loader {
-      id: panelLoader
+    // Open network settings button
+    NButton {
+      text: "Network Settings"
       Layout.fillWidth: true
-      Layout.fillHeight: true
-      active: true
-      sourceComponent: NetworkPanel {
-        screen: root.screen
-      }
+      onClicked: SettingsPanelService.openToTab(SettingsPanel.Tab.Connections, 0, screen)
     }
   }
 }
