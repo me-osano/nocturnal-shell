@@ -13,9 +13,24 @@ ColumnLayout {
   spacing: Style.marginL
 
   // Track network panel expanded state from control center
-  property bool networkPanelExpanded: {
-    var panel = PanelService.getPanel("controlCenterPanel", root.screen);
-    return panel ? panel.networkCardExpanded : false;
+  property bool networkPanelExpanded: false
+  
+  // Get reference to the control center panel
+  property var controlCenterPanel: PanelService.getPanel("controlCenterPanel", root.screen)
+  
+  // Update networkPanelExpanded when the panel's state changes
+  Connections {
+    target: shortcutsRoot.controlCenterPanel
+    function onNetworkCardExpandedChanged() {
+      shortcutsRoot.networkPanelExpanded = shortcutsRoot.controlCenterPanel ? shortcutsRoot.controlCenterPanel.networkCardExpanded : false;
+    }
+  }
+  
+  // Initialize on completion
+  Component.onCompleted: {
+    if (controlCenterPanel) {
+      networkPanelExpanded = controlCenterPanel.networkCardExpanded;
+    }
   }
 
   // Shortcuts row with left and right boxes
@@ -110,8 +125,12 @@ ColumnLayout {
     Layout.fillWidth: true
     screen: root.screen
     expanded: shortcutsRoot.networkPanelExpanded
-    onImplicitHeightChanged: {
-      // Notify parent about height change for panel resizing
+    
+    // Update panel height whenever expanded state or implicit height changes
+    onExpandedChanged: updatePanelHeight()
+    onImplicitHeightChanged: updatePanelHeight()
+    
+    function updatePanelHeight() {
       var panel = PanelService.getPanel("controlCenterPanel", root.screen);
       if (panel) {
         panel.networkInlinePanelHeight = expanded ? implicitHeight : 0;

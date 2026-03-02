@@ -152,7 +152,8 @@ SmartPanel {
       Repeater {
         model: root.cardsForRender
         Loader {
-          active: modelData.enabled && (modelData.id !== "weather-card" || Settings.data.location.weatherEnabled)
+          // Skip network-card as it's now inline in shortcuts card
+          active: modelData.enabled && modelData.id !== "network-card" && (modelData.id !== "weather-card" || Settings.data.location.weatherEnabled)
           visible: active
           Layout.fillWidth: true
           Layout.preferredHeight: {
@@ -160,15 +161,15 @@ SmartPanel {
             case "profile-card":
               return profileHeight;
             case "shortcuts-card":
-              return shortcutsHeight;
+              // Include inline network panel height when expanded
+              return shortcutsHeight + (networkCardExpanded ? networkInlinePanelHeight + Style.marginL : 0);
             case "audio-card":
               return audioHeight;
             case "brightness-card":
               return brightnessHeight;
             case "notifications-card":
+              // Dynamic height based on expanded state
               return notificationsHeight;
-            case "network-card":
-              return 0; // Network is now inline in shortcuts card
             case "weather-card":
               return weatherHeight;
             case "media-sysmon-card":
@@ -189,12 +190,12 @@ SmartPanel {
               return brightnessCard;
             case "notifications-card":
               return notificationsCard;
-            case "network-card":
-              return null; // Network is now inline in shortcuts card
             case "weather-card":
               return weatherCard;
             case "media-sysmon-card":
               return mediaSysMonCard;
+            default:
+              return null;
             }
           }
         }
