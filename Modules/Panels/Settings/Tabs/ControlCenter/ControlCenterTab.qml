@@ -46,7 +46,7 @@ ColumnLayout {
     {
       "id": "network-card",
       "text": "Network",
-      "enabled": false,
+      "enabled": true,
       "required": false
     },
     {

@@ -32,6 +32,13 @@ SmartPanel {
   panelAnchorTop: !shouldCenter && controlCenterPosition !== "close_to_bar_button" && controlCenterPosition.startsWith("top_")
 
   preferredWidth: Math.round(440 * Style.uiScaleRatio)
+
+  // Network card expanded state
+  property bool networkCardExpanded: false
+
+  // Notifications card expanded state
+  property bool notificationsCardExpanded: true
+
   readonly property var cardsForRender: {
     const sourceCards = Settings.data.controlCenter.cards || [];
     let cards = [];
@@ -113,7 +120,7 @@ SmartPanel {
   readonly property int shortcutsHeight: Math.round(52 * Style.uiScaleRatio)
   readonly property int audioHeight: Math.round(60 * Style.uiScaleRatio)
   readonly property int brightnessHeight: Math.round(60 * Style.uiScaleRatio)
-  property int notificationsHeight: Math.round(136 * Style.uiScaleRatio)
+  property int notificationsHeight: Math.round(110 * Style.uiScaleRatio)
   readonly property int mediaSysMonHeight: Math.round(260 * Style.uiScaleRatio)
   readonly property int networkHeight: Math.round(100 * Style.uiScaleRatio)
 
@@ -214,6 +221,7 @@ SmartPanel {
       id: notificationsCard
       NotificationsCard {
         screen: root.screen
+        expanded: root.notificationsCardExpanded
         onHeightChanged: root.notificationsHeight = this.height
       }
     }
@@ -222,6 +230,7 @@ SmartPanel {
       id: networkCard
       NetworkCard {
         screen: root.screen
+        expanded: root.networkCardExpanded
         onHeightChanged: root.networkHeight = this.height
       }
     }

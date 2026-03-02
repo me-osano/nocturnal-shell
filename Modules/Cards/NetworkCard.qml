@@ -8,11 +8,23 @@ import qs.Services.Networking
 import qs.Services.UI
 import qs.Widgets
 
-// Network card: network status and quick controls
+// Network card: collapsible network status and quick controls
 NBox {
   id: root
 
   property ShellScreen screen
+  property bool expanded: false
+
+  clip: true
+  
+  Behavior on implicitHeight {
+    NumberAnimation {
+      duration: Style.animationNormal
+      easing.type: Easing.InOutQuad
+    }
+  }
+
+  implicitHeight: expanded ? (headerRow.implicitHeight + Style.margin2M + content.implicitHeight + Style.margin2M) : (headerRow.implicitHeight + Style.margin2M)
 
   ColumnLayout {
     anchors.fill: parent
@@ -21,6 +33,7 @@ NBox {
 
     // Header
     RowLayout {
+      id: headerRow
       Layout.fillWidth: true
       spacing: Style.marginM
 
@@ -124,13 +137,57 @@ NBox {
         onToggled: checked => NetworkService.setWifiEnabled(checked)
         baseSize: Style.baseWidgetSize * 0.65
       }
+
+      // Expand/collapse button
+      NIconButton {
+        icon: root.expanded ? "chevron-up" : "chevron-down"
+        baseSize: Style.baseWidgetSize * 0.8
+        tooltipText: root.expanded ? "Collapse" : "Expand"
+        onClicked: root.expanded = !root.expanded
+      }
     }
 
-    // Open network settings button
-    NButton {
-      text: "Network Settings"
+    // Collapsible content
+    Item {
+      id: content
+      visible: root.expanded
       Layout.fillWidth: true
-      onClicked: SettingsPanelService.openToTab(SettingsPanel.Tab.Connections, 0, screen)
+      implicitHeight: contentColumn.implicitHeight
+
+      ColumnLayout {
+        id: contentColumn
+        width: parent.width
+        spacing: Style.marginM
+
+        Rectangle {
+          Layout.fillWidth: true
+          Layout.preferredHeight: 1
+          color: Color.mOutline
+          opacity: 0.2
+        }
+
+        // Network Settings button
+        NButton {
+          text: "Network Settings"
+          Layout.fillWidth: true
+          onClicked: SettingsPanelService.openToTab(SettingsPanel.Tab.Connections, 0, screen)
+        }
+
+        // WiFi Networks list placeholder
+        NText {
+          text: "Available Networks"
+          font.weight: Style.fontWeightBold
+          pointSize: Style.fontSizeS
+          Layout.fillWidth: true
+        }
+
+        NText {
+          text: Settings.data.network.wifiEnabled ? "Scan for networks..." : "Enable Wi-Fi to see networks"
+          pointSize: Style.fontSizeXS
+          color: Color.mOnSurfaceVariant
+          Layout.fillWidth: true
+        }
+      }
     }
   }
 }

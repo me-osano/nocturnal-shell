@@ -37,7 +37,7 @@ NIconButton {
   customRadius: Style.radiusL
   visible: PowerProfileService.available
   icon: PowerProfileService.getIcon()
-  tooltipText: "{profile} power profile"
+  tooltipText: PowerProfileService.getName() + " power profile"
   tooltipDirection: BarService.getTooltipDirection(screen?.name)
   colorBg: (PowerProfileService.profile === PowerProfile.Balanced) ? Style.capsuleColor : Color.mPrimary
   colorFg: (PowerProfileService.profile === PowerProfile.Balanced) ? Color.resolveColorKey(iconColorKey) : Color.mOnPrimary

@@ -10,13 +10,25 @@ NBox {
   id: root
 
   property var screen
+  property bool expanded: (root.unreadCount > 0)
   property int compactItems: 5
   property bool showAll: false
-  readonly property real compactViewportHeight: Math.round(220 * Style.uiScaleRatio)
-  readonly property real expandedViewportHeight: Math.round(340 * Style.uiScaleRatio)
+  readonly property real compactViewportHeight: Math.round(160 * Style.uiScaleRatio)
+  readonly property real expandedViewportHeight: Math.round(260 * Style.uiScaleRatio)
   readonly property real listViewportHeight: showAll ? expandedViewportHeight : compactViewportHeight
   // 0 = All, 1 = Today, 2 = Yesterday, 3 = Earlier
   property int currentRange: 1
+
+  clip: true
+
+  Behavior on implicitHeight {
+    NumberAnimation {
+      duration: Style.animationNormal
+      easing.type: Easing.InOutQuad
+    }
+  }
+
+  implicitHeight: expanded ? (headerRow.implicitHeight + Style.margin2M + contentArea.implicitHeight + Style.margin2M) : (headerRow.implicitHeight + Style.margin2M)
 
   readonly property int totalCount: NotificationService.historyList.count
   readonly property int unreadCount: {
@@ -104,6 +116,7 @@ NBox {
     spacing: Style.marginS
 
     RowLayout {
+      id: headerRow
       Layout.fillWidth: true
       spacing: Style.marginS
 
@@ -157,104 +170,123 @@ NBox {
         tooltipText: "Clear notification history"
         onClicked: NotificationService.clearHistory()
       }
-    }
 
-    NDivider {
-      Layout.fillWidth: true
-    }
-
-    NTabBar {
-      id: rangeTabs
-      visible: root.totalCount > 0
-      Layout.fillWidth: true
-      currentIndex: root.currentRange
-      distributeEvenly: true
-
-      NTabButton {
-        tabIndex: 0
-        text: "All (" + root.rangeCounts[0] + ")"
-        checked: rangeTabs.currentIndex === 0
-        onClicked: root.currentRange = 0
-        pointSize: Style.fontSizeXS
-      }
-
-      NTabButton {
-        tabIndex: 1
-        text: "Today (" + root.rangeCounts[1] + ")"
-        checked: rangeTabs.currentIndex === 1
-        onClicked: root.currentRange = 1
-        pointSize: Style.fontSizeXS
-      }
-
-      NTabButton {
-        tabIndex: 2
-        text: "Yesterday (" + root.rangeCounts[2] + ")"
-        checked: rangeTabs.currentIndex === 2
-        onClicked: root.currentRange = 2
-        pointSize: Style.fontSizeXS
-      }
-
-      NTabButton {
-        tabIndex: 3
-        text: "Earlier (" + root.rangeCounts[3] + ")"
-        checked: rangeTabs.currentIndex === 3
-        onClicked: root.currentRange = 3
-        pointSize: Style.fontSizeXS
+      // Expand/collapse button
+      NIconButton {
+        icon: root.expanded ? "chevron-up" : "chevron-down"
+        baseSize: Style.baseWidgetSize * 0.8
+        tooltipText: root.expanded ? "Collapse" : "Expand"
+        onClicked: root.expanded = !root.expanded
       }
     }
 
-    RowLayout {
-      visible: root.filteredIndices.length > 0 && root.canViewAll
+    // Collapsible content
+    Item {
+      id: contentArea
+      visible: root.expanded
       Layout.fillWidth: true
-      spacing: Style.marginS
-
-      Item {
-        Layout.fillWidth: true
-      }
-
-      NButton {
-        icon: root.showAll ? "chevron-up" : "chevron-down"
-        text: root.showAll ? "Show less" : "View all"
-        outlined: true
-        onClicked: root.showAll = !root.showAll
-      }
-    }
-
-    Loader {
-      active: root.totalCount === 0 || root.filteredIndices.length === 0
-      Layout.fillWidth: true
-      sourceComponent: ColumnLayout {
-        Layout.fillWidth: true
-        spacing: Style.marginXS
-
-        NIcon {
-          icon: "bell-off"
-          pointSize: Style.fontSizeXXL
-          color: Color.mOnSurfaceVariant
-          Layout.alignment: Qt.AlignHCenter
-        }
-
-        NText {
-          text: root.totalCount === 0 ? "No notifications" : "No notifications in this range"
-          color: Color.mOnSurfaceVariant
-          Layout.alignment: Qt.AlignHCenter
-        }
-      }
-    }
-
-    NScrollView {
-      visible: root.filteredIndices.length > 0
-      Layout.fillWidth: true
-      Layout.preferredHeight: root.listViewportHeight
-      horizontalPolicy: ScrollBar.AlwaysOff
-      verticalPolicy: ScrollBar.AsNeeded
-      reserveScrollbarSpace: false
+      implicitHeight: contentColumn.implicitHeight
 
       ColumnLayout {
+        id: contentColumn
         width: parent.width
-        spacing: Style.marginXS
+        spacing: Style.marginS
 
-        Repeater {
+        NDivider {
+          Layout.fillWidth: true
+        }
+
+        NTabBar {
+          id: rangeTabs
+          visible: root.totalCount > 0
+          Layout.fillWidth: true
+          currentIndex: root.currentRange
+          distributeEvenly: true
+
+          NTabButton {
+            tabIndex: 0
+            text: "All (" + root.rangeCounts[0] + ")"
+            checked: rangeTabs.currentIndex === 0
+            onClicked: root.currentRange = 0
+            pointSize: Style.fontSizeXS
+          }
+
+          NTabButton {
+            tabIndex: 1
+            text: "Today (" + root.rangeCounts[1] + ")"
+            checked: rangeTabs.currentIndex === 1
+            onClicked: root.currentRange = 1
+            pointSize: Style.fontSizeXS
+          }
+
+          NTabButton {
+            tabIndex: 2
+            text: "Yesterday (" + root.rangeCounts[2] + ")"
+            checked: rangeTabs.currentIndex === 2
+            onClicked: root.currentRange = 2
+            pointSize: Style.fontSizeXS
+          }
+
+          NTabButton {
+            tabIndex: 3
+            text: "Earlier (" + root.rangeCounts[3] + ")"
+            checked: rangeTabs.currentIndex === 3
+            onClicked: root.currentRange = 3
+            pointSize: Style.fontSizeXS
+          }
+        }
+
+        RowLayout {
+          visible: root.filteredIndices.length > 0 && root.canViewAll
+          Layout.fillWidth: true
+          spacing: Style.marginS
+
+          Item {
+            Layout.fillWidth: true
+          }
+
+          NButton {
+            icon: root.showAll ? "chevron-up" : "chevron-down"
+            text: root.showAll ? "Show less" : "View all"
+            outlined: true
+            onClicked: root.showAll = !root.showAll
+          }
+        }
+
+        Loader {
+          active: root.totalCount === 0 || root.filteredIndices.length === 0
+          Layout.fillWidth: true
+          sourceComponent: ColumnLayout {
+            Layout.fillWidth: true
+            spacing: Style.marginXS
+
+            NIcon {
+              icon: "bell-off"
+              pointSize: Style.fontSizeXXL
+              color: Color.mOnSurfaceVariant
+              Layout.alignment: Qt.AlignHCenter
+            }
+
+              text: root.totalCount === 0 ? "No notifications" : "No notifications in this range"
+              color: Color.mOnSurfaceVariant
+              Layout.alignment: Qt.AlignHCenter
+            }
+          }
+        }
+
+        NScrollView {
+          visible: root.filteredIndices.length > 0
+          Layout.fillWidth: true
+          Layout.preferredHeight: root.listViewportHeight
+          horizontalPolicy: ScrollBar.AlwaysOff
+          verticalPolicy: ScrollBar.AsNeeded
+          reserveScrollbarSpace: false
+
+          ColumnLayout {
+            width: parent.width
+            spacing: Style.marginXS
+
+            Repeater {
           model: root.showAll ? root.filteredIndices : root.filteredIndices.slice(0, root.compactItems)
 
           delegate: Rectangle {

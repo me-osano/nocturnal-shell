@@ -478,7 +478,7 @@ Singleton {
         },
         {
           "id": "network-card",
-          "enabled": false
+          "enabled": true
         },
         {
           "id": "weather-card",
