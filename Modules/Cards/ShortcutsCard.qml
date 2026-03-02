@@ -4,88 +4,117 @@ import QtQuick.Layouts
 import Quickshell
 import qs.Commons
 import qs.Modules.Panels.ControlCenter
+import qs.Services.UI
 import qs.Widgets
 
-RowLayout {
+ColumnLayout {
+  id: shortcutsRoot
   Layout.fillWidth: true
   spacing: Style.marginL
 
-  NBox {
+  // Track network panel expanded state from control center
+  property bool networkPanelExpanded: {
+    var panel = PanelService.getPanel("controlCenterPanel", root.screen);
+    return panel ? panel.networkCardExpanded : false;
+  }
+
+  // Shortcuts row with left and right boxes
+  RowLayout {
     Layout.fillWidth: true
-    Layout.preferredHeight: root.shortcutsHeight
-    visible: Settings.data.controlCenter.shortcuts.left.length > 0
+    spacing: Style.marginL
 
-    RowLayout {
-      id: leftContent
-      anchors.fill: parent
-      spacing: Style.marginS
+    NBox {
+      Layout.fillWidth: true
+      Layout.preferredHeight: root.shortcutsHeight
+      visible: Settings.data.controlCenter.shortcuts.left.length > 0
 
-      Item {
-        Layout.fillWidth: true
-      }
+      RowLayout {
+        id: leftContent
+        anchors.fill: parent
+        spacing: Style.marginS
 
-      Repeater {
-        model: Settings.data.controlCenter.shortcuts.left
-        delegate: ControlCenterWidgetLoader {
-          required property var modelData
-          required property int index
+        Item {
+          Layout.fillWidth: true
+        }
 
-          Layout.fillWidth: false
-          widgetId: (modelData.id !== undefined ? modelData.id : "")
-          widgetScreen: root.screen
-          widgetProps: {
-            "widgetId": modelData.id,
-            "section": "quickSettings",
-            "sectionWidgetIndex": index,
-            "sectionWidgetsCount": Settings.data.controlCenter.shortcuts.left.length,
-            "widgetSettings": modelData
+        Repeater {
+          model: Settings.data.controlCenter.shortcuts.left
+          delegate: ControlCenterWidgetLoader {
+            required property var modelData
+            required property int index
+
+            Layout.fillWidth: false
+            widgetId: (modelData.id !== undefined ? modelData.id : "")
+            widgetScreen: root.screen
+            widgetProps: {
+              "widgetId": modelData.id,
+              "section": "quickSettings",
+              "sectionWidgetIndex": index,
+              "sectionWidgetsCount": Settings.data.controlCenter.shortcuts.left.length,
+              "widgetSettings": modelData
+            }
+            Layout.alignment: Qt.AlignVCenter
           }
-          Layout.alignment: Qt.AlignVCenter
+        }
+
+        Item {
+          Layout.fillWidth: true
         }
       }
+    }
 
-      Item {
-        Layout.fillWidth: true
+    NBox {
+      Layout.fillWidth: true
+      Layout.preferredHeight: root.shortcutsHeight
+      visible: Settings.data.controlCenter.shortcuts.right.length > 0
+
+      RowLayout {
+        id: rightContent
+        anchors.fill: parent
+        spacing: Style.marginS
+
+        Item {
+          Layout.fillWidth: true
+        }
+
+        Repeater {
+          model: Settings.data.controlCenter.shortcuts.right
+          delegate: ControlCenterWidgetLoader {
+            required property var modelData
+            required property int index
+
+            Layout.fillWidth: false
+            widgetId: (modelData.id !== undefined ? modelData.id : "")
+            widgetScreen: root.screen
+            widgetProps: {
+              "widgetId": modelData.id,
+              "section": "quickSettings",
+              "sectionWidgetIndex": index,
+              "sectionWidgetsCount": Settings.data.controlCenter.shortcuts.right.length,
+              "widgetSettings": modelData
+            }
+            Layout.alignment: Qt.AlignVCenter
+          }
+        }
+
+        Item {
+          Layout.fillWidth: true
+        }
       }
     }
   }
 
-  NBox {
+  // Inline network panel - appears when WiFi shortcut is clicked
+  NetworkInlinePanel {
+    id: networkInlinePanel
     Layout.fillWidth: true
-    Layout.preferredHeight: root.shortcutsHeight
-    visible: Settings.data.controlCenter.shortcuts.right.length > 0
-
-    RowLayout {
-      id: rightContent
-      anchors.fill: parent
-      spacing: Style.marginS
-
-      Item {
-        Layout.fillWidth: true
-      }
-
-      Repeater {
-        model: Settings.data.controlCenter.shortcuts.right
-        delegate: ControlCenterWidgetLoader {
-          required property var modelData
-          required property int index
-
-          Layout.fillWidth: false
-          widgetId: (modelData.id !== undefined ? modelData.id : "")
-          widgetScreen: root.screen
-          widgetProps: {
-            "widgetId": modelData.id,
-            "section": "quickSettings",
-            "sectionWidgetIndex": index,
-            "sectionWidgetsCount": Settings.data.controlCenter.shortcuts.right.length,
-            "widgetSettings": modelData
-          }
-          Layout.alignment: Qt.AlignVCenter
-        }
-      }
-
-      Item {
-        Layout.fillWidth: true
+    screen: root.screen
+    expanded: shortcutsRoot.networkPanelExpanded
+    onImplicitHeightChanged: {
+      // Notify parent about height change for panel resizing
+      var panel = PanelService.getPanel("controlCenterPanel", root.screen);
+      if (panel) {
+        panel.networkInlinePanelHeight = expanded ? implicitHeight : 0;
       }
     }
   }

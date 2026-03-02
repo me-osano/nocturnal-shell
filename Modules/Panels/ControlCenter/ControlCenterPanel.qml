@@ -33,8 +33,11 @@ SmartPanel {
 
   preferredWidth: Math.round(440 * Style.uiScaleRatio)
 
-  // Network card expanded state
+  // Network inline panel expanded state (shown in shortcuts card)
   property bool networkCardExpanded: false
+
+  // Network inline panel height (dynamic, updated by ShortcutsCard)
+  property int networkInlinePanelHeight: 0
 
   // Notifications card expanded state
   property bool notificationsCardExpanded: true
@@ -89,7 +92,7 @@ SmartPanel {
         height += profileHeight;
         break;
       case "shortcuts-card":
-        height += shortcutsHeight;
+        height += shortcutsHeight + (networkCardExpanded ? networkInlinePanelHeight + Style.marginL : 0);
         break;
       case "audio-card":
         height += audioHeight;
@@ -101,7 +104,8 @@ SmartPanel {
         height += notificationsHeight;
         break;
       case "network-card":
-        height += networkHeight;
+        // Network card is now inline in shortcuts card, skip it
+        count--; // Don't count it as a separate card
         break;
       case "weather-card":
         height += weatherHeight;
@@ -164,7 +168,7 @@ SmartPanel {
             case "notifications-card":
               return notificationsHeight;
             case "network-card":
-              return networkHeight;
+              return 0; // Network is now inline in shortcuts card
             case "weather-card":
               return weatherHeight;
             case "media-sysmon-card":
@@ -186,7 +190,7 @@ SmartPanel {
             case "notifications-card":
               return notificationsCard;
             case "network-card":
-              return networkCard;
+              return null; // Network is now inline in shortcuts card
             case "weather-card":
               return weatherCard;
             case "media-sysmon-card":
