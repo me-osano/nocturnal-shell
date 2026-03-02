@@ -137,6 +137,9 @@ SmartPanel {
 
   onClosed: {
     MediaService.autoSwitchingPaused = false;
+    // Reset network inline panel state so it's hidden on next open
+    networkCardExpanded = false;
+    networkInlinePanelHeight = 0;
   }
 
   panelContent: Item {

@@ -14,6 +14,9 @@ NBox {
 
   property ShellScreen screen
   property bool expanded: false
+  
+  // Expose the target height (non-animated) for parent layout calculations
+  readonly property real targetHeight: expanded ? contentColumn.implicitHeight + Style.margin2M : 0
 
   clip: true
   visible: expanded

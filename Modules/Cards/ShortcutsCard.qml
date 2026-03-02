@@ -126,14 +126,15 @@ ColumnLayout {
     screen: root.screen
     expanded: shortcutsRoot.networkPanelExpanded
     
-    // Update panel height whenever expanded state or implicit height changes
+    // Update panel height whenever expanded state or target height changes
     onExpandedChanged: updatePanelHeight()
-    onImplicitHeightChanged: updatePanelHeight()
+    onTargetHeightChanged: updatePanelHeight()
     
     function updatePanelHeight() {
       var panel = PanelService.getPanel("controlCenterPanel", root.screen);
       if (panel) {
-        panel.networkInlinePanelHeight = expanded ? implicitHeight : 0;
+        // Use targetHeight (non-animated) so the container resizes immediately
+        panel.networkInlinePanelHeight = targetHeight;
       }
     }
   }
