@@ -15,14 +15,20 @@ ColumnLayout {
   // Track network panel expanded state from control center
   property bool networkPanelExpanded: false
   
+  // Track bluetooth panel expanded state from control center
+  property bool bluetoothPanelExpanded: false
+  
   // Get reference to the control center panel
   property var controlCenterPanel: PanelService.getPanel("controlCenterPanel", root.screen)
   
-  // Update networkPanelExpanded when the panel's state changes
+  // Update panel expanded states when the panel's state changes
   Connections {
     target: shortcutsRoot.controlCenterPanel
     function onNetworkCardExpandedChanged() {
       shortcutsRoot.networkPanelExpanded = shortcutsRoot.controlCenterPanel ? shortcutsRoot.controlCenterPanel.networkCardExpanded : false;
+    }
+    function onBluetoothCardExpandedChanged() {
+      shortcutsRoot.bluetoothPanelExpanded = shortcutsRoot.controlCenterPanel ? shortcutsRoot.controlCenterPanel.bluetoothCardExpanded : false;
     }
   }
   
@@ -30,6 +36,7 @@ ColumnLayout {
   Component.onCompleted: {
     if (controlCenterPanel) {
       networkPanelExpanded = controlCenterPanel.networkCardExpanded;
+      bluetoothPanelExpanded = controlCenterPanel.bluetoothCardExpanded;
     }
   }
 
@@ -135,6 +142,26 @@ ColumnLayout {
       if (panel) {
         // Use targetHeight (non-animated) so the container resizes immediately
         panel.networkInlinePanelHeight = targetHeight;
+      }
+    }
+  }
+
+  // Inline bluetooth card - appears when Bluetooth shortcut is clicked
+  BluetoothCard {
+    id: bluetoothCard
+    Layout.fillWidth: true
+    screen: root.screen
+    expanded: shortcutsRoot.bluetoothPanelExpanded
+    
+    // Update panel height whenever expanded state or target height changes
+    onExpandedChanged: updatePanelHeight()
+    onTargetHeightChanged: updatePanelHeight()
+    
+    function updatePanelHeight() {
+      var panel = PanelService.getPanel("controlCenterPanel", root.screen);
+      if (panel) {
+        // Use targetHeight (non-animated) so the container resizes immediately
+        panel.bluetoothInlinePanelHeight = targetHeight;
       }
     }
   }

@@ -168,7 +168,7 @@ NBox {
       }
 
       NIconButton {
-        icon: NotificationService.doNotDisturb ? "bell" : "bell-off"
+        icon: NotificationService.doNotDisturb ? "bell-off" : "bell"
         tooltipText: NotificationService.doNotDisturb ? "Disable Do Not Disturb" : "Enable Do Not Disturb"
         baseSize: Style.baseWidgetSize * 0.8
         onClicked: NotificationService.doNotDisturb = !NotificationService.doNotDisturb
@@ -251,6 +251,7 @@ NBox {
         ColumnLayout {
           visible: root.totalCount === 0 || root.filteredIndices.length === 0
           Layout.fillWidth: true
+          Layout.alignment: Qt.AlignHCenter
           spacing: Style.marginS
 
           Item { Layout.preferredHeight: Style.marginM }
@@ -266,7 +267,8 @@ NBox {
             text: root.totalCount === 0 ? "No notifications" : "No notifications in this range"
             pointSize: Style.fontSizeS
             color: Color.mOnSurfaceVariant
-            Layout.alignment: Qt.AlignHCenter
+            horizontalAlignment: Text.AlignHCenter
+            Layout.fillWidth: true
           }
 
           NText {
@@ -274,7 +276,8 @@ NBox {
             text: "Notifications will appear here"
             pointSize: Style.fontSizeXS
             color: Color.mOnSurfaceVariant
-            Layout.alignment: Qt.AlignHCenter
+            horizontalAlignment: Text.AlignHCenter
+            Layout.fillWidth: true
           }
 
           Item { Layout.preferredHeight: Style.marginM }

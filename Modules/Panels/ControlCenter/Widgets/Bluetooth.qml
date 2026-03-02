@@ -11,9 +11,11 @@ NIconButtonHot {
   icon: !BluetoothService.enabled ? "bluetooth-off" : ((BluetoothService.connectedDevices && BluetoothService.connectedDevices.length > 0) ? "bluetooth-connected" : "bluetooth")
   tooltipText: "Bluetooth"
   onClicked: {
-    var p = PanelService.getPanel("bluetoothPanel", screen);
-    if (p)
-      p.toggle(this);
+    // Toggle bluetooth card expanded state in control center
+    var panel = PanelService.getPanel("controlCenterPanel", screen);
+    if (panel) {
+      panel.bluetoothCardExpanded = !panel.bluetoothCardExpanded;
+    }
   }
   onRightClicked: {
     if (!Settings.data.network.airplaneModeEnabled) {

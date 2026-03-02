@@ -39,6 +39,27 @@ SmartPanel {
   // Network inline panel height (dynamic, updated by ShortcutsCard)
   property int networkInlinePanelHeight: 0
 
+  // Bluetooth inline panel expanded state (shown in shortcuts card)
+  property bool bluetoothCardExpanded: false
+
+  // Bluetooth inline panel height (dynamic, updated by ShortcutsCard)
+  property int bluetoothInlinePanelHeight: 0
+
+  // Ensure only one inline panel is open at a time
+  onNetworkCardExpandedChanged: {
+    if (networkCardExpanded && bluetoothCardExpanded) {
+      bluetoothCardExpanded = false;
+      bluetoothInlinePanelHeight = 0;
+    }
+  }
+
+  onBluetoothCardExpandedChanged: {
+    if (bluetoothCardExpanded && networkCardExpanded) {
+      networkCardExpanded = false;
+      networkInlinePanelHeight = 0;
+    }
+  }
+
   // Notifications card expanded state
   property bool notificationsCardExpanded: true
 
@@ -92,7 +113,7 @@ SmartPanel {
         height += profileHeight;
         break;
       case "shortcuts-card":
-        height += shortcutsHeight + (networkCardExpanded ? networkInlinePanelHeight + Style.marginL : 0);
+        height += shortcutsHeight + (networkCardExpanded ? networkInlinePanelHeight + Style.marginL : 0) + (bluetoothCardExpanded ? bluetoothInlinePanelHeight + Style.marginL : 0);
         break;
       case "audio-card":
         height += audioHeight;
@@ -137,9 +158,11 @@ SmartPanel {
 
   onClosed: {
     MediaService.autoSwitchingPaused = false;
-    // Reset network inline panel state so it's hidden on next open
+    // Reset inline panel states so they're hidden on next open
     networkCardExpanded = false;
     networkInlinePanelHeight = 0;
+    bluetoothCardExpanded = false;
+    bluetoothInlinePanelHeight = 0;
   }
 
   panelContent: Item {
@@ -164,8 +187,8 @@ SmartPanel {
             case "profile-card":
               return profileHeight;
             case "shortcuts-card":
-              // Include inline network panel height when expanded
-              return shortcutsHeight + (networkCardExpanded ? networkInlinePanelHeight + Style.marginL : 0);
+              // Include inline network/bluetooth panel height when expanded
+              return shortcutsHeight + (networkCardExpanded ? networkInlinePanelHeight + Style.marginL : 0) + (bluetoothCardExpanded ? bluetoothInlinePanelHeight + Style.marginL : 0);
             case "audio-card":
               return audioHeight;
             case "brightness-card":

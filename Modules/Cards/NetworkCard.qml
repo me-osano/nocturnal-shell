@@ -22,6 +22,9 @@ NBox {
   // Password and expand states for WiFi networks
   property string passwordSsid: ""
   property string expandedSsid: ""
+  
+  // Tab selection: 0 = WiFi, 1 = Ethernet
+  property int currentTab: 0
 
   // Computed network lists
   readonly property var knownNetworks: {
@@ -91,101 +94,39 @@ NBox {
       Layout.fillWidth: true
       spacing: Style.marginS
 
-      NIcon {
-        id: headerIcon
-        pointSize: Style.fontSizeXL
-        color: {
-          try {
-            if (NetworkService.ethernetConnected) {
-              return Color.mPrimary;
-            }
-            for (const net in NetworkService.networks) {
-              if (NetworkService.networks[net].connected) {
-                return Color.mPrimary;
-              }
-            }
-            return Color.mOnSurfaceVariant;
-          } catch (e) {
-            return Color.mOnSurfaceVariant;
-          }
-        }
-        icon: {
-          try {
-            if (NetworkService.ethernetConnected) {
-              return NetworkService.internetConnectivity ? "ethernet" : "ethernet-off";
-            }
-            let connected = false;
-            let signalStrength = 0;
-            for (const net in NetworkService.networks) {
-              if (NetworkService.networks[net].connected) {
-                connected = true;
-                signalStrength = NetworkService.networks[net].signal;
-                break;
-              }
-            }
-            return connected ? NetworkService.signalIcon(signalStrength, true) : "wifi-off";
-          } catch (error) {
-            Logger.e("Network Card", "Error getting icon:", error);
-            return "wifi-off";
-          }
-        }
+      // Settings button (top-left)
+      NIconButton {
+        icon: "settings"
+        baseSize: Style.baseWidgetSize * 0.8
+        tooltipText: "Network Settings"
+        onClicked: SettingsPanelService.openToTab(SettingsPanel.Tab.Connections, 0, screen)
       }
 
-      ColumnLayout {
-        Layout.fillWidth: true
-        spacing: 0
+      // WiFi tab button
+      NIconButton {
+        icon: "wifi"
+        baseSize: Style.baseWidgetSize * 0.8
+        tooltipText: "Wi-Fi"
+        highlighted: root.currentTab === 0
+        onClicked: root.currentTab = 0
+      }
 
-        NText {
-          text: {
-            try {
-              if (NetworkService.ethernetConnected) {
-                return "Ethernet";
-              }
-              for (const net in NetworkService.networks) {
-                if (NetworkService.networks[net].connected) {
-                  return net;
-                }
-              }
-              return "Not Connected";
-            } catch (e) {
-              return "Network";
-            }
-          }
-          font.weight: Style.fontWeightBold
-          pointSize: Style.fontSizeS
-        }
-
-        NText {
-          text: {
-            try {
-              if (NetworkService.ethernetConnected) {
-                const d = NetworkService.activeEthernetDetails || ({});
-                const speed = (d.speed && d.speed.length > 0) ? d.speed : "";
-                return speed ? "Speed: " + speed : "Connected";
-              }
-              for (const net in NetworkService.networks) {
-                if (NetworkService.networks[net].connected) {
-                  const w = NetworkService.activeWifiDetails || ({});
-                  const rate = (w.rateShort && w.rateShort.length > 0) ? w.rateShort : (w.rate || "");
-                  return rate ? "Speed: " + rate : "Connected";
-                }
-              }
-              return "Enable Wi-Fi to connect";
-            } catch (e) {
-              return "—";
-            }
-          }
-          pointSize: Style.fontSizeXS
-          color: Color.mOnSurfaceVariant
-        }
+      // Ethernet tab button
+      NIconButton {
+        icon: "ethernet"
+        baseSize: Style.baseWidgetSize * 0.8
+        tooltipText: "Ethernet"
+        highlighted: root.currentTab === 1
+        onClicked: root.currentTab = 1
       }
 
       Item {
         Layout.fillWidth: true
       }
 
-      // Refresh button
+      // Refresh button (WiFi only)
       NIconButton {
+        visible: root.currentTab === 0
         icon: "refresh"
         baseSize: Style.baseWidgetSize * 0.8
         tooltipText: "Scan for networks"
@@ -193,9 +134,10 @@ NBox {
         onClicked: NetworkService.scan()
       }
 
-      // WiFi toggle
+      // WiFi toggle (WiFi tab only)
       NToggle {
         id: wifiSwitch
+        visible: root.currentTab === 0
         checked: Settings.data.network.wifiEnabled
         enabled: !Settings.data.network.airplaneModeEnabled && NetworkService.wifiAvailable
         onToggled: checked => NetworkService.setWifiEnabled(checked)
@@ -258,9 +200,9 @@ NBox {
       }
     }
 
-    // WiFi disabled state
+    // WiFi disabled state (WiFi tab only)
     ColumnLayout {
-      visible: !Settings.data.network.wifiEnabled
+      visible: root.currentTab === 0 && !Settings.data.network.wifiEnabled
       Layout.fillWidth: true
       spacing: Style.marginM
 
@@ -286,124 +228,193 @@ NBox {
       }
     }
 
-    // Scanning state
+    // WiFi Tab Content
     ColumnLayout {
-      visible: Settings.data.network.wifiEnabled && Object.keys(NetworkService.networks).length === 0 && NetworkService.scanning
+      visible: root.currentTab === 0
       Layout.fillWidth: true
       spacing: Style.marginM
 
-      NBusyIndicator {
-        running: visible
-        color: Color.mPrimary
-        size: Style.baseWidgetSize * 0.8
-        Layout.alignment: Qt.AlignHCenter
-      }
-
-      NText {
-        text: "Searching for networks..."
-        pointSize: Style.fontSizeS
-        color: Color.mOnSurfaceVariant
-        Layout.alignment: Qt.AlignHCenter
-      }
-    }
-
-    // Empty state
-    ColumnLayout {
-      visible: Settings.data.network.wifiEnabled && !NetworkService.scanning && Object.keys(NetworkService.networks).length === 0
-      Layout.fillWidth: true
-      spacing: Style.marginM
-
-      NIcon {
-        icon: "search"
-        pointSize: Style.fontSizeXXL
-        color: Color.mOnSurfaceVariant
-        Layout.alignment: Qt.AlignHCenter
-      }
-
-      NText {
-        text: "No networks found"
-        pointSize: Style.fontSizeM
-        color: Color.mOnSurfaceVariant
-        Layout.alignment: Qt.AlignHCenter
-      }
-
-      NButton {
-        text: "Scan again"
-        icon: "refresh"
-        Layout.alignment: Qt.AlignHCenter
-        onClicked: NetworkService.scan()
-      }
-    }
-
-    // Networks list
-    NScrollView {
-      visible: Settings.data.network.wifiEnabled && Object.keys(NetworkService.networks).length > 0
-      Layout.fillWidth: true
-      Layout.preferredHeight: Math.min(networksColumn.implicitHeight, Math.round(250 * Style.uiScaleRatio))
-      horizontalPolicy: ScrollBar.AlwaysOff
-      verticalPolicy: ScrollBar.AsNeeded
-      reserveScrollbarSpace: false
-
+      // Scanning state
       ColumnLayout {
-        id: networksColumn
-        width: parent.width
+        visible: Settings.data.network.wifiEnabled && Object.keys(NetworkService.networks).length === 0 && NetworkService.scanning
+        Layout.fillWidth: true
+        spacing: Style.marginM
+
+        NBusyIndicator {
+          running: visible
+          color: Color.mPrimary
+          size: Style.baseWidgetSize * 0.8
+          Layout.alignment: Qt.AlignHCenter
+        }
+
+        NText {
+          text: "Searching for networks..."
+          pointSize: Style.fontSizeS
+          color: Color.mOnSurfaceVariant
+          Layout.alignment: Qt.AlignHCenter
+        }
+      }
+
+      // Empty state
+      ColumnLayout {
+        visible: Settings.data.network.wifiEnabled && !NetworkService.scanning && Object.keys(NetworkService.networks).length === 0
+        Layout.fillWidth: true
+        spacing: Style.marginM
+
+        NIcon {
+          icon: "search"
+          pointSize: Style.fontSizeXXL
+          color: Color.mOnSurfaceVariant
+          Layout.alignment: Qt.AlignHCenter
+        }
+
+        NText {
+          text: "No networks found"
+          pointSize: Style.fontSizeM
+          color: Color.mOnSurfaceVariant
+          Layout.alignment: Qt.AlignHCenter
+        }
+
+        NButton {
+          text: "Scan again"
+          icon: "refresh"
+          Layout.alignment: Qt.AlignHCenter
+          onClicked: NetworkService.scan()
+        }
+      }
+
+      // Networks list
+      NScrollView {
+        visible: Settings.data.network.wifiEnabled && Object.keys(NetworkService.networks).length > 0
+        Layout.fillWidth: true
+        Layout.preferredHeight: Math.min(networksColumn.implicitHeight, Math.round(250 * Style.uiScaleRatio))
+        horizontalPolicy: ScrollBar.AlwaysOff
+        verticalPolicy: ScrollBar.AsNeeded
+        reserveScrollbarSpace: false
+
+        ColumnLayout {
+          id: networksColumn
+          width: parent.width
+          spacing: Style.marginS
+
+          // Known networks section
+          WiFiNetworksList {
+            visible: root.knownNetworks.length > 0
+            label: "Known networks"
+            model: root.knownNetworks
+            passwordSsid: root.passwordSsid
+            expandedSsid: root.expandedSsid
+            onPasswordRequested: ssid => {
+              root.passwordSsid = ssid;
+              root.expandedSsid = "";
+            }
+            onPasswordSubmitted: (ssid, password) => {
+              NetworkService.connect(ssid, password);
+              root.passwordSsid = "";
+            }
+            onPasswordCancelled: root.passwordSsid = ""
+            onForgetRequested: ssid => root.expandedSsid = root.expandedSsid === ssid ? "" : ssid
+            onForgetConfirmed: ssid => {
+              NetworkService.forget(ssid);
+              root.expandedSsid = "";
+            }
+            onForgetCancelled: root.expandedSsid = ""
+          }
+
+          // Available networks section
+          WiFiNetworksList {
+            visible: root.availableNetworks.length > 0
+            label: "Available networks"
+            model: root.availableNetworks
+            passwordSsid: root.passwordSsid
+            expandedSsid: root.expandedSsid
+            onPasswordRequested: ssid => {
+              root.passwordSsid = ssid;
+              root.expandedSsid = "";
+            }
+            onPasswordSubmitted: (ssid, password) => {
+              NetworkService.connect(ssid, password);
+              root.passwordSsid = "";
+            }
+            onPasswordCancelled: root.passwordSsid = ""
+            onForgetRequested: ssid => root.expandedSsid = root.expandedSsid === ssid ? "" : ssid
+            onForgetConfirmed: ssid => {
+              NetworkService.forget(ssid);
+              root.expandedSsid = "";
+            }
+            onForgetCancelled: root.expandedSsid = ""
+          }
+        }
+      }
+    }
+
+    // Ethernet Tab Content
+    ColumnLayout {
+      visible: root.currentTab === 1
+      Layout.fillWidth: true
+      spacing: Style.marginM
+
+      // Ethernet status
+      RowLayout {
+        Layout.fillWidth: true
         spacing: Style.marginS
 
-        // Known networks section
-        WiFiNetworksList {
-          visible: root.knownNetworks.length > 0
-          label: "Known networks"
-          model: root.knownNetworks
-          passwordSsid: root.passwordSsid
-          expandedSsid: root.expandedSsid
-          onPasswordRequested: ssid => {
-            root.passwordSsid = ssid;
-            root.expandedSsid = "";
-          }
-          onPasswordSubmitted: (ssid, password) => {
-            NetworkService.connect(ssid, password);
-            root.passwordSsid = "";
-          }
-          onPasswordCancelled: root.passwordSsid = ""
-          onForgetRequested: ssid => root.expandedSsid = root.expandedSsid === ssid ? "" : ssid
-          onForgetConfirmed: ssid => {
-            NetworkService.forget(ssid);
-            root.expandedSsid = "";
-          }
-          onForgetCancelled: root.expandedSsid = ""
+        NIcon {
+          pointSize: Style.fontSizeXL
+          color: NetworkService.ethernetConnected ? Color.mPrimary : Color.mOnSurfaceVariant
+          icon: NetworkService.ethernetConnected ? (NetworkService.internetConnectivity ? "ethernet" : "ethernet-off") : "ethernet-off"
         }
 
-        // Available networks section
-        WiFiNetworksList {
-          visible: root.availableNetworks.length > 0
-          label: "Available networks"
-          model: root.availableNetworks
-          passwordSsid: root.passwordSsid
-          expandedSsid: root.expandedSsid
-          onPasswordRequested: ssid => {
-            root.passwordSsid = ssid;
-            root.expandedSsid = "";
+        ColumnLayout {
+          Layout.fillWidth: true
+          spacing: 0
+
+          NText {
+            text: NetworkService.ethernetConnected ? "Ethernet Connected" : "Not Connected"
+            font.weight: Style.fontWeightBold
+            pointSize: Style.fontSizeS
           }
-          onPasswordSubmitted: (ssid, password) => {
-            NetworkService.connect(ssid, password);
-            root.passwordSsid = "";
+
+          NText {
+            visible: NetworkService.ethernetConnected
+            text: {
+              const d = NetworkService.activeEthernetDetails || ({});
+              const speed = (d.speed && d.speed.length > 0) ? d.speed : "";
+              return speed ? "Speed: " + speed : "Connected";
+            }
+            pointSize: Style.fontSizeXS
+            color: Color.mOnSurfaceVariant
           }
-          onPasswordCancelled: root.passwordSsid = ""
-          onForgetRequested: ssid => root.expandedSsid = root.expandedSsid === ssid ? "" : ssid
-          onForgetConfirmed: ssid => {
-            NetworkService.forget(ssid);
-            root.expandedSsid = "";
-          }
-          onForgetCancelled: root.expandedSsid = ""
         }
       }
-    }
 
-    // Network Settings button at bottom
-    NButton {
-      text: "Network Settings"
-      Layout.fillWidth: true
-      onClicked: SettingsPanelService.openToTab(SettingsPanel.Tab.Connections, 0, screen)
+      // Not connected state
+      ColumnLayout {
+        visible: !NetworkService.ethernetConnected
+        Layout.fillWidth: true
+        spacing: Style.marginS
+
+        NIcon {
+          icon: "ethernet-off"
+          pointSize: Style.fontSizeXXL
+          color: Color.mOnSurfaceVariant
+          Layout.alignment: Qt.AlignHCenter
+        }
+
+        NText {
+          text: "No Ethernet connection"
+          pointSize: Style.fontSizeS
+          color: Color.mOnSurfaceVariant
+          Layout.alignment: Qt.AlignHCenter
+        }
+
+        NText {
+          text: "Connect an Ethernet cable to get started"
+          pointSize: Style.fontSizeXS
+          color: Color.mOnSurfaceVariant
+          Layout.alignment: Qt.AlignHCenter
+        }
+      }
     }
   }
 }
