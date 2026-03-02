@@ -107,7 +107,8 @@ NBox {
         icon: "wifi"
         baseSize: Style.baseWidgetSize * 0.8
         tooltipText: "Wi-Fi"
-        highlighted: root.currentTab === 0
+        colorBg: root.currentTab === 0 ? Color.mPrimary : Color.mSurfaceVariant
+        colorFg: root.currentTab === 0 ? Color.mOnPrimary : Color.mOnSurfaceVariant
         onClicked: root.currentTab = 0
       }
 
@@ -116,7 +117,8 @@ NBox {
         icon: "ethernet"
         baseSize: Style.baseWidgetSize * 0.8
         tooltipText: "Ethernet"
-        highlighted: root.currentTab === 1
+        colorBg: root.currentTab === 1 ? Color.mPrimary : Color.mSurfaceVariant
+        colorFg: root.currentTab === 1 ? Color.mOnPrimary : Color.mOnSurfaceVariant
         onClicked: root.currentTab = 1
       }
 
