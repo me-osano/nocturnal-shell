@@ -17,7 +17,13 @@ ColumnLayout {
 
   signal settingsChanged(var settings)
 
-  // Local state
+  // Local state - Display mode
+  property string valueDisplayMode: widgetData.displayMode !== undefined ? widgetData.displayMode : widgetMetadata.displayMode
+  property bool valueShowNetworkIcon: widgetData.showNetworkIcon !== undefined ? widgetData.showNetworkIcon : widgetMetadata.showNetworkIcon
+  property bool valueShowBluetoothIcon: widgetData.showBluetoothIcon !== undefined ? widgetData.showBluetoothIcon : widgetMetadata.showBluetoothIcon
+  property bool valueShowNotificationIcon: widgetData.showNotificationIcon !== undefined ? widgetData.showNotificationIcon : widgetMetadata.showNotificationIcon
+
+  // Local state - Icon mode
   property string valueIcon: widgetData.icon !== undefined ? widgetData.icon : widgetMetadata.icon
   property bool valueUseDistroLogo: widgetData.useDistroLogo !== undefined ? widgetData.useDistroLogo : widgetMetadata.useDistroLogo
   property string valueCustomIconPath: widgetData.customIconPath !== undefined ? widgetData.customIconPath : widgetMetadata.customIconPath
@@ -26,6 +32,10 @@ ColumnLayout {
 
   function saveSettings() {
     var settings = Object.assign({}, widgetData || {});
+    settings.displayMode = valueDisplayMode;
+    settings.showNetworkIcon = valueShowNetworkIcon;
+    settings.showBluetoothIcon = valueShowBluetoothIcon;
+    settings.showNotificationIcon = valueShowNotificationIcon;
     settings.icon = valueIcon;
     settings.useDistroLogo = valueUseDistroLogo;
     settings.customIconPath = valueCustomIconPath;
@@ -34,7 +44,74 @@ ColumnLayout {
     settingsChanged(settings);
   }
 
+  // Display Mode Selection
+  NHeader {
+    text: "Display Mode"
+  }
+
+  NComboBox {
+    label: "Widget style"
+    description: "Choose how the control center button appears in the bar."
+    model: [
+      { value: "icon", text: "Single Icon" },
+      { value: "capsule", text: "Capsule (Network, Bluetooth, Notifications)" }
+    ]
+    textRole: "text"
+    valueRole: "value"
+    currentIndex: valueDisplayMode === "capsule" ? 1 : 0
+    onActivated: index => {
+      valueDisplayMode = model[index].value;
+      saveSettings();
+    }
+  }
+
+  // Capsule mode settings
+  NHeader {
+    visible: valueDisplayMode === "capsule"
+    text: "Capsule Icons"
+  }
+
   NToggle {
+    visible: valueDisplayMode === "capsule"
+    label: "Show network icon"
+    description: "Display network/Wi-Fi status icon in the capsule."
+    checked: valueShowNetworkIcon
+    onToggled: checked => {
+      valueShowNetworkIcon = checked;
+      saveSettings();
+    }
+  }
+
+  NToggle {
+    visible: valueDisplayMode === "capsule"
+    label: "Show Bluetooth icon"
+    description: "Display Bluetooth status icon in the capsule."
+    checked: valueShowBluetoothIcon
+    onToggled: checked => {
+      valueShowBluetoothIcon = checked;
+      saveSettings();
+    }
+  }
+
+  NToggle {
+    visible: valueDisplayMode === "capsule"
+    label: "Show notification icon"
+    description: "Display notification bell icon in the capsule."
+    checked: valueShowNotificationIcon
+    onToggled: checked => {
+      valueShowNotificationIcon = checked;
+      saveSettings();
+    }
+  }
+
+  // Icon mode settings
+  NHeader {
+    visible: valueDisplayMode === "icon"
+    text: "Icon Settings"
+  }
+
+  NToggle {
+    visible: valueDisplayMode === "icon"
     label: "Use distro logo instead of icon"
     description: "Use your distribution's logo instead of a custom icon."
     checked: valueUseDistroLogo
@@ -45,6 +122,7 @@ ColumnLayout {
   }
 
   NToggle {
+    visible: valueDisplayMode === "icon"
     label: "Enable colorization"
     description: "Enable colorization for icon, applying theme colors."
     checked: valueEnableColorization
@@ -55,7 +133,7 @@ ColumnLayout {
   }
 
   NColorChoice {
-    visible: valueEnableColorization
+    visible: valueDisplayMode === "icon" && valueEnableColorization
     label: "Select icon color"
     description: "Apply theme colors to icons."
     currentKey: valueColorizeSystemIcon
@@ -66,6 +144,7 @@ ColumnLayout {
   }
 
   RowLayout {
+    visible: valueDisplayMode === "icon"
     spacing: Style.marginM
 
     NLabel {
@@ -91,6 +170,7 @@ ColumnLayout {
   }
 
   RowLayout {
+    visible: valueDisplayMode === "icon"
     spacing: Style.marginM
     NButton {
       enabled: !valueUseDistroLogo

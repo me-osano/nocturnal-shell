@@ -116,6 +116,10 @@ Singleton {
                                     "tooltipFormat": "HH:mm ddd, MMM dd"
                                   },
                                   "ControlCenter": {
+                                    "displayMode": "icon",
+                                    "showNetworkIcon": true,
+                                    "showBluetoothIcon": true,
+                                    "showNotificationIcon": true,
                                     "useDistroLogo": false,
                                     "icon": "nocturnal",
                                     "customIconPath": "",
