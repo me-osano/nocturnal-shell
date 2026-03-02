@@ -165,7 +165,11 @@ Item {
         acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
         cursorShape: Qt.PointingHandCursor
 
+        onEntered: TooltipService.show(capsuleBg, "Control center", BarService.getTooltipDirection(screenName))
+        onExited: TooltipService.hide()
+
         onClicked: mouse => {
+          TooltipService.hide();
           if (mouse.button === Qt.RightButton) {
             PanelService.showContextMenu(contextMenu, capsuleBg, screen);
           } else if (mouse.button === Qt.MiddleButton) {
@@ -173,12 +177,6 @@ Item {
           } else {
             openControlCenter(capsuleBg);
           }
-        }
-
-        NTooltip {
-          visible: capsuleMouseArea.containsMouse
-          text: "Control center"
-          direction: BarService.getTooltipDirection(screenName)
         }
       }
 
