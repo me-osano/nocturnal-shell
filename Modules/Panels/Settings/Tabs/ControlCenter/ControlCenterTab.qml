@@ -44,6 +44,12 @@ ColumnLayout {
       "required": false
     },
     {
+      "id": "network-card",
+      "text": "Network",
+      "enabled": false,
+      "required": false
+    },
+    {
       "id": "weather-card",
       "text": "Weather",
       "enabled": true,

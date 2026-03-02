@@ -93,6 +93,9 @@ SmartPanel {
       case "notifications-card":
         height += notificationsHeight;
         break;
+      case "network-card":
+        height += networkHeight;
+        break;
       case "weather-card":
         height += weatherHeight;
         break;
@@ -112,6 +115,7 @@ SmartPanel {
   readonly property int brightnessHeight: Math.round(60 * Style.uiScaleRatio)
   property int notificationsHeight: Math.round(136 * Style.uiScaleRatio)
   readonly property int mediaSysMonHeight: Math.round(260 * Style.uiScaleRatio)
+  property int networkHeight: Math.round(500 * Style.uiScaleRatio)
 
   // We keep a dynamic weather height due to a more complex layout and font scaling
   property int weatherHeight: Math.round(210 * Style.uiScaleRatio)
@@ -152,6 +156,8 @@ SmartPanel {
               return brightnessHeight;
             case "notifications-card":
               return notificationsHeight;
+            case "network-card":
+              return networkHeight;
             case "weather-card":
               return weatherHeight;
             case "media-sysmon-card":
@@ -172,6 +178,8 @@ SmartPanel {
               return brightnessCard;
             case "notifications-card":
               return notificationsCard;
+            case "network-card":
+              return networkCard;
             case "weather-card":
               return weatherCard;
             case "media-sysmon-card":
@@ -207,6 +215,14 @@ SmartPanel {
       NotificationsCard {
         screen: root.screen
         onHeightChanged: root.notificationsHeight = this.height
+      }
+    }
+
+    Component {
+      id: networkCard
+      NetworkCard {
+        screen: root.screen
+        onHeightChanged: root.networkHeight = this.height
       }
     }
 

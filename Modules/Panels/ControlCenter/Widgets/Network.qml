@@ -49,8 +49,26 @@ NIconButtonHot {
     return "Wi-Fi";
   }
   onClicked: {
-    var panel = PanelService.getPanel("networkPanel", screen);
-    panel?.toggle(this);
+    // Toggle network card visibility in control center
+    if (Settings.data.controlCenter.cards) {
+      let found = false;
+      for (let i = 0; i < Settings.data.controlCenter.cards.length; i++) {
+        if (Settings.data.controlCenter.cards[i].id === "network-card") {
+          Settings.data.controlCenter.cards[i].enabled = !Settings.data.controlCenter.cards[i].enabled;
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        // Network card not in the list, add it enabled
+        Settings.data.controlCenter.cards.push({
+          "id": "network-card",
+          "enabled": true
+        });
+      }
+      // Trigger update by reassigning
+      Settings.data.controlCenter.cards = Settings.data.controlCenter.cards;
+    }
   }
   onRightClicked: {
     if (!Settings.data.network.airplaneModeEnabled) {
