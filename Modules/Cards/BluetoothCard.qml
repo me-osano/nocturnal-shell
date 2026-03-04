@@ -100,6 +100,17 @@ NBox {
         Layout.fillWidth: true
       }
 
+      // Bluetooth settings icon button
+      NIconButton {
+        iconSize: Style.fontSizeM
+        icon: "settings"
+        colorBg: "transparent"
+        colorFg: Color.mOnSurfaceVariant
+        onClicked: SettingsPanelService.openToTab(SettingsPanel.Tab.Connections, 1, screen)
+        onHoverEntered: TooltipService.show("Bluetooth Settings", this)
+        onHoverExited: TooltipService.hide()
+      }
+
       // Bluetooth toggle
       NToggle {
         id: bluetoothSwitch
@@ -328,6 +339,7 @@ NBox {
             color: Color.mOnSurfaceVariant
             horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: true
+            Layout.alignment: Qt.AlignHCenter
           }
 
           NText {
@@ -336,18 +348,12 @@ NBox {
             color: Color.mOnSurfaceVariant
             horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: true
+            Layout.alignment: Qt.AlignHCenter
           }
 
           Item { Layout.preferredHeight: Style.marginM }
         }
       }
-    }
-
-    // Bluetooth Settings button at bottom
-    NButton {
-      text: "Bluetooth Settings"
-      Layout.fillWidth: true
-      onClicked: SettingsPanelService.openToTab(SettingsPanel.Tab.Connections, 1, screen)
     }
   }
 }

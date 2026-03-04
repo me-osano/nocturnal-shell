@@ -152,6 +152,13 @@ SmartPanel {
   // We keep a dynamic weather height due to a more complex layout and font scaling
   property int weatherHeight: Math.round(210 * Style.uiScaleRatio)
 
+  // When preferredHeight changes, recalculate the panel position/size
+  onPreferredHeightChanged: {
+    if (isPanelOpen && isPanelVisible) {
+      setPosition();
+    }
+  }
+
   onOpened: {
     MediaService.autoSwitchingPaused = true;
   }

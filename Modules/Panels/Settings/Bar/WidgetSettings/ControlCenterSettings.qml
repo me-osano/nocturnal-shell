@@ -50,17 +50,16 @@ ColumnLayout {
   }
 
   NComboBox {
+    Layout.fillWidth: true
     label: "Widget style"
     description: "Choose how the control center button appears in the bar."
     model: [
-      { value: "icon", text: "Single Icon" },
-      { value: "capsule", text: "Capsule (Network, Bluetooth, Notifications)" }
+      { "key": "icon", "name": "Single Icon" },
+      { "key": "capsule", "name": "Capsule (Network, Bluetooth, Notifications)" }
     ]
-    textRole: "text"
-    valueRole: "value"
-    currentIndex: valueDisplayMode === "capsule" ? 1 : 0
-    onActivated: index => {
-      valueDisplayMode = model[index].value;
+    currentKey: valueDisplayMode
+    onSelected: key => {
+      valueDisplayMode = key;
       saveSettings();
     }
   }

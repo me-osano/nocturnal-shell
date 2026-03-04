@@ -106,7 +106,100 @@ NBox {
       Layout.fillWidth: true
       spacing: Style.marginS
 
-      // Refresh button (top-left)
+      NIcon {
+        id: headericon
+        pointSize: Style.fontSizeL
+        color: {
+          try {
+            if (NetworkService.ethernetConnected) {
+              return Color.mPrimary;
+            }
+            for (const net in NetworkService.networks) {
+              if (NetworkService.networks[net].connected) {
+                return Color.mPrimary;
+              }
+            }
+            return Color.mOnSurfaceVariant;
+          } catch (e) {
+            return Color.mOnSurfaceVariant;
+          }
+        }
+        icon: {
+          try {
+            if (NetworkService.ethernetConnected) {
+              return NetworkService.internetConnectivity ? "ethernet" : "ethernet-off";
+            }
+            let connected = false;
+            let signalStrength = 0;
+            for (const net in NetworkService.networks) {
+              if (NetworkService.networks[net].connected) {
+                connected = true;
+                signalStrength = NetworkService.networks[net].signal;
+                break;
+              }
+            }
+            return connected ? NetworkService.signalIcon(signalStrength, true) : "wifi-off";
+          } catch (error) {
+            Logger.e("Network Panel", "Error getting icon:", error);
+            return "wifi-off";
+          }
+        }
+      }
+
+      ColumnLayout {
+        Layout.fillWidth: true
+        spacing: 0
+
+        NText {
+          text: {
+            try {
+              if (NetworkService.ethernetConnected) {
+                return "Ethernet";
+              }
+              for (const net in NetworkService.networks) {
+                if (NetworkService.networks[net].connected) {
+                  return net;
+                }
+              }
+              return "Not Connected";
+            } catch (e) {
+              return "Network";
+            }
+          }
+          font.weight: Style.fontWeightBold
+          pointSize: Style.fontSizeS
+        }
+
+        NText {
+          text: {
+            try {
+              if (NetworkService.ethernetConnected) {
+                const d = NetworkService.activeEthernetDetails || ({});
+                const speed = (d.speed && d.speed.length > 0) ? d.speed : "";
+                return speed ? "Speed: " + speed : "Connected";
+              }
+              for (const net in NetworkService.networks) {
+                if (NetworkService.networks[net].connected) {
+                  const w = NetworkService.activeWifiDetails || ({});
+                  const rate = (w.rateShort && w.rateShort.length > 0) ? w.rateShort : (w.rate || "");
+                  return rate ? "Speed: " + rate : "Connected";
+                }
+              }
+              return "Enable Wi-Fi to connect";
+            } catch (e) {
+              return "—";
+            }
+          }
+          pointSize: Style.fontSizeXS
+          color: Color.mOnSurfaceVariant
+        }
+      }
+
+      Item {
+        Layout.fillWidth: true
+      }
+
+      // Refresh button (top-right)
       NIconButton {
         visible: root.currentTab === 0
         icon: "refresh"
@@ -114,14 +207,6 @@ NBox {
         tooltipText: "Scan for networks"
         enabled: Settings.data.network.wifiEnabled && !NetworkService.scanning
         onClicked: NetworkService.scan()
-      }
-
-      // Settings button
-      NIconButton {
-        icon: "settings"
-        baseSize: Style.baseWidgetSize * 0.8
-        tooltipText: "Network Settings"
-        onClicked: SettingsPanelService.openToTab(SettingsPanel.Tab.Connections, 0, screen)
       }
 
       // WiFi tab button
@@ -144,19 +229,12 @@ NBox {
         onClicked: root.currentTab = 1
       }
 
-      Item {
-        Layout.fillWidth: true
-      }
-
-      // Connected network name (top-right)
-      NText {
-        visible: root.currentTab === 0 && root.connectedSsid !== ""
-        text: root.connectedSsid
-        pointSize: Style.fontSizeS
-        font.weight: Style.fontWeightMedium
-        color: Color.mPrimary
-        elide: Text.ElideRight
-        Layout.maximumWidth: 120
+      // Settings button
+      NIconButton {
+        icon: "settings"
+        baseSize: Style.baseWidgetSize * 0.8
+        tooltipText: "Network Settings"
+        onClicked: SettingsPanelService.openToTab(SettingsPanel.Tab.Connections, 0, screen)
       }
 
       // WiFi toggle (WiFi tab only)
