@@ -101,14 +101,22 @@ NBox {
       }
 
       // Bluetooth settings icon button
+            // Settings button
       NIconButton {
-        iconSize: Style.fontSizeM
         icon: "settings"
-        colorBg: "transparent"
-        colorFg: Color.mOnSurfaceVariant
+        baseSize: Style.baseWidgetSize * 0.8
         tooltipText: "Bluetooth Settings"
-        onClicked: SettingsPanelService.openToTab(SettingsPanel.Tab.Connections, 1, screen)
+        onClicked: SettingsPanelService.openToTab(SettingsPanel.Tab.Connections, 0, screen)
       }
+
+      // NIconButton {
+      //   //baseSize: Style.fontSizeM * 2
+      //   icon: "settings"
+      //   colorBg: "transparent"
+      //   colorFg: Color.mOnSurfaceVariant
+      //   tooltipText: "Bluetooth Settings"
+      //   onClicked: SettingsPanelService.openToTab(SettingsPanel.Tab.Connections, 1, screen)
+      // }
 
       // Bluetooth toggle
       NToggle {
