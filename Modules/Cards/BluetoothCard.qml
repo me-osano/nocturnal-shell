@@ -136,6 +136,7 @@ NBox {
     ColumnLayout {
       visible: !BluetoothService.enabled
       Layout.fillWidth: true
+      Layout.alignment: Qt.AlignHCenter
       spacing: Style.marginM
 
       NIcon {
@@ -149,6 +150,8 @@ NBox {
         text: "Bluetooth is disabled"
         pointSize: Style.fontSizeM
         color: Color.mOnSurfaceVariant
+        horizontalAlignment: Text.AlignHCenter
+        Layout.fillWidth: true
         Layout.alignment: Qt.AlignHCenter
       }
 
@@ -156,6 +159,8 @@ NBox {
         text: "Enable Bluetooth to see devices"
         pointSize: Style.fontSizeXS
         color: Color.mOnSurfaceVariant
+        horizontalAlignment: Text.AlignHCenter
+        Layout.fillWidth: true
         Layout.alignment: Qt.AlignHCenter
       }
     }

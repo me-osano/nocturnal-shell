@@ -10,7 +10,8 @@ Singleton {
   id: root
 
   readonly property var powerProfiles: PowerProfiles
-  readonly property bool available: powerProfiles && powerProfiles.hasPerformanceProfile
+  // Available if we have any profile support (not just performance)
+  readonly property bool available: powerProfiles && (powerProfiles.hasPerformanceProfile || powerProfiles.profile !== undefined)
   property int profile: powerProfiles ? powerProfiles.profile : PowerProfile.Balanced
 
   // Not a power profile but a volatile property to quickly disable shadows, animations, etc..
@@ -70,24 +71,46 @@ Singleton {
     if (!available)
       return;
     const current = powerProfiles.profile;
-    if (current === PowerProfile.Performance)
-      setProfile(PowerProfile.PowerSaver);
-    else if (current === PowerProfile.Balanced)
-      setProfile(PowerProfile.Performance);
-    else if (current === PowerProfile.PowerSaver)
-      setProfile(PowerProfile.Balanced);
+    const hasPerf = powerProfiles.hasPerformanceProfile;
+    
+    if (hasPerf) {
+      // Full cycle: PowerSaver -> Balanced -> Performance -> PowerSaver
+      if (current === PowerProfile.Performance)
+        setProfile(PowerProfile.PowerSaver);
+      else if (current === PowerProfile.Balanced)
+        setProfile(PowerProfile.Performance);
+      else if (current === PowerProfile.PowerSaver)
+        setProfile(PowerProfile.Balanced);
+    } else {
+      // No performance profile: toggle between Balanced and PowerSaver
+      if (current === PowerProfile.Balanced)
+        setProfile(PowerProfile.PowerSaver);
+      else
+        setProfile(PowerProfile.Balanced);
+    }
   }
 
   function cycleProfileReverse() {
     if (!available)
       return;
     const current = powerProfiles.profile;
-    if (current === PowerProfile.Performance)
-      setProfile(PowerProfile.Balanced);
-    else if (current === PowerProfile.Balanced)
-      setProfile(PowerProfile.PowerSaver);
-    else if (current === PowerProfile.PowerSaver)
-      setProfile(PowerProfile.Performance);
+    const hasPerf = powerProfiles.hasPerformanceProfile;
+    
+    if (hasPerf) {
+      // Full reverse cycle: Performance -> Balanced -> PowerSaver -> Performance
+      if (current === PowerProfile.Performance)
+        setProfile(PowerProfile.Balanced);
+      else if (current === PowerProfile.Balanced)
+        setProfile(PowerProfile.PowerSaver);
+      else if (current === PowerProfile.PowerSaver)
+        setProfile(PowerProfile.Performance);
+    } else {
+      // No performance profile: toggle between PowerSaver and Balanced
+      if (current === PowerProfile.PowerSaver)
+        setProfile(PowerProfile.Balanced);
+      else
+        setProfile(PowerProfile.PowerSaver);
+    }
   }
 
   function isDefault() {
