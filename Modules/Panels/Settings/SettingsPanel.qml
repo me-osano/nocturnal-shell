@@ -11,7 +11,7 @@ SmartPanel {
   id: root
 
   preferredWidth: Math.round(840 * Style.uiScaleRatio)
-  preferredHeight: Math.round(910 * Style.uiScaleRatio)
+  preferredHeight: Math.round(870 * Style.uiScaleRatio)
 
   // Settings panel mode: "centered", "attached", "window"
   readonly property string settingsPanelMode: Settings.data.ui.settingsPanelMode
