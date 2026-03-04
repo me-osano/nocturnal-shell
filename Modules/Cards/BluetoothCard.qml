@@ -106,9 +106,8 @@ NBox {
         icon: "settings"
         colorBg: "transparent"
         colorFg: Color.mOnSurfaceVariant
+        tooltipText: "Bluetooth Settings"
         onClicked: SettingsPanelService.openToTab(SettingsPanel.Tab.Connections, 1, screen)
-        onHoverEntered: TooltipService.show("Bluetooth Settings", this)
-        onHoverExited: TooltipService.hide()
       }
 
       // Bluetooth toggle
