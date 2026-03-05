@@ -70,6 +70,8 @@ NBox {
   }
 
   clip: true
+  // When used as overlay, visibility is controlled externally
+  // When expanded is true, show the card content
   visible: expanded
   
   Behavior on implicitHeight {
@@ -79,6 +81,7 @@ NBox {
     }
   }
 
+  // For overlay mode, always show full height when expanded
   implicitHeight: expanded ? contentColumn.implicitHeight + Style.margin2M : 0
 
   // Trigger scan when expanded

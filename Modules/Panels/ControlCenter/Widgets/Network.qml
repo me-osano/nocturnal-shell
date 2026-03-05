@@ -49,10 +49,10 @@ NIconButtonHot {
     return "Wi-Fi";
   }
   onClicked: {
-    // Toggle network card expanded state in control center
+    // Toggle network card overlay in control center
     var panel = PanelService.getPanel("controlCenterPanel", screen);
     if (panel) {
-      panel.networkCardExpanded = !panel.networkCardExpanded;
+      panel.toggleOverlay("network");
     }
   }
   onRightClicked: {

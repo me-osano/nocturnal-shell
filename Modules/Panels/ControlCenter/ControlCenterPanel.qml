@@ -33,30 +33,19 @@ SmartPanel {
 
   preferredWidth: Math.round(440 * Style.uiScaleRatio)
 
-  // Network inline panel expanded state (shown in shortcuts card)
-  property bool networkCardExpanded: false
-
-  // Network inline panel height (dynamic, updated by ShortcutsCard)
-  property int networkInlinePanelHeight: 0
-
-  // Bluetooth inline panel expanded state (shown in shortcuts card)
-  property bool bluetoothCardExpanded: false
-
-  // Bluetooth inline panel height (dynamic, updated by ShortcutsCard)
-  property int bluetoothInlinePanelHeight: 0
-
-  // Ensure only one inline panel is open at a time
-  onNetworkCardExpandedChanged: {
-    if (networkCardExpanded && bluetoothCardExpanded) {
-      bluetoothCardExpanded = false;
-      bluetoothInlinePanelHeight = 0;
-    }
-  }
-
-  onBluetoothCardExpandedChanged: {
-    if (bluetoothCardExpanded && networkCardExpanded) {
-      networkCardExpanded = false;
-      networkInlinePanelHeight = 0;
+  // Overlay card states - which floating card is currently shown
+  property string activeOverlay: "" // "", "network", "bluetooth"
+  
+  // Convenience properties for widgets to check
+  property bool networkCardExpanded: activeOverlay === "network"
+  property bool bluetoothCardExpanded: activeOverlay === "bluetooth"
+  
+  // Toggle overlay - ensures only one is open at a time
+  function toggleOverlay(name) {
+    if (activeOverlay === name) {
+      activeOverlay = "";
+    } else {
+      activeOverlay = name;
     }
   }
 
@@ -113,7 +102,7 @@ SmartPanel {
         height += profileHeight;
         break;
       case "shortcuts-card":
-        height += shortcutsHeight + (networkCardExpanded ? networkInlinePanelHeight + Style.marginL : 0) + (bluetoothCardExpanded ? bluetoothInlinePanelHeight + Style.marginL : 0);
+        height += shortcutsHeight;
         break;
       case "audio-card":
         height += audioHeight;
@@ -165,11 +154,8 @@ SmartPanel {
 
   onClosed: {
     MediaService.autoSwitchingPaused = false;
-    // Reset inline panel states so they're hidden on next open
-    networkCardExpanded = false;
-    networkInlinePanelHeight = 0;
-    bluetoothCardExpanded = false;
-    bluetoothInlinePanelHeight = 0;
+    // Reset overlay state when panel closes
+    activeOverlay = "";
   }
 
   panelContent: Item {
@@ -194,8 +180,7 @@ SmartPanel {
             case "profile-card":
               return profileHeight;
             case "shortcuts-card":
-              // Include inline network/bluetooth panel height when expanded
-              return shortcutsHeight + (networkCardExpanded ? networkInlinePanelHeight + Style.marginL : 0) + (bluetoothCardExpanded ? bluetoothInlinePanelHeight + Style.marginL : 0);
+              return shortcutsHeight;
             case "audio-card":
               return audioHeight;
             case "brightness-card":
@@ -266,15 +251,6 @@ SmartPanel {
     }
 
     Component {
-      id: networkCard
-      NetworkCard {
-        screen: root.screen
-        expanded: root.networkCardExpanded
-        onHeightChanged: root.networkHeight = this.height
-      }
-    }
-
-    Component {
       id: weatherCard
       WeatherCard {
         Component.onCompleted: {
@@ -299,6 +275,72 @@ SmartPanel {
           Layout.preferredWidth: Math.round(Style.baseWidgetSize * 2.625)
           Layout.fillHeight: true
         }
+      }
+    }
+
+    // Floating overlay cards - appear on top of the control center content
+    // Semi-transparent backdrop when overlay is open
+    Rectangle {
+      id: overlayBackdrop
+      anchors.fill: parent
+      color: Qt.alpha(Color.mBackground, 0.6)
+      visible: root.activeOverlay !== ""
+      opacity: visible ? 1 : 0
+      
+      Behavior on opacity {
+        NumberAnimation {
+          duration: Style.animationFast
+          easing.type: Easing.OutQuad
+        }
+      }
+      
+      MouseArea {
+        anchors.fill: parent
+        onClicked: root.activeOverlay = ""
+      }
+    }
+
+    // Network card overlay
+    NetworkCard {
+      id: networkOverlay
+      screen: root.screen
+      expanded: root.networkCardExpanded
+      
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: parent.top
+      anchors.margins: Style.marginL
+      
+      z: 100
+      visible: root.activeOverlay === "network"
+      
+      // Override the visibility binding from expanded
+      Binding {
+        target: networkOverlay
+        property: "visible"
+        value: root.activeOverlay === "network"
+      }
+    }
+
+    // Bluetooth card overlay
+    BluetoothCard {
+      id: bluetoothOverlay
+      screen: root.screen
+      expanded: root.bluetoothCardExpanded
+      
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: parent.top
+      anchors.margins: Style.marginL
+      
+      z: 100
+      visible: root.activeOverlay === "bluetooth"
+      
+      // Override the visibility binding from expanded
+      Binding {
+        target: bluetoothOverlay
+        property: "visible"
+        value: root.activeOverlay === "bluetooth"
       }
     }
   }

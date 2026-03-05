@@ -7,161 +7,87 @@ import qs.Modules.Panels.ControlCenter
 import qs.Services.UI
 import qs.Widgets
 
-ColumnLayout {
+RowLayout {
   id: shortcutsRoot
   Layout.fillWidth: true
   spacing: Style.marginL
 
-  // Track network panel expanded state from control center
-  property bool networkPanelExpanded: false
-  
-  // Track bluetooth panel expanded state from control center
-  property bool bluetoothPanelExpanded: false
-  
-  // Get reference to the control center panel
-  property var controlCenterPanel: PanelService.getPanel("controlCenterPanel", root.screen)
-  
-  // Update panel expanded states when the panel's state changes
-  Connections {
-    target: shortcutsRoot.controlCenterPanel
-    function onNetworkCardExpandedChanged() {
-      shortcutsRoot.networkPanelExpanded = shortcutsRoot.controlCenterPanel ? shortcutsRoot.controlCenterPanel.networkCardExpanded : false;
-    }
-    function onBluetoothCardExpandedChanged() {
-      shortcutsRoot.bluetoothPanelExpanded = shortcutsRoot.controlCenterPanel ? shortcutsRoot.controlCenterPanel.bluetoothCardExpanded : false;
-    }
-  }
-  
-  // Initialize on completion
-  Component.onCompleted: {
-    if (controlCenterPanel) {
-      networkPanelExpanded = controlCenterPanel.networkCardExpanded;
-      bluetoothPanelExpanded = controlCenterPanel.bluetoothCardExpanded;
-    }
-  }
-
-  // Shortcuts row with left and right boxes
-  RowLayout {
+  NBox {
     Layout.fillWidth: true
-    spacing: Style.marginL
+    Layout.preferredHeight: root.shortcutsHeight
+    visible: Settings.data.controlCenter.shortcuts.left.length > 0
 
-    NBox {
-      Layout.fillWidth: true
-      Layout.preferredHeight: root.shortcutsHeight
-      visible: Settings.data.controlCenter.shortcuts.left.length > 0
+    RowLayout {
+      id: leftContent
+      anchors.fill: parent
+      spacing: Style.marginS
 
-      RowLayout {
-        id: leftContent
-        anchors.fill: parent
-        spacing: Style.marginS
+      Item {
+        Layout.fillWidth: true
+      }
 
-        Item {
-          Layout.fillWidth: true
-        }
+      Repeater {
+        model: Settings.data.controlCenter.shortcuts.left
+        delegate: ControlCenterWidgetLoader {
+          required property var modelData
+          required property int index
 
-        Repeater {
-          model: Settings.data.controlCenter.shortcuts.left
-          delegate: ControlCenterWidgetLoader {
-            required property var modelData
-            required property int index
-
-            Layout.fillWidth: false
-            widgetId: (modelData.id !== undefined ? modelData.id : "")
-            widgetScreen: root.screen
-            widgetProps: {
-              "widgetId": modelData.id,
-              "section": "quickSettings",
-              "sectionWidgetIndex": index,
-              "sectionWidgetsCount": Settings.data.controlCenter.shortcuts.left.length,
-              "widgetSettings": modelData
-            }
-            Layout.alignment: Qt.AlignVCenter
+          Layout.fillWidth: false
+          widgetId: (modelData.id !== undefined ? modelData.id : "")
+          widgetScreen: root.screen
+          widgetProps: {
+            "widgetId": modelData.id,
+            "section": "quickSettings",
+            "sectionWidgetIndex": index,
+            "sectionWidgetsCount": Settings.data.controlCenter.shortcuts.left.length,
+            "widgetSettings": modelData
           }
-        }
-
-        Item {
-          Layout.fillWidth: true
+          Layout.alignment: Qt.AlignVCenter
         }
       }
+
+      Item {
+        Layout.fillWidth: true
+      }
     }
+  }
 
-    NBox {
-      Layout.fillWidth: true
-      Layout.preferredHeight: root.shortcutsHeight
-      visible: Settings.data.controlCenter.shortcuts.right.length > 0
+  NBox {
+    Layout.fillWidth: true
+    Layout.preferredHeight: root.shortcutsHeight
+    visible: Settings.data.controlCenter.shortcuts.right.length > 0
 
-      RowLayout {
-        id: rightContent
-        anchors.fill: parent
-        spacing: Style.marginS
+    RowLayout {
+      id: rightContent
+      anchors.fill: parent
+      spacing: Style.marginS
 
-        Item {
-          Layout.fillWidth: true
-        }
+      Item {
+        Layout.fillWidth: true
+      }
 
-        Repeater {
-          model: Settings.data.controlCenter.shortcuts.right
-          delegate: ControlCenterWidgetLoader {
-            required property var modelData
-            required property int index
+      Repeater {
+        model: Settings.data.controlCenter.shortcuts.right
+        delegate: ControlCenterWidgetLoader {
+          required property var modelData
+          required property int index
 
-            Layout.fillWidth: false
-            widgetId: (modelData.id !== undefined ? modelData.id : "")
-            widgetScreen: root.screen
-            widgetProps: {
-              "widgetId": modelData.id,
-              "section": "quickSettings",
-              "sectionWidgetIndex": index,
-              "sectionWidgetsCount": Settings.data.controlCenter.shortcuts.right.length,
-              "widgetSettings": modelData
-            }
-            Layout.alignment: Qt.AlignVCenter
+          Layout.fillWidth: false
+          widgetId: (modelData.id !== undefined ? modelData.id : "")
+          widgetScreen: root.screen
+          widgetProps: {
+            "widgetId": modelData.id,
+            "section": "quickSettings",
+            "sectionWidgetIndex": index,
+            "sectionWidgetsCount": Settings.data.controlCenter.shortcuts.right.length,
+            "widgetSettings": modelData
           }
-        }
-
-        Item {
-          Layout.fillWidth: true
+          Layout.alignment: Qt.AlignVCenter
         }
       }
-    }
-  }
 
-  // Inline network card - appears when WiFi shortcut is clicked
-  NetworkCard {
-    id: networkCard
-    Layout.fillWidth: true
-    screen: root.screen
-    expanded: shortcutsRoot.networkPanelExpanded
-    
-    // Update panel height whenever expanded state or target height changes
-    onExpandedChanged: updatePanelHeight()
-    onTargetHeightChanged: updatePanelHeight()
-    
-    function updatePanelHeight() {
-      var panel = PanelService.getPanel("controlCenterPanel", root.screen);
-      if (panel) {
-        // Use targetHeight (non-animated) so the container resizes immediately
-        panel.networkInlinePanelHeight = targetHeight;
-      }
-    }
-  }
-
-  // Inline bluetooth card - appears when Bluetooth shortcut is clicked
-  BluetoothCard {
-    id: bluetoothCard
-    Layout.fillWidth: true
-    screen: root.screen
-    expanded: shortcutsRoot.bluetoothPanelExpanded
-    
-    // Update panel height whenever expanded state or target height changes
-    onExpandedChanged: updatePanelHeight()
-    onTargetHeightChanged: updatePanelHeight()
-    
-    function updatePanelHeight() {
-      var panel = PanelService.getPanel("controlCenterPanel", root.screen);
-      if (panel) {
-        // Use targetHeight (non-animated) so the container resizes immediately
-        panel.bluetoothInlinePanelHeight = targetHeight;
+      Item {
+        Layout.fillWidth: true
       }
     }
   }

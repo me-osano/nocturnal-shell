@@ -11,10 +11,10 @@ NIconButtonHot {
   icon: !BluetoothService.enabled ? "bluetooth-off" : ((BluetoothService.connectedDevices && BluetoothService.connectedDevices.length > 0) ? "bluetooth-connected" : "bluetooth")
   tooltipText: "Bluetooth"
   onClicked: {
-    // Toggle bluetooth card expanded state in control center
+    // Toggle bluetooth card overlay in control center
     var panel = PanelService.getPanel("controlCenterPanel", screen);
     if (panel) {
-      panel.bluetoothCardExpanded = !panel.bluetoothCardExpanded;
+      panel.toggleOverlay("bluetooth");
     }
   }
   onRightClicked: {
