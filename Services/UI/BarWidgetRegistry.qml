@@ -116,7 +116,7 @@ Singleton {
                                     "tooltipFormat": "HH:mm ddd, MMM dd"
                                   },
                                   "ControlCenter": {
-                                    "displayMode": "icon",
+                                    "displayMode": "capsule",
                                     "showNetworkIcon": true,
                                     "showBluetoothIcon": true,
                                     "showNotificationIcon": true,

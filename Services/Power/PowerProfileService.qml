@@ -17,6 +17,9 @@ Singleton {
   // Not a power profile but a volatile property to quickly disable shadows, animations, etc..
   property bool nocturnalPerformanceMode: false
 
+  // Track if service has been initialized (to suppress startup notification)
+  property bool initialized: false
+
   function getName(p) {
     if (!available)
       return "Unknown";
@@ -55,6 +58,8 @@ Singleton {
 
   function init() {
     Logger.d("PowerProfileService", "Service started");
+    // Mark as initialized after a short delay to skip initial profile read
+    Qt.callLater(() => { root.initialized = true; });
   }
 
   function setProfile(p) {
@@ -123,10 +128,12 @@ Singleton {
     target: powerProfiles
     function onProfileChanged() {
       root.profile = powerProfiles.profile;
-      // Only show toast if we have a valid profile name (not "Unknown")
-      const profileName = root.getName();
-      if (profileName !== "Unknown") {
-        ToastService.showNotice("{profile}", "Power profile changed", profileName.toLowerCase().replace(" ", ""));
+      // Only show toast if initialized (not on startup) and we have a valid profile name
+      if (root.initialized) {
+        const profileName = root.getName();
+        if (profileName !== "Unknown") {
+          ToastService.showNotice(profileName, "Power profile changed", profileName.toLowerCase().replace(" ", ""));
+        }
       }
     }
   }

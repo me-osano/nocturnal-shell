@@ -46,7 +46,7 @@ ColumnLayout {
 
   // Display Mode Selection
   NHeader {
-    text: "Display Mode"
+    //text: "Display Mode"
   }
 
   NComboBox {
