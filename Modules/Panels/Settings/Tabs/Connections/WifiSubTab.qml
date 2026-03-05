@@ -68,7 +68,7 @@ ColumnLayout {
       anchors.margins: Style.marginL
 
       NHeader {
-        text: "Connection Status"
+        label: "Connection Status"
       }
 
       // Current Wi-Fi connection
@@ -558,7 +558,7 @@ ColumnLayout {
       anchors.margins: Style.marginL
 
       NHeader {
-        text: "Quick Actions"
+        label: "Quick Actions"
       }
 
       RowLayout {

@@ -46,7 +46,7 @@ ColumnLayout {
 
   // Display Mode Selection
   NHeader {
-    //text: "Display Mode"
+    label : "Display Mode"
   }
 
   NComboBox {
@@ -67,7 +67,7 @@ ColumnLayout {
   // Capsule mode settings
   NHeader {
     visible: valueDisplayMode === "capsule"
-    text: "Capsule Icons"
+    label: "Capsule Icons"
   }
 
   NToggle {
@@ -106,7 +106,7 @@ ColumnLayout {
   // Icon mode settings
   NHeader {
     visible: valueDisplayMode === "icon"
-    text: "Icon Settings"
+    label: "Icon Settings"
   }
 
   NToggle {
