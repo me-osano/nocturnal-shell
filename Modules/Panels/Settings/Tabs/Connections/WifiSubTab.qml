@@ -221,7 +221,7 @@ ColumnLayout {
   // Network Details (when connected to Wi-Fi)
   NCollapsible {
     Layout.fillWidth: true
-    title: "Wi-Fi Details"
+    label: "Wi-Fi Details"
     visible: {
       for (const net in NetworkService.networks) {
         if (NetworkService.networks[net].connected) {
@@ -428,7 +428,7 @@ ColumnLayout {
   // Ethernet Details (when connected)
   NCollapsible {
     Layout.fillWidth: true
-    title: "Ethernet Details"
+    label: "Ethernet Details"
     visible: NetworkService.ethernetConnected
 
     ColumnLayout {
