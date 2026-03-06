@@ -279,9 +279,45 @@ SmartPanel {
     }
 
     // Floating overlay cards - appear below shortcuts card
-    // Calculate the Y offset to position cards below shortcuts
-    // Profile card height + shortcuts card height + margins
-    readonly property real overlayTopOffset: Style.marginL + root.profileHeight + Style.marginL + root.shortcutsHeight + Style.marginL
+    // Calculate the Y offset dynamically based on card order
+    readonly property real overlayTopOffset: {
+      var offset = Style.marginL; // Initial top margin
+      for (var i = 0; i < root.cardsForRender.length; i++) {
+        const card = root.cardsForRender[i];
+        if (!card.enabled || card.id === "network-card")
+          continue;
+        if (card.id === "weather-card" && !Settings.data.location.weatherEnabled)
+          continue;
+        
+        // Add the card's height
+        switch (card.id) {
+        case "profile-card":
+          offset += root.profileHeight + Style.marginL;
+          break;
+        case "shortcuts-card":
+          offset += root.shortcutsHeight + Style.marginL;
+          // Stop after shortcuts - we want to position just below shortcuts
+          return offset;
+        case "audio-card":
+          offset += root.audioHeight + Style.marginL;
+          break;
+        case "brightness-card":
+          offset += root.brightnessHeight + Style.marginL;
+          break;
+        case "notifications-card":
+          offset += root.notificationsHeight + Style.marginL;
+          break;
+        case "weather-card":
+          offset += root.weatherHeight + Style.marginL;
+          break;
+        case "media-sysmon-card":
+          offset += root.mediaSysMonHeight + Style.marginL;
+          break;
+        }
+      }
+      // Fallback if shortcuts not found
+      return offset;
+    }
 
     // Transparent backdrop when overlay is open (for click-to-dismiss)
     Item {
