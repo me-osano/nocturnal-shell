@@ -208,7 +208,7 @@ Item {
               return "wifi-off";
             }
           }
-          pointSize: capsuleHeight * 0.4
+          pointSize: capsuleHeight * 0.5
           color: capsuleBg.hovered ? Color.mOnHover : Color.mOnSurface
         }
 
@@ -216,7 +216,7 @@ Item {
         NIcon {
           visible: showBluetoothIcon
           icon: !BluetoothService.enabled ? "bluetooth-off" : ((BluetoothService.connectedDevices && BluetoothService.connectedDevices.length > 0) ? "bluetooth-connected" : "bluetooth")
-          pointSize: capsuleHeight * 0.4
+          pointSize: capsuleHeight * 0.5
           color: capsuleBg.hovered ? Color.mOnHover : Color.mOnSurface
         }
 
@@ -229,7 +229,7 @@ Item {
           NIcon {
             id: notifIcon
             icon: NotificationService.doNotDisturb ? "bell-off" : "bell"
-            pointSize: capsuleHeight * 0.4
+            pointSize: capsuleHeight * 0.5
             color: capsuleBg.hovered ? Color.mOnHover : Color.mOnSurface
           }
 
@@ -279,7 +279,7 @@ Item {
               return "wifi-off";
             }
           }
-          pointSize: capsuleHeight * 0.4
+          pointSize: capsuleHeight * 0.5
           color: capsuleBg.hovered ? Color.mOnHover : Color.mOnSurface
         }
 
@@ -287,7 +287,7 @@ Item {
         NIcon {
           visible: showBluetoothIcon
           icon: !BluetoothService.enabled ? "bluetooth-off" : ((BluetoothService.connectedDevices && BluetoothService.connectedDevices.length > 0) ? "bluetooth-connected" : "bluetooth")
-          pointSize: capsuleHeight * 0.4
+          pointSize: capsuleHeight * 0.5
           color: capsuleBg.hovered ? Color.mOnHover : Color.mOnSurface
         }
 
@@ -300,7 +300,7 @@ Item {
           NIcon {
             id: notifIconV
             icon: NotificationService.doNotDisturb ? "bell-off" : "bell"
-            pointSize: capsuleHeight * 0.4
+            pointSize: capsuleHeight * 0.5
             color: capsuleBg.hovered ? Color.mOnHover : Color.mOnSurface
           }
 
