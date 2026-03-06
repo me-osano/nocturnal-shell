@@ -186,40 +186,6 @@ Item {
         anchors.centerIn: parent
         spacing: Style.marginS
 
-        // Network icon
-        NIcon {
-          visible: showNetworkIcon
-          icon: {
-            try {
-              if (NetworkService.ethernetConnected) {
-                return NetworkService.internetConnectivity ? "ethernet" : "ethernet-off";
-              }
-              let connected = false;
-              let signalStrength = 0;
-              for (const net in NetworkService.networks) {
-                if (NetworkService.networks[net].connected) {
-                  connected = true;
-                  signalStrength = NetworkService.networks[net].signal;
-                  break;
-                }
-              }
-              return connected ? NetworkService.signalIcon(signalStrength, true) : "wifi-off";
-            } catch (error) {
-              return "wifi-off";
-            }
-          }
-          pointSize: capsuleHeight * 0.5
-          color: capsuleBg.hovered ? Color.mOnHover : Color.mOnSurface
-        }
-
-        // Bluetooth icon
-        NIcon {
-          visible: showBluetoothIcon
-          icon: !BluetoothService.enabled ? "bluetooth-off" : ((BluetoothService.connectedDevices && BluetoothService.connectedDevices.length > 0) ? "bluetooth-connected" : "bluetooth")
-          pointSize: capsuleHeight * 0.5
-          color: capsuleBg.hovered ? Color.mOnHover : Color.mOnSurface
-        }
-
         // Notification icon with badge
         Item {
           visible: showNotificationIcon
@@ -247,6 +213,40 @@ Item {
             border.color: Style.capsuleColor
             border.width: Style.borderS
           }
+        }
+
+        // Bluetooth icon
+        NIcon {
+          visible: showBluetoothIcon
+          icon: !BluetoothService.enabled ? "bluetooth-off" : ((BluetoothService.connectedDevices && BluetoothService.connectedDevices.length > 0) ? "bluetooth-connected" : "bluetooth")
+          pointSize: capsuleHeight * 0.5
+          color: capsuleBg.hovered ? Color.mOnHover : Color.mOnSurface
+        }
+
+        // Network icon
+        NIcon {
+          visible: showNetworkIcon
+          icon: {
+            try {
+              if (NetworkService.ethernetConnected) {
+                return NetworkService.internetConnectivity ? "ethernet" : "ethernet-off";
+              }
+              let connected = false;
+              let signalStrength = 0;
+              for (const net in NetworkService.networks) {
+                if (NetworkService.networks[net].connected) {
+                  connected = true;
+                  signalStrength = NetworkService.networks[net].signal;
+                  break;
+                }
+              }
+              return connected ? NetworkService.signalIcon(signalStrength, true) : "wifi-off";
+            } catch (error) {
+              return "wifi-off";
+            }
+          }
+          pointSize: capsuleHeight * 0.7
+          color: capsuleBg.hovered ? Color.mOnHover : Color.mOnSurface
         }
       }
 
@@ -279,7 +279,7 @@ Item {
               return "wifi-off";
             }
           }
-          pointSize: capsuleHeight * 0.5
+          pointSize: capsuleHeight * 0.7
           color: capsuleBg.hovered ? Color.mOnHover : Color.mOnSurface
         }
 
