@@ -278,21 +278,17 @@ SmartPanel {
       }
     }
 
-    // Floating overlay cards - appear on top of the control center content
-    // Semi-transparent backdrop when overlay is open
-    Rectangle {
+    // Floating overlay cards - appear below shortcuts card
+    // Calculate the Y offset to position cards below shortcuts
+    // Profile card height + shortcuts card height + margins
+    readonly property real overlayTopOffset: Style.marginL + root.profileHeight + Style.marginL + root.shortcutsHeight + Style.marginL
+
+    // Transparent backdrop when overlay is open (for click-to-dismiss)
+    Item {
       id: overlayBackdrop
       anchors.fill: parent
-      color: Qt.alpha(Color.mBackground, 0.6)
       visible: root.activeOverlay !== ""
-      opacity: visible ? 1 : 0
-      
-      Behavior on opacity {
-        NumberAnimation {
-          duration: Style.animationFast
-          easing.type: Easing.OutQuad
-        }
-      }
+      z: 99
       
       MouseArea {
         anchors.fill: parent
@@ -306,10 +302,9 @@ SmartPanel {
       screen: root.screen
       expanded: root.networkCardExpanded
       
-      anchors.left: parent.left
-      anchors.right: parent.right
-      anchors.top: parent.top
-      anchors.margins: Style.marginL
+      x: Style.marginL
+      y: panelContent.overlayTopOffset
+      width: parent.width - Style.margin2L
       
       z: 100
       visible: root.activeOverlay === "network"
@@ -328,10 +323,9 @@ SmartPanel {
       screen: root.screen
       expanded: root.bluetoothCardExpanded
       
-      anchors.left: parent.left
-      anchors.right: parent.right
-      anchors.top: parent.top
-      anchors.margins: Style.marginL
+      x: Style.marginL
+      y: panelContent.overlayTopOffset
+      width: parent.width - Style.margin2L
       
       z: 100
       visible: root.activeOverlay === "bluetooth"
