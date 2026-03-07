@@ -6,6 +6,7 @@ import Quickshell
 import Quickshell.Bluetooth
 
 import qs.Commons
+import qs.Modules.Panels.Network
 import qs.Services.Networking
 import qs.Services.System
 import qs.Services.UI
@@ -15,6 +16,41 @@ ColumnLayout {
   id: root
   spacing: Style.marginL
   Layout.fillWidth: true
+
+  // Password and expand states for WiFi networks
+  property string passwordSsid: ""
+  property string expandedSsid: ""
+
+  // Computed network lists
+  readonly property var knownNetworks: {
+    if (!Settings.data.network.wifiEnabled)
+      return [];
+
+    var nets = Object.values(NetworkService.networks);
+    var known = nets.filter(n => n.connected || n.existing || n.cached);
+
+    // Sort: connected first, then by signal strength
+    known.sort((a, b) => {
+      if (a.connected !== b.connected)
+        return b.connected - a.connected;
+      return b.signal - a.signal;
+    });
+
+    return known;
+  }
+
+  readonly property var availableNetworks: {
+    if (!Settings.data.network.wifiEnabled)
+      return [];
+
+    var nets = Object.values(NetworkService.networks);
+    var available = nets.filter(n => !n.connected && !n.existing && !n.cached);
+
+    // Sort by signal strength
+    available.sort((a, b) => b.signal - a.signal);
+
+    return available;
+  }
 
   // Master Controls
   NBox {
@@ -579,6 +615,120 @@ ColumnLayout {
             var panel = PanelService.getPanel("networkPanel", null);
             if (panel) panel.toggle();
           }
+        }
+      }
+    }
+  }
+
+  // Known Networks
+  NBox {
+    Layout.fillWidth: true
+    Layout.preferredHeight: knownNetworksCol.implicitHeight + Style.margin2L
+    color: Color.mSurface
+    visible: Settings.data.network.wifiEnabled && root.knownNetworks.length > 0
+
+    ColumnLayout {
+      id: knownNetworksCol
+      spacing: Style.marginM
+      anchors.fill: parent
+      anchors.margins: Style.marginL
+
+      NHeader {
+        label: "Known Networks"
+      }
+
+      WiFiNetworksList {
+        Layout.fillWidth: true
+        model: root.knownNetworks
+        passwordSsid: root.passwordSsid
+        expandedSsid: root.expandedSsid
+        onPasswordRequested: ssid => {
+          root.passwordSsid = ssid;
+          root.expandedSsid = "";
+        }
+        onPasswordSubmitted: (ssid, password) => {
+          NetworkService.connect(ssid, password);
+          root.passwordSsid = "";
+        }
+        onPasswordCancelled: root.passwordSsid = ""
+        onForgetRequested: ssid => root.expandedSsid = root.expandedSsid === ssid ? "" : ssid
+        onForgetConfirmed: ssid => {
+          NetworkService.forget(ssid);
+          root.expandedSsid = "";
+        }
+        onForgetCancelled: root.expandedSsid = ""
+      }
+    }
+  }
+
+  // Available Networks
+  NBox {
+    Layout.fillWidth: true
+    Layout.preferredHeight: availableNetworksCol.implicitHeight + Style.margin2L
+    color: Color.mSurface
+    visible: Settings.data.network.wifiEnabled && root.availableNetworks.length > 0
+
+    ColumnLayout {
+      id: availableNetworksCol
+      spacing: Style.marginM
+      anchors.fill: parent
+      anchors.margins: Style.marginL
+
+      NHeader {
+        label: "Available Networks"
+      }
+
+      WiFiNetworksList {
+        Layout.fillWidth: true
+        model: root.availableNetworks
+        passwordSsid: root.passwordSsid
+        expandedSsid: root.expandedSsid
+        onPasswordRequested: ssid => {
+          root.passwordSsid = ssid;
+          root.expandedSsid = "";
+        }
+        onPasswordSubmitted: (ssid, password) => {
+          NetworkService.connect(ssid, password);
+          root.passwordSsid = "";
+        }
+        onPasswordCancelled: root.passwordSsid = ""
+        onForgetRequested: ssid => root.expandedSsid = root.expandedSsid === ssid ? "" : ssid
+        onForgetConfirmed: ssid => {
+          NetworkService.forget(ssid);
+          root.expandedSsid = "";
+        }
+        onForgetCancelled: root.expandedSsid = ""
+      }
+    }
+  }
+
+  // Scanning indicator
+  NBox {
+    Layout.fillWidth: true
+    Layout.preferredHeight: scanningCol.implicitHeight + Style.margin2L
+    color: Color.mSurface
+    visible: Settings.data.network.wifiEnabled && NetworkService.scanning
+
+    ColumnLayout {
+      id: scanningCol
+      spacing: Style.marginM
+      anchors.fill: parent
+      anchors.margins: Style.marginL
+
+      RowLayout {
+        Layout.fillWidth: true
+        spacing: Style.marginM
+
+        NBusyIndicator {
+          running: visible
+          color: Color.mPrimary
+          size: Style.baseWidgetSize * 0.6
+        }
+
+        NText {
+          text: "Scanning for networks..."
+          pointSize: Style.fontSizeS
+          color: Color.mOnSurfaceVariant
         }
       }
     }

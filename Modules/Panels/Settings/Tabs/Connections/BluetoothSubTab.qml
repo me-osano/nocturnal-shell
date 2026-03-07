@@ -184,6 +184,173 @@ Item {
       }
     }
 
+    // Bluetooth Status Section
+    NBox {
+      visible: !root.showOnlyLists && BluetoothService.enabled
+      Layout.fillWidth: true
+      Layout.preferredHeight: statusCol.implicitHeight + Style.margin2L
+      color: Color.mSurface
+
+      ColumnLayout {
+        id: statusCol
+        anchors.fill: parent
+        anchors.margins: Style.marginL
+        spacing: Style.marginM
+
+        NHeader {
+          label: "Bluetooth Status"
+        }
+
+        // Adapter info
+        RowLayout {
+          Layout.fillWidth: true
+          spacing: Style.marginM
+
+          NIcon {
+            icon: "bluetooth"
+            pointSize: Style.fontSizeXL
+            color: BluetoothService.enabled ? Color.mPrimary : Color.mOnSurfaceVariant
+          }
+
+          ColumnLayout {
+            Layout.fillWidth: true
+            spacing: 0
+
+            NText {
+              text: BluetoothService.adapter ? (BluetoothService.adapter.name || HostService.hostName) : HostService.hostName
+              font.weight: Style.fontWeightBold
+              pointSize: Style.fontSizeM
+            }
+
+            NText {
+              text: {
+                var parts = [];
+                if (BluetoothService.adapter && BluetoothService.adapter.address)
+                  parts.push(BluetoothService.adapter.address);
+                if (BluetoothService.backendUsed)
+                  parts.push("Backend: " + BluetoothService.backendUsed);
+                return parts.length > 0 ? parts.join(" · ") : "Bluetooth adapter";
+              }
+              pointSize: Style.fontSizeXS
+              color: Color.mOnSurfaceVariant
+            }
+          }
+        }
+
+        NDivider {
+          Layout.fillWidth: true
+        }
+
+        // Status indicators
+        GridLayout {
+          Layout.fillWidth: true
+          columns: 2
+          columnSpacing: Style.marginL
+          rowSpacing: Style.marginS
+
+          // Connected count
+          RowLayout {
+            spacing: Style.marginS
+            NIcon {
+              icon: "bluetooth-connected"
+              pointSize: Style.fontSizeS
+              color: root.connectedDevices.length > 0 ? Color.mPrimary : Color.mOnSurfaceVariant
+            }
+            NText {
+              text: root.connectedDevices.length + " connected"
+              pointSize: Style.fontSizeS
+              color: Color.mOnSurface
+            }
+          }
+
+          // Paired count
+          RowLayout {
+            spacing: Style.marginS
+            NIcon {
+              icon: "link"
+              pointSize: Style.fontSizeS
+              color: Color.mOnSurfaceVariant
+            }
+            NText {
+              text: root.pairedDevices.length + " paired"
+              pointSize: Style.fontSizeS
+              color: Color.mOnSurface
+            }
+          }
+
+          // Scanning status
+          RowLayout {
+            spacing: Style.marginS
+            NIcon {
+              icon: root.isScanningActive ? "radar-2" : "radar-off"
+              pointSize: Style.fontSizeS
+              color: root.isScanningActive ? Color.mPrimary : Color.mOnSurfaceVariant
+            }
+            NText {
+              text: root.isScanningActive ? "Scanning" : "Not scanning"
+              pointSize: Style.fontSizeS
+              color: Color.mOnSurface
+            }
+          }
+
+          // Discoverable status
+          RowLayout {
+            spacing: Style.marginS
+            NIcon {
+              icon: root.isDiscoverable ? "eye" : "eye-off"
+              pointSize: Style.fontSizeS
+              color: root.isDiscoverable ? Color.mPrimary : Color.mOnSurfaceVariant
+            }
+            NText {
+              text: root.isDiscoverable ? "Visible" : "Hidden"
+              pointSize: Style.fontSizeS
+              color: Color.mOnSurface
+            }
+          }
+        }
+      }
+    }
+
+    // Quick Actions
+    NBox {
+      visible: !root.showOnlyLists && BluetoothService.enabled
+      Layout.fillWidth: true
+      Layout.preferredHeight: actionsCol.implicitHeight + Style.margin2L
+      color: Color.mSurface
+
+      ColumnLayout {
+        id: actionsCol
+        anchors.fill: parent
+        anchors.margins: Style.marginL
+        spacing: Style.marginM
+
+        NHeader {
+          label: "Quick Actions"
+        }
+
+        RowLayout {
+          Layout.fillWidth: true
+          spacing: Style.marginM
+
+          NButton {
+            text: root.isScanningActive ? "Scanning..." : "Scan"
+            icon: "radar-2"
+            enabled: BluetoothService.enabled && !root.isScanningActive
+            onClicked: BluetoothService.setScanActive(true)
+          }
+
+          NButton {
+            text: "Open Bluetooth Panel"
+            icon: "bluetooth"
+            onClicked: {
+              var panel = PanelService.getPanel("bluetoothPanel", null);
+              if (panel) panel.toggle();
+            }
+          }
+        }
+      }
+    }
+
     Item {
       visible: !showOnlyLists
       Layout.fillWidth: true
@@ -311,6 +478,10 @@ Item {
         anchors.margins: Style.marginXL
         spacing: Style.marginM
 
+        NHeader {
+          label: "Settings"
+        }
+
         NToggle {
           label: "Hide unnamed devices"
           description: "Hide devices that appear only as Bluetooth addresses."
@@ -328,6 +499,14 @@ Item {
                      }
         }
 
+        NDivider {
+          Layout.fillWidth: true
+        }
+
+        NHeader {
+          label: "Signal Monitoring"
+        }
+
         // RSSI Polling
         NToggle {
           label: "Bluetooth signal polling"
@@ -335,6 +514,7 @@ Item {
           checked: Settings.data.network.bluetoothRssiPollingEnabled
           onToggled: checked => Settings.data.network.bluetoothRssiPollingEnabled = checked
         }
+
         NSpinBox {
           label: "Polling interval"
           description: "Configure how often to update signal strength for connected devices."

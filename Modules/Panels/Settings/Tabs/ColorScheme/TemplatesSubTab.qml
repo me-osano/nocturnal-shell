@@ -19,7 +19,7 @@ ColumnLayout {
 
     // Helper to format path description
     function getDesc(fallbackPath) {
-      return "Writes: {filepath}";
+      return "Writes: " + fallbackPath;
     }
 
     // Add terminals with category "terminal"

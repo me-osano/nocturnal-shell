@@ -245,7 +245,7 @@ Item {
               return "wifi-off";
             }
           }
-          pointSize: capsuleHeight * 0.7
+          pointSize: capsuleHeight * 0.8
           color: capsuleBg.hovered ? Color.mOnHover : Color.mOnSurface
         }
       }
@@ -279,7 +279,7 @@ Item {
               return "wifi-off";
             }
           }
-          pointSize: capsuleHeight * 0.7
+          pointSize: capsuleHeight * 0.8
           color: capsuleBg.hovered ? Color.mOnHover : Color.mOnSurface
         }
 
