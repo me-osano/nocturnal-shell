@@ -581,45 +581,6 @@ ColumnLayout {
     }
   }
 
-  // Quick Actions
-  NBox {
-    Layout.fillWidth: true
-    Layout.preferredHeight: actionsCol.implicitHeight + Style.margin2L
-    color: Color.mSurface
-
-    ColumnLayout {
-      id: actionsCol
-      spacing: Style.marginM
-      anchors.fill: parent
-      anchors.margins: Style.marginL
-
-      NHeader {
-        label: "Quick Actions"
-      }
-
-      RowLayout {
-        Layout.fillWidth: true
-        spacing: Style.marginM
-
-        NButton {
-          text: "Scan Networks"
-          icon: "refresh"
-          enabled: Settings.data.network.wifiEnabled && !NetworkService.scanning
-          onClicked: NetworkService.scan()
-        }
-
-        NButton {
-          text: "Open Network Panel"
-          icon: "wifi"
-          onClicked: {
-            var panel = PanelService.getPanel("networkPanel", null);
-            if (panel) panel.toggle();
-          }
-        }
-      }
-    }
-  }
-
   // Known Networks
   NBox {
     Layout.fillWidth: true
@@ -733,6 +694,46 @@ ColumnLayout {
       }
     }
   }
+
+  // Quick Actions
+  NBox {
+    Layout.fillWidth: true
+    Layout.preferredHeight: actionsCol.implicitHeight + Style.margin2L
+    color: Color.mSurface
+
+    ColumnLayout {
+      id: actionsCol
+      spacing: Style.marginM
+      anchors.fill: parent
+      anchors.margins: Style.marginL
+
+      NHeader {
+        label: "Quick Actions"
+      }
+
+      RowLayout {
+        Layout.fillWidth: true
+        spacing: Style.marginM
+
+        NButton {
+          text: "Scan Networks"
+          icon: "refresh"
+          enabled: Settings.data.network.wifiEnabled && !NetworkService.scanning
+          onClicked: NetworkService.scan()
+        }
+
+        NButton {
+          text: "Open Network Panel"
+          icon: "wifi"
+          onClicked: {
+            var panel = PanelService.getPanel("networkPanel", null);
+            if (panel) panel.toggle();
+          }
+        }
+      }
+    }
+  }
+
 
   // Spacer to push content up
   Item {
