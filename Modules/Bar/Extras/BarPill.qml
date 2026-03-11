@@ -23,6 +23,7 @@ Item {
   property color customTextIconColor: "transparent"
   property color customIconColor: "transparent"
   property color customTextColor: "transparent"
+  property real iconScale: 1.0
 
   readonly property string barPosition: Settings.getBarPositionForScreen(screen?.name)
   readonly property bool isVerticalBar: barPosition === "left" || barPosition === "right"
@@ -68,6 +69,7 @@ Item {
         customTextIconColor: root.customTextIconColor
         customIconColor: root.customIconColor
         customTextColor: root.customTextColor
+        iconScale: root.iconScale
         onShown: root.shown()
         onHidden: root.hidden()
         onEntered: root.entered()
@@ -96,6 +98,7 @@ Item {
         customTextIconColor: root.customTextIconColor
         customIconColor: root.customIconColor
         customTextColor: root.customTextColor
+        iconScale: root.iconScale
         onShown: root.shown()
         onHidden: root.hidden()
         onEntered: root.entered()

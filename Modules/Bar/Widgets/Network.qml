@@ -37,6 +37,7 @@ Item {
   readonly property string displayMode: widgetSettings.displayMode !== undefined ? widgetSettings.displayMode : widgetMetadata.displayMode
   readonly property string iconColorKey: widgetSettings.iconColor !== undefined ? widgetSettings.iconColor : widgetMetadata.iconColor
   readonly property string textColorKey: widgetSettings.textColor !== undefined ? widgetSettings.textColor : widgetMetadata.textColor
+  readonly property real iconScale: widgetSettings.iconScale !== undefined ? widgetSettings.iconScale : (widgetMetadata.iconScale !== undefined ? widgetMetadata.iconScale : 1.0)
 
   implicitWidth: pill.width
   implicitHeight: pill.height
@@ -84,6 +85,7 @@ Item {
     oppositeDirection: BarService.getPillDirection(root)
     customIconColor: Color.resolveColorKeyOptional(root.iconColorKey)
     customTextColor: Color.resolveColorKeyOptional(root.textColorKey)
+    iconScale: root.iconScale
     icon: {
       try {
         if (NetworkService.ethernetConnected) {

@@ -18,12 +18,14 @@ ColumnLayout {
   property string valueDisplayMode: widgetData.displayMode !== undefined ? widgetData.displayMode : widgetMetadata.displayMode
   property string valueIconColor: widgetData.iconColor !== undefined ? widgetData.iconColor : widgetMetadata.iconColor
   property string valueTextColor: widgetData.textColor !== undefined ? widgetData.textColor : widgetMetadata.textColor
+  property real valueIconScale: widgetData.iconScale !== undefined ? widgetData.iconScale : (widgetMetadata.iconScale !== undefined ? widgetMetadata.iconScale : 1.0)
 
   function saveSettings() {
     var settings = Object.assign({}, widgetData || {});
     settings.displayMode = valueDisplayMode;
     settings.iconColor = valueIconColor;
     settings.textColor = valueTextColor;
+    settings.iconScale = valueIconScale;
     settingsChanged(settings);
   }
 
@@ -67,5 +69,19 @@ ColumnLayout {
                   valueTextColor = key;
                   saveSettings();
                 }
+  }
+
+  NValueSlider {
+    label: "Icon scale"
+    description: "Adjust the size of the network icon"
+    from: 0.5
+    to: 1.5
+    stepSize: 0.1
+    value: valueIconScale
+    valueFormat: value => Math.round(value * 100) + "%"
+    onValueChanged: {
+      valueIconScale = value;
+      saveSettings();
+    }
   }
 }

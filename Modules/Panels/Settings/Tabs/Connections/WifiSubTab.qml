@@ -97,9 +97,42 @@ ColumnLayout {
     Layout.preferredHeight: statusCol.implicitHeight + Style.margin2L
     color: Color.mSurface
 
+    // Helper properties for connection state
+    readonly property bool hasWifiConnection: {
+      for (const net in NetworkService.networks) {
+        if (NetworkService.networks[net].connected) return true;
+      }
+      return false;
+    }
+    readonly property string connectedSsid: {
+      for (const net in NetworkService.networks) {
+        if (NetworkService.networks[net].connected) return net;
+      }
+      return "";
+    }
+    readonly property int connectedSignal: {
+      for (const net in NetworkService.networks) {
+        if (NetworkService.networks[net].connected) return NetworkService.networks[net].signal;
+      }
+      return 0;
+    }
+    readonly property color signalColor: {
+      if (!hasWifiConnection) return Color.mOnSurfaceVariant;
+      if (connectedSignal >= 70) return Color.mPrimary;
+      if (connectedSignal >= 40) return Color.mWarning || Color.mOnSurface;
+      return Color.mError;
+    }
+    readonly property string signalQuality: {
+      if (!hasWifiConnection) return "";
+      if (connectedSignal >= 70) return "Excellent";
+      if (connectedSignal >= 50) return "Good";
+      if (connectedSignal >= 30) return "Fair";
+      return "Weak";
+    }
+
     ColumnLayout {
       id: statusCol
-      spacing: Style.marginM
+      spacing: Style.marginL
       anchors.fill: parent
       anchors.margins: Style.marginL
 
@@ -107,148 +140,299 @@ ColumnLayout {
         label: "Connection Status"
       }
 
-      // Current Wi-Fi connection
-      RowLayout {
+      // Main connection card - Wi-Fi
+      Rectangle {
         Layout.fillWidth: true
-        spacing: Style.marginM
+        Layout.preferredHeight: wifiStatusContent.implicitHeight + Style.marginL * 2
+        radius: Style.radiusM
+        color: parent.parent.hasWifiConnection ? Qt.rgba(Color.mPrimary.r, Color.mPrimary.g, Color.mPrimary.b, 0.08) : Qt.rgba(Color.mOnSurfaceVariant.r, Color.mOnSurfaceVariant.g, Color.mOnSurfaceVariant.b, 0.05)
+        border.width: 1
+        border.color: parent.parent.hasWifiConnection ? Qt.rgba(Color.mPrimary.r, Color.mPrimary.g, Color.mPrimary.b, 0.2) : Qt.rgba(Color.mOnSurfaceVariant.r, Color.mOnSurfaceVariant.g, Color.mOnSurfaceVariant.b, 0.1)
         visible: Settings.data.network.wifiEnabled
 
-        NIcon {
-          icon: {
-            let connected = false;
-            let signalStrength = 0;
-            for (const net in NetworkService.networks) {
-              if (NetworkService.networks[net].connected) {
-                connected = true;
-                signalStrength = NetworkService.networks[net].signal;
-                break;
+        RowLayout {
+          id: wifiStatusContent
+          anchors.fill: parent
+          anchors.margins: Style.marginL
+          spacing: Style.marginL
+
+          // Large animated Wi-Fi icon with glow effect
+          Item {
+            Layout.preferredWidth: Style.baseWidgetSize * 1.4
+            Layout.preferredHeight: Style.baseWidgetSize * 1.4
+
+            // Glow effect for connected state
+            Rectangle {
+              anchors.centerIn: parent
+              width: parent.width
+              height: parent.height
+              radius: width / 2
+              color: "transparent"
+              border.width: 2
+              border.color: parent.parent.parent.parent.parent.hasWifiConnection ? Qt.rgba(Color.mPrimary.r, Color.mPrimary.g, Color.mPrimary.b, 0.3) : "transparent"
+              visible: parent.parent.parent.parent.parent.hasWifiConnection
+
+              SequentialAnimation on opacity {
+                running: parent.visible
+                loops: Animation.Infinite
+                NumberAnimation { to: 0.5; duration: 1500; easing.type: Easing.InOutSine }
+                NumberAnimation { to: 1.0; duration: 1500; easing.type: Easing.InOutSine }
               }
             }
-            return connected ? NetworkService.signalIcon(signalStrength, true) : "wifi-off";
-          }
-          pointSize: Style.fontSizeXL
-          color: {
-            for (const net in NetworkService.networks) {
-              if (NetworkService.networks[net].connected) {
-                return Color.mPrimary;
+
+            Rectangle {
+              anchors.centerIn: parent
+              width: parent.width * 0.85
+              height: parent.height * 0.85
+              radius: width / 2
+              color: parent.parent.parent.parent.hasWifiConnection ? Qt.rgba(Color.mPrimary.r, Color.mPrimary.g, Color.mPrimary.b, 0.15) : Qt.rgba(Color.mOnSurfaceVariant.r, Color.mOnSurfaceVariant.g, Color.mOnSurfaceVariant.b, 0.1)
+
+              NIcon {
+                anchors.centerIn: parent
+                icon: {
+                  const box = statusCol.parent;
+                  return box.hasWifiConnection ? NetworkService.signalIcon(box.connectedSignal, true) : "wifi-off";
+                }
+                pointSize: Style.fontSizeXXL
+                color: statusCol.parent.hasWifiConnection ? Color.mPrimary : Color.mOnSurfaceVariant
               }
             }
-            return Color.mOnSurfaceVariant;
           }
-        }
 
-        ColumnLayout {
-          Layout.fillWidth: true
-          spacing: 0
+          // Connection info
+          ColumnLayout {
+            Layout.fillWidth: true
+            spacing: Style.marginXS
 
-          NText {
-            text: {
-              for (const net in NetworkService.networks) {
-                if (NetworkService.networks[net].connected) {
-                  return net;
+            RowLayout {
+              spacing: Style.marginS
+
+              NText {
+                text: statusCol.parent.hasWifiConnection ? statusCol.parent.connectedSsid : "Not connected"
+                font.weight: Style.fontWeightBold
+                pointSize: Style.fontSizeL
+              }
+
+              // Connection quality badge
+              Rectangle {
+                visible: statusCol.parent.hasWifiConnection
+                Layout.preferredHeight: qualityText.implicitHeight + Style.marginXS
+                Layout.preferredWidth: qualityText.implicitWidth + Style.marginM
+                radius: height / 2
+                color: Qt.rgba(statusCol.parent.signalColor.r, statusCol.parent.signalColor.g, statusCol.parent.signalColor.b, 0.15)
+
+                NText {
+                  id: qualityText
+                  anchors.centerIn: parent
+                  text: statusCol.parent.signalQuality
+                  pointSize: Style.fontSizeXS
+                  font.weight: Style.fontWeightMedium
+                  color: statusCol.parent.signalColor
                 }
               }
-              return "Not connected";
             }
-            font.weight: Style.fontWeightBold
-            pointSize: Style.fontSizeM
-          }
 
-          NText {
-            visible: {
-              for (const net in NetworkService.networks) {
-                if (NetworkService.networks[net].connected) {
-                  return true;
+            // Signal strength bar
+            RowLayout {
+              visible: statusCol.parent.hasWifiConnection
+              spacing: Style.marginS
+              Layout.fillWidth: true
+
+              NText {
+                text: "Signal"
+                pointSize: Style.fontSizeXS
+                color: Color.mOnSurfaceVariant
+              }
+
+              Rectangle {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 6
+                Layout.maximumWidth: 120
+                radius: 3
+                color: Qt.rgba(Color.mOnSurfaceVariant.r, Color.mOnSurfaceVariant.g, Color.mOnSurfaceVariant.b, 0.2)
+
+                Rectangle {
+                  width: parent.width * (statusCol.parent.connectedSignal / 100)
+                  height: parent.height
+                  radius: 3
+                  color: statusCol.parent.signalColor
+
+                  Behavior on width {
+                    NumberAnimation { duration: 300; easing.type: Easing.OutCubic }
+                  }
                 }
               }
-              return false;
-            }
-            text: {
-              const w = NetworkService.activeWifiDetails || ({});
-              const parts = [];
-              if (w.rateShort) parts.push(w.rateShort);
-              if (w.freq) parts.push(w.freq);
-              if (w.security) parts.push(w.security);
-              return parts.length > 0 ? parts.join(" · ") : "Connected";
-            }
-            pointSize: Style.fontSizeXS
-            color: Color.mOnSurfaceVariant
-          }
-        }
 
-        NButton {
-          visible: {
-            for (const net in NetworkService.networks) {
-              if (NetworkService.networks[net].connected) {
-                return true;
+              NText {
+                text: statusCol.parent.connectedSignal + "%"
+                pointSize: Style.fontSizeXS
+                font.weight: Style.fontWeightMedium
+                color: statusCol.parent.signalColor
               }
             }
-            return false;
+
+            // Connection details
+            NText {
+              visible: statusCol.parent.hasWifiConnection
+              text: {
+                const w = NetworkService.activeWifiDetails || ({});
+                const parts = [];
+                if (w.rateShort) parts.push(w.rateShort);
+                if (w.freq) parts.push(w.freq);
+                if (w.security) parts.push(w.security);
+                return parts.length > 0 ? parts.join(" · ") : "Connected";
+              }
+              pointSize: Style.fontSizeXS
+              color: Color.mOnSurfaceVariant
+            }
+
+            NText {
+              visible: !statusCol.parent.hasWifiConnection && Settings.data.network.wifiEnabled
+              text: "Select a network to connect"
+              pointSize: Style.fontSizeS
+              color: Color.mOnSurfaceVariant
+            }
           }
-          text: "Disconnect"
-          onClicked: {
-            for (const net in NetworkService.networks) {
-              if (NetworkService.networks[net].connected) {
-                NetworkService.disconnect(net);
-                break;
-              }
-            }
+
+          // Disconnect button
+          NButton {
+            visible: statusCol.parent.hasWifiConnection
+            text: "Disconnect"
+            onClicked: NetworkService.disconnect(statusCol.parent.connectedSsid)
           }
         }
       }
 
-      // Ethernet status
-      RowLayout {
+      // Ethernet status card
+      Rectangle {
         Layout.fillWidth: true
-        spacing: Style.marginM
+        Layout.preferredHeight: ethernetStatusContent.implicitHeight + Style.marginL * 2
+        radius: Style.radiusM
+        color: NetworkService.ethernetConnected ? Qt.rgba(Color.mPrimary.r, Color.mPrimary.g, Color.mPrimary.b, 0.08) : Qt.rgba(Color.mOnSurfaceVariant.r, Color.mOnSurfaceVariant.g, Color.mOnSurfaceVariant.b, 0.05)
+        border.width: 1
+        border.color: NetworkService.ethernetConnected ? Qt.rgba(Color.mPrimary.r, Color.mPrimary.g, Color.mPrimary.b, 0.2) : Qt.rgba(Color.mOnSurfaceVariant.r, Color.mOnSurfaceVariant.g, Color.mOnSurfaceVariant.b, 0.1)
         visible: NetworkService.ethernetAvailable
 
-        NIcon {
-          icon: NetworkService.ethernetConnected ? "ethernet" : "ethernet-off"
-          pointSize: Style.fontSizeXL
-          color: NetworkService.ethernetConnected ? Color.mPrimary : Color.mOnSurfaceVariant
-        }
+        RowLayout {
+          id: ethernetStatusContent
+          anchors.fill: parent
+          anchors.margins: Style.marginL
+          spacing: Style.marginL
 
-        ColumnLayout {
-          Layout.fillWidth: true
-          spacing: 0
+          // Ethernet icon
+          Rectangle {
+            Layout.preferredWidth: Style.baseWidgetSize * 1.2
+            Layout.preferredHeight: Style.baseWidgetSize * 1.2
+            radius: width / 2
+            color: NetworkService.ethernetConnected ? Qt.rgba(Color.mPrimary.r, Color.mPrimary.g, Color.mPrimary.b, 0.15) : Qt.rgba(Color.mOnSurfaceVariant.r, Color.mOnSurfaceVariant.g, Color.mOnSurfaceVariant.b, 0.1)
 
-          NText {
-            text: NetworkService.ethernetConnected ? "Ethernet Connected" : "Ethernet Disconnected"
-            font.weight: Style.fontWeightBold
-            pointSize: Style.fontSizeM
+            NIcon {
+              anchors.centerIn: parent
+              icon: NetworkService.ethernetConnected ? "ethernet" : "ethernet-off"
+              pointSize: Style.fontSizeXL
+              color: NetworkService.ethernetConnected ? Color.mPrimary : Color.mOnSurfaceVariant
+            }
           }
 
-          NText {
-            visible: NetworkService.ethernetConnected
-            text: {
-              const d = NetworkService.activeEthernetDetails || ({});
-              const parts = [];
-              if (d.speed) parts.push(d.speed);
-              if (d.ipv4) parts.push(d.ipv4);
-              return parts.length > 0 ? parts.join(" · ") : "Connected";
+          ColumnLayout {
+            Layout.fillWidth: true
+            spacing: Style.marginXS
+
+            RowLayout {
+              spacing: Style.marginS
+
+              NText {
+                text: NetworkService.ethernetConnected ? "Ethernet" : "Ethernet Disconnected"
+                font.weight: Style.fontWeightBold
+                pointSize: Style.fontSizeM
+              }
+
+              // Connected badge
+              Rectangle {
+                visible: NetworkService.ethernetConnected
+                Layout.preferredHeight: ethBadgeText.implicitHeight + Style.marginXS
+                Layout.preferredWidth: ethBadgeText.implicitWidth + Style.marginM
+                radius: height / 2
+                color: Qt.rgba(Color.mPrimary.r, Color.mPrimary.g, Color.mPrimary.b, 0.15)
+
+                NText {
+                  id: ethBadgeText
+                  anchors.centerIn: parent
+                  text: "Connected"
+                  pointSize: Style.fontSizeXS
+                  font.weight: Style.fontWeightMedium
+                  color: Color.mPrimary
+                }
+              }
             }
-            pointSize: Style.fontSizeXS
-            color: Color.mOnSurfaceVariant
+
+            NText {
+              visible: NetworkService.ethernetConnected
+              text: {
+                const d = NetworkService.activeEthernetDetails || ({});
+                const parts = [];
+                if (d.speed) parts.push(d.speed);
+                if (d.ipv4) parts.push(d.ipv4);
+                return parts.length > 0 ? parts.join(" · ") : "Wired connection";
+              }
+              pointSize: Style.fontSizeXS
+              color: Color.mOnSurfaceVariant
+            }
           }
         }
       }
 
-      // Internet connectivity
-      RowLayout {
+      // Internet connectivity indicator
+      Rectangle {
         Layout.fillWidth: true
-        spacing: Style.marginM
+        Layout.preferredHeight: internetStatusContent.implicitHeight + Style.marginM * 2
+        radius: Style.radiusS
+        color: NetworkService.internetConnectivity ? Qt.rgba(Color.mPrimary.r, Color.mPrimary.g, Color.mPrimary.b, 0.06) : Qt.rgba(Color.mError.r, Color.mError.g, Color.mError.b, 0.06)
+        border.width: 1
+        border.color: NetworkService.internetConnectivity ? Qt.rgba(Color.mPrimary.r, Color.mPrimary.g, Color.mPrimary.b, 0.15) : Qt.rgba(Color.mError.r, Color.mError.g, Color.mError.b, 0.15)
 
-        NIcon {
-          icon: NetworkService.internetConnectivity ? "world" : "world-off"
-          pointSize: Style.fontSizeL
-          color: NetworkService.internetConnectivity ? Color.mPrimary : Color.mError
-        }
+        RowLayout {
+          id: internetStatusContent
+          anchors.fill: parent
+          anchors.margins: Style.marginM
+          spacing: Style.marginM
 
-        NText {
-          text: NetworkService.internetConnectivity ? "Internet connected" : "No internet connection"
-          pointSize: Style.fontSizeS
-          color: NetworkService.internetConnectivity ? Color.mOnSurface : Color.mError
+          Rectangle {
+            Layout.preferredWidth: Style.baseWidgetSize * 0.8
+            Layout.preferredHeight: Style.baseWidgetSize * 0.8
+            radius: width / 2
+            color: NetworkService.internetConnectivity ? Qt.rgba(Color.mPrimary.r, Color.mPrimary.g, Color.mPrimary.b, 0.15) : Qt.rgba(Color.mError.r, Color.mError.g, Color.mError.b, 0.15)
+
+            NIcon {
+              anchors.centerIn: parent
+              icon: NetworkService.internetConnectivity ? "world" : "world-off"
+              pointSize: Style.fontSizeL
+              color: NetworkService.internetConnectivity ? Color.mPrimary : Color.mError
+            }
+          }
+
+          NText {
+            Layout.fillWidth: true
+            text: NetworkService.internetConnectivity ? "Internet connected" : "No internet connection"
+            pointSize: Style.fontSizeS
+            font.weight: Style.fontWeightMedium
+            color: NetworkService.internetConnectivity ? Color.mOnSurface : Color.mError
+          }
+
+          // Status dot with pulse animation
+          Rectangle {
+            Layout.preferredWidth: 10
+            Layout.preferredHeight: 10
+            radius: 5
+            color: NetworkService.internetConnectivity ? Color.mPrimary : Color.mError
+
+            SequentialAnimation on opacity {
+              running: NetworkService.internetConnectivity
+              loops: Animation.Infinite
+              NumberAnimation { to: 0.4; duration: 1000; easing.type: Easing.InOutSine }
+              NumberAnimation { to: 1.0; duration: 1000; easing.type: Easing.InOutSine }
+            }
+          }
         }
       }
     }

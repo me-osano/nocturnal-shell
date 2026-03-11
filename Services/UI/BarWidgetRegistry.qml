@@ -274,7 +274,8 @@ Singleton {
                                   "Network": {
                                     "displayMode": "onhover",
                                     "iconColor": "none",
-                                    "textColor": "none"
+                                    "textColor": "none",
+                                    "iconScale": 1.0
                                   },
                                   "NightLight": {
                                     "iconColor": "none"
