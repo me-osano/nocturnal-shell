@@ -35,7 +35,7 @@ Singleton {
   property string disconnectingFrom: ""
   property string forgettingNetwork: ""
   property string networkConnectivity: "unknown"
-  property bool internetConnectivity: true
+  property bool internetConnectivity: false
   property bool ignoreScanResults: false
   property bool scanPending: false
 
@@ -86,6 +86,11 @@ Singleton {
         }
         // Clear networks so the widget icon changes
         root.networks = ({});
+        // Reset internet connectivity if no Ethernet connection
+        if (!root.ethernetConnected) {
+          root.internetConnectivity = false;
+          root.networkConnectivity = "none";
+        }
       }
     }
   }

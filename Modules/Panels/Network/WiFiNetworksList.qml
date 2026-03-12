@@ -533,7 +533,7 @@ NBox {
                   // Click-to-copy Wi‑Fi IPv4 address
                   MouseArea {
                     anchors.fill: parent
-                    enabled: (NetworkService.activeWifiDetails.ipv4 && NetworkService.activeWifiDetails.ipv4.length > 0)
+                    enabled: !!(NetworkService.activeWifiDetails && NetworkService.activeWifiDetails.ipv4 && NetworkService.activeWifiDetails.ipv4.length > 0)
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onEntered: TooltipService.show(parent, "Copy address")

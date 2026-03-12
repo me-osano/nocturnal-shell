@@ -151,11 +151,11 @@ ColumnLayout {
 
         // Status dot with pulse animation
         Rectangle {
+          id: statusDot
           Layout.preferredWidth: 8
           Layout.preferredHeight: 8
           radius: 4
           color: NetworkService.internetConnectivity ? Color.mPrimary : Color.mError
-          opacity: pulseAnimation.running ? pulseAnimation.opacity : 1.0
 
           SequentialAnimation on opacity {
             id: pulseAnimation
@@ -164,6 +164,16 @@ ColumnLayout {
             alwaysRunToEnd: false
             NumberAnimation { to: 0.4; duration: 1000; easing.type: Easing.InOutSine }
             NumberAnimation { to: 1.0; duration: 1000; easing.type: Easing.InOutSine }
+          }
+
+          // Reset opacity when animation stops
+          Connections {
+            target: pulseAnimation
+            function onRunningChanged() {
+              if (!pulseAnimation.running) {
+                statusDot.opacity = 1.0;
+              }
+            }
           }
         }
 
@@ -502,7 +512,7 @@ ColumnLayout {
       // Frequency
       RowLayout {
         Layout.fillWidth: true
-        visible: NetworkService.activeWifiDetails && NetworkService.activeWifiDetails.freq
+        visible: !!(NetworkService.activeWifiDetails && NetworkService.activeWifiDetails.freq)
         NText {
           text: "Frequency"
           pointSize: Style.fontSizeS
@@ -519,7 +529,7 @@ ColumnLayout {
       // Link Speed
       RowLayout {
         Layout.fillWidth: true
-        visible: NetworkService.activeWifiDetails && NetworkService.activeWifiDetails.rate
+        visible: !!(NetworkService.activeWifiDetails && NetworkService.activeWifiDetails.rate)
         NText {
           text: "Link Speed"
           pointSize: Style.fontSizeS
@@ -536,7 +546,7 @@ ColumnLayout {
       // Security
       RowLayout {
         Layout.fillWidth: true
-        visible: NetworkService.activeWifiDetails && NetworkService.activeWifiDetails.security
+        visible: !!(NetworkService.activeWifiDetails && NetworkService.activeWifiDetails.security)
         NText {
           text: "Security"
           pointSize: Style.fontSizeS
@@ -553,7 +563,7 @@ ColumnLayout {
       // BSSID
       RowLayout {
         Layout.fillWidth: true
-        visible: NetworkService.activeWifiDetails && NetworkService.activeWifiDetails.bssid
+        visible: !!(NetworkService.activeWifiDetails && NetworkService.activeWifiDetails.bssid)
         NText {
           text: "BSSID"
           pointSize: Style.fontSizeS
@@ -571,7 +581,7 @@ ColumnLayout {
       // IPv4 Address
       RowLayout {
         Layout.fillWidth: true
-        visible: NetworkService.activeWifiDetails && NetworkService.activeWifiDetails.ipv4
+        visible: !!(NetworkService.activeWifiDetails && NetworkService.activeWifiDetails.ipv4)
         NText {
           text: "IPv4 Address"
           pointSize: Style.fontSizeS
@@ -589,7 +599,7 @@ ColumnLayout {
       // IPv6 Address
       RowLayout {
         Layout.fillWidth: true
-        visible: NetworkService.activeWifiDetails && NetworkService.activeWifiDetails.ipv6
+        visible: !!(NetworkService.activeWifiDetails && NetworkService.activeWifiDetails.ipv6)
         NText {
           text: "IPv6 Address"
           pointSize: Style.fontSizeS
@@ -608,7 +618,7 @@ ColumnLayout {
       // Gateway
       RowLayout {
         Layout.fillWidth: true
-        visible: NetworkService.activeWifiDetails && NetworkService.activeWifiDetails.gateway
+        visible: !!(NetworkService.activeWifiDetails && NetworkService.activeWifiDetails.gateway)
         NText {
           text: "Gateway"
           pointSize: Style.fontSizeS
@@ -626,7 +636,7 @@ ColumnLayout {
       // DNS
       RowLayout {
         Layout.fillWidth: true
-        visible: NetworkService.activeWifiDetails && NetworkService.activeWifiDetails.dns
+        visible: !!(NetworkService.activeWifiDetails && NetworkService.activeWifiDetails.dns)
         NText {
           text: "DNS"
           pointSize: Style.fontSizeS
@@ -656,7 +666,7 @@ ColumnLayout {
       // Interface
       RowLayout {
         Layout.fillWidth: true
-        visible: NetworkService.activeEthernetIf
+        visible: !!NetworkService.activeEthernetIf
         NText {
           text: "Interface"
           pointSize: Style.fontSizeS
@@ -674,7 +684,7 @@ ColumnLayout {
       // Speed
       RowLayout {
         Layout.fillWidth: true
-        visible: NetworkService.activeEthernetDetails && NetworkService.activeEthernetDetails.speed
+        visible: !!(NetworkService.activeEthernetDetails && NetworkService.activeEthernetDetails.speed)
         NText {
           text: "Link Speed"
           pointSize: Style.fontSizeS
@@ -691,7 +701,7 @@ ColumnLayout {
       // IPv4 Address
       RowLayout {
         Layout.fillWidth: true
-        visible: NetworkService.activeEthernetDetails && NetworkService.activeEthernetDetails.ipv4
+        visible: !!(NetworkService.activeEthernetDetails && NetworkService.activeEthernetDetails.ipv4)
         NText {
           text: "IPv4 Address"
           pointSize: Style.fontSizeS
@@ -709,7 +719,7 @@ ColumnLayout {
       // IPv6 Address
       RowLayout {
         Layout.fillWidth: true
-        visible: NetworkService.activeEthernetDetails && NetworkService.activeEthernetDetails.ipv6
+        visible: !!(NetworkService.activeEthernetDetails && NetworkService.activeEthernetDetails.ipv6)
         NText {
           text: "IPv6 Address"
           pointSize: Style.fontSizeS
@@ -728,7 +738,7 @@ ColumnLayout {
       // Gateway
       RowLayout {
         Layout.fillWidth: true
-        visible: NetworkService.activeEthernetDetails && NetworkService.activeEthernetDetails.gateway
+        visible: !!(NetworkService.activeEthernetDetails && NetworkService.activeEthernetDetails.gateway)
         NText {
           text: "Gateway"
           pointSize: Style.fontSizeS
@@ -746,7 +756,7 @@ ColumnLayout {
       // DNS
       RowLayout {
         Layout.fillWidth: true
-        visible: NetworkService.activeEthernetDetails && NetworkService.activeEthernetDetails.dns
+        visible: !!(NetworkService.activeEthernetDetails && NetworkService.activeEthernetDetails.dns)
         NText {
           text: "DNS"
           pointSize: Style.fontSizeS
