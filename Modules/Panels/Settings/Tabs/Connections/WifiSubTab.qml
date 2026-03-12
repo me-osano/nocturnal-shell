@@ -130,65 +130,63 @@ ColumnLayout {
       return "Weak";
     }
 
+    // Internet connectivity indicator (anchored top-right)
+    Rectangle {
+      anchors.top: parent.top
+      anchors.right: parent.right
+      anchors.topMargin: Style.marginL
+      anchors.rightMargin: Style.marginL
+      z: 1
+      height: internetIndicatorContent.implicitHeight + Style.marginS * 2
+      width: internetIndicatorContent.implicitWidth + Style.marginM * 2
+      radius: height / 2
+      color: NetworkService.internetConnectivity ? Qt.rgba(Color.mPrimary.r, Color.mPrimary.g, Color.mPrimary.b, 0.1) : Qt.rgba(Color.mError.r, Color.mError.g, Color.mError.b, 0.1)
+      border.width: 1
+      border.color: NetworkService.internetConnectivity ? Qt.rgba(Color.mPrimary.r, Color.mPrimary.g, Color.mPrimary.b, 0.2) : Qt.rgba(Color.mError.r, Color.mError.g, Color.mError.b, 0.2)
+
+      RowLayout {
+        id: internetIndicatorContent
+        anchors.centerIn: parent
+        spacing: Style.marginS
+
+        // Status dot with pulse animation
+        Rectangle {
+          Layout.preferredWidth: 8
+          Layout.preferredHeight: 8
+          radius: 4
+          color: NetworkService.internetConnectivity ? Color.mPrimary : Color.mError
+
+          SequentialAnimation on opacity {
+            running: NetworkService.internetConnectivity
+            loops: Animation.Infinite
+            NumberAnimation { to: 0.4; duration: 1000; easing.type: Easing.InOutSine }
+            NumberAnimation { to: 1.0; duration: 1000; easing.type: Easing.InOutSine }
+          }
+        }
+
+        NIcon {
+          icon: NetworkService.internetConnectivity ? "world" : "world-off"
+          pointSize: Style.fontSizeS
+          color: NetworkService.internetConnectivity ? Color.mPrimary : Color.mError
+        }
+
+        NText {
+          text: NetworkService.internetConnectivity ? "Online" : "Offline"
+          pointSize: Style.fontSizeXS
+          font.weight: Style.fontWeightMedium
+          color: NetworkService.internetConnectivity ? Color.mPrimary : Color.mError
+        }
+      }
+    }
+
     ColumnLayout {
       id: statusCol
       spacing: Style.marginL
       anchors.fill: parent
       anchors.margins: Style.marginL
 
-      // Header with internet status indicator on the right
-      RowLayout {
-        Layout.fillWidth: true
-        spacing: Style.marginM
-
-        NHeader {
-          label: "Connection Status"
-          Layout.fillWidth: true
-        }
-
-        // Internet connectivity indicator (top-right)
-        Rectangle {
-          Layout.preferredHeight: internetIndicatorContent.implicitHeight + Style.marginS * 2
-          Layout.preferredWidth: internetIndicatorContent.implicitWidth + Style.marginM * 2
-          radius: height / 2
-          color: NetworkService.internetConnectivity ? Qt.rgba(Color.mPrimary.r, Color.mPrimary.g, Color.mPrimary.b, 0.1) : Qt.rgba(Color.mError.r, Color.mError.g, Color.mError.b, 0.1)
-          border.width: 1
-          border.color: NetworkService.internetConnectivity ? Qt.rgba(Color.mPrimary.r, Color.mPrimary.g, Color.mPrimary.b, 0.2) : Qt.rgba(Color.mError.r, Color.mError.g, Color.mError.b, 0.2)
-
-          RowLayout {
-            id: internetIndicatorContent
-            anchors.centerIn: parent
-            spacing: Style.marginS
-
-            // Status dot with pulse animation
-            Rectangle {
-              Layout.preferredWidth: 8
-              Layout.preferredHeight: 8
-              radius: 4
-              color: NetworkService.internetConnectivity ? Color.mPrimary : Color.mError
-
-              SequentialAnimation on opacity {
-                running: NetworkService.internetConnectivity
-                loops: Animation.Infinite
-                NumberAnimation { to: 0.4; duration: 1000; easing.type: Easing.InOutSine }
-                NumberAnimation { to: 1.0; duration: 1000; easing.type: Easing.InOutSine }
-              }
-            }
-
-            NIcon {
-              icon: NetworkService.internetConnectivity ? "world" : "world-off"
-              pointSize: Style.fontSizeS
-              color: NetworkService.internetConnectivity ? Color.mPrimary : Color.mError
-            }
-
-            NText {
-              text: NetworkService.internetConnectivity ? "Online" : "Offline"
-              pointSize: Style.fontSizeXS
-              font.weight: Style.fontWeightMedium
-              color: NetworkService.internetConnectivity ? Color.mPrimary : Color.mError
-            }
-          }
-        }
+      NHeader {
+        label: "Connection Status"
       }
 
       // Main connection card - Wi-Fi
