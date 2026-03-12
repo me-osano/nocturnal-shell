@@ -155,10 +155,13 @@ ColumnLayout {
           Layout.preferredHeight: 8
           radius: 4
           color: NetworkService.internetConnectivity ? Color.mPrimary : Color.mError
+          opacity: pulseAnimation.running ? pulseAnimation.opacity : 1.0
 
           SequentialAnimation on opacity {
+            id: pulseAnimation
             running: NetworkService.internetConnectivity
             loops: Animation.Infinite
+            alwaysRunToEnd: false
             NumberAnimation { to: 0.4; duration: 1000; easing.type: Easing.InOutSine }
             NumberAnimation { to: 1.0; duration: 1000; easing.type: Easing.InOutSine }
           }

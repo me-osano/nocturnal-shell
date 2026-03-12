@@ -72,14 +72,15 @@ ColumnLayout {
   }
 
   NValueSlider {
+    Layout.fillWidth: true
     label: "Icon scale"
     description: "Adjust the size of the network icon"
     from: 0.5
     to: 1.5
     stepSize: 0.1
     value: valueIconScale
-    valueFormat: value => Math.round(value * 100) + "%"
-    onValueChanged: {
+    text: Math.round(valueIconScale * 100) + "%"
+    onMoved: value => {
       valueIconScale = value;
       saveSettings();
     }
