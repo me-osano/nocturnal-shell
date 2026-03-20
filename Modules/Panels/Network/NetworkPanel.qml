@@ -80,10 +80,10 @@ SmartPanel {
         panelViewMode = "wifi";
       }
     } else {
-      if (!Settings.data.network.wifiEnabled && NetworkService.hasEthernet())
-        panelViewMode = "ethernet";
-      else
-        panelViewMode = "wifi";
+      // Default to the Wi‑Fi view even if Wi‑Fi is currently disabled.
+      // Preserve explicit saved preference above; this branch runs only
+      // when there is no saved `Settings.data.ui.networkPanelView`.
+      panelViewMode = "wifi";
     }
     panelViewPersistEnabled = true;
   }
